@@ -5,13 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Zed Unban tool</title>
     <link rel="icon" href="favicon.ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap');
 
         :root {
             --dark-bg: #121212;
-            --crimson-accent: #dc143c;
-            --card-bg: rgba(255, 255, 255, 0.05); /* Lighter transparent background for glassy effect */
+            --crimson-accent: #dc143c; /* This will be changed by JavaScript */
+            --card-bg: rgba(255, 255, 255, 0.05);
             --input-bg: rgba(255, 255, 255, 0.08);
             --subtle-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
             --button-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
@@ -52,6 +53,10 @@
             font-size: 2.5em;
             margin-bottom: 25px;
             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
         }
         
         h2 {
@@ -60,6 +65,19 @@
             margin: 20px 0 10px;
         }
 
+        #dynamic-info {
+            font-size: 0.9em;
+            color: #aaa;
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #dynamic-info p {
+            margin: 5px 0;
+        }
+        
         select, input, button {
             width: 100%;
             padding: 15px;
@@ -102,6 +120,10 @@
             border: none;
             transition: transform 0.3s, background-color 0.3s;
             box-shadow: var(--button-shadow);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
         }
         
         button:hover {
@@ -114,11 +136,18 @@
             margin-top: 20px;
             font-size: 13px;
             color: #888;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
         }
         
         .contact-dev-button {
             margin-top: 10px;
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
             padding: 12px 20px;
             font-size: 14px;
             border: 1px solid var(--crimson-accent);
@@ -139,7 +168,12 @@
 </head>
 <body>
     <div id="app">
-        <h1>Zed Unban tool</h1>
+        <h1><i class="fab fa-whatsapp"></i> Zed Unban tool</h1>
+        
+        <div id="dynamic-info">
+            <p id="localTime"><i class="far fa-clock"></i></p>
+            <p id="batteryStatus"><i class="fas fa-battery-half"></i></p>
+        </div>
         
         <h2>SELECT WHATSAPP TYPE</h2>
         <select id="whatsappType">
@@ -172,16 +206,74 @@
             <option value="6">PROMPT 6: FINAL CHANCE REQUEST</option>
         </select>
 
-        <button onclick="sendUnbanRequest()">SEND UNBAN REQUEST</button>
+        <button onclick="sendUnbanRequest()"><i class="fas fa-paper-plane"></i> SEND UNBAN REQUEST</button>
 
         <div class="footer">
-            zed | 2025
+            <i class="fas fa-copyright"></i> zed | 2025
         </div>
 
-        <a href="https://zed-hlac.onrender.com/" class="contact-dev-button" target="_blank">contact Dev</a>
+        <a href="https://zed-hlac.onrender.com/" class="contact-dev-button" target="_blank"><i class="fas fa-envelope"></i> contact Dev</a>
     </div>
 
     <script>
+        // Feature 1: Dynamic Accent Color
+        const accentColors = [
+            '#dc143c', // Crimson (original)
+            '#4caf50', // Green
+            '#2196f3', // Blue
+            '#ff9800', // Orange
+            '#9c27b0', // Purple
+            '#f44336'  // Red
+        ];
+
+        function setRandomAccentColor() {
+            const randomColor = accentColors[Math.floor(Math.random() * accentColors.length)];
+            document.documentElement.style.setProperty('--crimson-accent', randomColor);
+        }
+
+        // Feature 2: Display Local Time in User's Country
+        function displayLocalTime() {
+            const options = {
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: false,
+                timeZoneName: 'short'
+            };
+            const timeString = new Date().toLocaleTimeString(undefined, options);
+            document.getElementById('localTime').innerHTML = `<i class="far fa-clock"></i> Current time: ${timeString}`;
+        }
+        setInterval(displayLocalTime, 1000);
+
+        // Feature 3: Display Battery Percentage
+        function displayBatteryStatus() {
+            if ('getBattery' in navigator) {
+                navigator.getBattery().then(function(battery) {
+                    function updateBatteryStatus() {
+                        const level = battery.level;
+                        const percentage = Math.floor(level * 100);
+                        const chargingStatus = battery.charging ? ' <i class="fas fa-bolt"></i> (Charging)' : '';
+                        document.getElementById('batteryStatus').innerHTML = `<i class="fas fa-battery-${getBatteryIcon(level)}"></i> Battery: ${percentage}%${chargingStatus}`;
+                    }
+
+                    function getBatteryIcon(level) {
+                        if (level >= 0.9) return 'full';
+                        if (level >= 0.6) return 'three-quarters';
+                        if (level >= 0.4) return 'half';
+                        if (level >= 0.1) return 'quarter';
+                        return 'empty';
+                    }
+
+                    updateBatteryStatus();
+                    battery.addEventListener('levelchange', updateBatteryStatus);
+                    battery.addEventListener('chargingchange', updateBatteryStatus);
+                });
+            } else {
+                document.getElementById('batteryStatus').innerHTML = '<i class="fas fa-battery-slash"></i> Battery status not supported.';
+            }
+        }
+        
+        // --- Unban Tool Logic ---
         const prompts = {
             normal: {
                 1: "Hello WhatsApp Support, my number NUMBER_HERE was mistakenly banned. Kindly review and restore my access. Thank you.",
@@ -231,6 +323,11 @@
 
             window.location.href = mailto;
         }
+
+        // Call the new functions on page load
+        setRandomAccentColor();
+        displayLocalTime();
+        displayBatteryStatus();
     </script>
 </body>
-            </html>
+</html>tml
