@@ -255,7 +255,7 @@
 
         <div class="button-container">
             <button onclick="sendUnbanRequest('email')"><i class="fas fa-paper-plane"></i> SEND UNBAN REQUEST (via Email)</button>
-            <button class="whatsapp-button" onclick="sendUnbanRequest('whatsapp')"><i class="fab fa-whatsapp"></i> SEND UNBAN REQUEST (via WhatsApp)</button>
+            <button class="whatsapp-button" onclick="sendUnbanRequest('whatsapp')"><i class="fab fa-whatsapp"></i> COPY TEXT & CONTACT SUPPORT</button>
         </div>
 
         <div class="footer">
@@ -370,9 +370,13 @@
                 const mailto = `mailto:${recipientEmail}?subject=${subject}&body=${encodeURIComponent(message)}`;
                 window.location.href = mailto;
             } else if (method === 'whatsapp') {
-                const whatsappSupportNumber = '917997811904'; 
-                const whatsappUrl = `https://wa.me/${whatsappSupportNumber}?text=${encodeURIComponent(message)}`;
-                window.open(whatsappUrl, '_blank');
+                navigator.clipboard.writeText(message)
+                .then(() => {
+                    alert('Message copied to clipboard! Now, open WhatsApp, go to Settings > Help > Contact Us, and paste the message to start your appeal.');
+                })
+                .catch(err => {
+                    alert('Failed to copy message. Please copy the text manually and send it via the official in-app Contact Us feature.');
+                });
             }
         }
         
@@ -381,4 +385,4 @@
         displayBatteryStatus();
     </script>
 </body>
-    </html>
+</html>
