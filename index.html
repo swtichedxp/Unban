@@ -11,8 +11,10 @@
         :root {
             --dark-bg: #121212;
             --crimson-accent: #dc143c;
-            --card-bg: rgba(0, 0, 0, 0.5);
+            --card-bg: rgba(255, 255, 255, 0.05); /* Lighter transparent background for glassy effect */
             --input-bg: rgba(255, 255, 255, 0.08);
+            --subtle-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+            --button-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
         }
 
         * {
@@ -24,7 +26,7 @@
             font-family: 'Orbitron', sans-serif;
             background: url('https://files.catbox.moe/oi8p2u.png') no-repeat center center fixed;
             background-size: cover;
-            color: var(--crimson-accent);
+            color: #ccc;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -34,79 +36,104 @@
 
         #app {
             background: var(--card-bg);
-            border: 3px solid var(--crimson-accent);
-            box-shadow: 0 0 20px var(--crimson-accent), 0 0 40px var(--crimson-accent);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
             padding: 30px 20px;
             max-width: 400px;
             width: 100%;
-            border-radius: 20px;
             text-align: center;
             backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+            transition: all 0.3s ease;
         }
 
-        h1, h2 {
+        h1 {
             color: var(--crimson-accent);
-            text-shadow: 0 0 10px var(--crimson-accent);
+            font-size: 2.5em;
+            margin-bottom: 25px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        h2 {
+            color: #eee;
+            font-size: 1.1em;
+            margin: 20px 0 10px;
         }
 
         select, input, button {
             width: 100%;
-            padding: 12px;
+            padding: 15px;
             margin: 10px 0;
-            border-radius: 10px;
-            border: 2px solid var(--crimson-accent);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
             background-color: var(--input-bg);
-            color: var(--crimson-accent);
+            color: #eee;
             font-family: 'Orbitron', sans-serif;
             font-size: 14px;
-            transition: box-shadow 0.3s;
+            box-shadow: var(--subtle-shadow);
+            transition: all 0.3s ease;
+        }
+        
+        select {
+            background-image: linear-gradient(45deg, transparent 50%, var(--crimson-accent) 50%), linear-gradient(135deg, var(--crimson-accent) 50%, transparent 50%);
+            background-position: calc(100% - 20px) 50%, calc(100% - 15px) 50%;
+            background-size: 5px 5px, 5px 5px;
+            background-repeat: no-repeat;
+            -moz-appearance: none;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        input::placeholder {
+            color: rgba(255, 255, 255, 0.4);
         }
 
         select:focus, input:focus {
             outline: none;
-            box-shadow: 0 0 10px var(--crimson-accent);
+            border-color: var(--crimson-accent);
+            box-shadow: 0 0 8px rgba(220, 20, 60, 0.5);
         }
         
         button {
             font-weight: bold;
             cursor: pointer;
-            background: var(--crimson-accent);
-            color: black;
+            background: linear-gradient(145deg, var(--crimson-accent), #a80f2d);
+            color: white;
             border: none;
-            transition: transform 0.3s, background-color 0.3s, box-shadow 0.3s;
-            box-shadow: 0 0 15px rgba(220, 20, 60, 0.5);
+            transition: transform 0.3s, background-color 0.3s;
+            box-shadow: var(--button-shadow);
         }
         
         button:hover {
-            transform: scale(1.04);
-            background-color: #ff0040;
-            box-shadow: 0 0 25px rgba(220, 20, 60, 0.8);
+            transform: translateY(-2px);
+            background: linear-gradient(145deg, #ff0040, #b51133);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.7);
         }
 
         .footer {
             margin-top: 20px;
             font-size: 13px;
-            color: var(--crimson-accent);
+            color: #888;
         }
         
         .contact-dev-button {
             margin-top: 10px;
             display: inline-block;
-            padding: 10px 15px;
+            padding: 12px 20px;
             font-size: 14px;
-            border: 2px solid var(--crimson-accent);
+            border: 1px solid var(--crimson-accent);
             color: var(--crimson-accent);
-            background-color: var(--input-bg);
-            border-radius: 10px;
+            background-color: transparent;
+            border-radius: 15px;
             text-decoration: none;
-            transition: transform 0.3s, box-shadow 0.3s;
+            transition: all 0.3s ease;
+            box-shadow: var(--subtle-shadow);
         }
 
         .contact-dev-button:hover {
-            transform: scale(1.04);
-            background-color: var(--crimson-accent);
-            color: black;
-            box-shadow: 0 0 15px var(--crimson-accent);
+            transform: translateY(-2px);
+            background-color: rgba(220, 20, 60, 0.2);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.7);
         }
     </style>
 </head>
