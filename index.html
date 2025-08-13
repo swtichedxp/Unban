@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zed Unban tool</title>
+    <link rel="icon" href="favicon.ico">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap');
+
+        :root {
+            --dark-bg: #121212;
+            --cyan-accent: #00ffff;
+            --card-bg: rgba(0, 0, 0, 0.85);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Orbitron', sans-serif;
+            background: url('https://files.catbox.moe/oi8p2u.png') no-repeat center center fixed;
+            background-size: cover;
+            color: var(--cyan-accent);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        #app {
+            background: var(--card-bg);
+            border: 3px solid var(--cyan-accent);
+            box-shadow: 0 0 20px var(--cyan-accent), 0 0 40px var(--cyan-accent), 0 0 60px var(--cyan-accent);
+            padding: 30px 20px;
+            max-width: 400px;
+            width: 100%;
+            border-radius: 15px;
+            text-align: center;
+            backdrop-filter: blur(5px);
+        }
+
+        h1, h2 {
+            color: var(--cyan-accent);
+            text-shadow: 0 0 10px var(--cyan-accent), 0 0 20px #00f;
+        }
+
+        select, input, button {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 10px;
+            border: 2px solid var(--cyan-accent);
+            background-color: black;
+            color: var(--cyan-accent);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 14px;
+        }
+
+        button {
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 0 10px #0ff, 0 0 20px #00f;
+        }
+
+        button:hover {
+            background-color: var(--cyan-accent);
+            color: black;
+            transform: scale(1.04);
+        }
+
+        .footer {
+            margin-top: 20px;
+            font-size: 13px;
+            color: var(--cyan-accent);
+        }
+
+        .join-button {
+            margin-top: 10px;
+            display: inline-block;
+            padding: 10px 15px;
+            font-size: 14px;
+            border: 2px solid var(--cyan-accent);
+            color: var(--cyan-accent);
+            background-color: black;
+            border-radius: 10px;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .join-button:hover {
+            background-color: var(--cyan-accent);
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <h1>Zed Unban tool</h1>
+        <h2>SELECT UNBAN OPTION</h2>
+        <select id="banType">
+            <option value="normal">NORMAL UNBANNED</option>
+            <option value="permanent">PERMANENTLY UNBANNED</option>
+        </select>
+
+        <h2>ENTER NUMBER</h2>
+        <input type="text" id="number" placeholder="eg: +923xxxxxxxx">
+
+        <h2>SELECT PROMPT</h2>
+        <select id="prompt">
+            <option value="1">PROMPT 1: STANDARD UNBAN REQUEST</option>
+            <option value="2">PROMPT 2: MISTAKEN BAN APPEAL</option>
+            <option value="3">PROMPT 3: POLICY COMPLIANCE PROMISE</option>
+            <option value="4">PROMPT 4: ACCOUNT REVIEW REQUEST</option>
+            <option value="5">PROMPT 5: TERMS VIOLATION APPEAL</option>
+            <option value="6">PROMPT 6: FINAL CHANCE REQUEST</option>
+        </select>
+
+        <button onclick="sendUnbanRequest()">SEND UNBAN REQUEST</button>
+
+        <div class="footer">
+            DEVELOPED BY MR IS BRAND | &copy;2025 | ALL SYSTEMS OPERATIONAL
+        </div>
+
+        <a href="https://whatsapp.com/channel/0029Vb9nRuQA2pL5rqf2JP2N" class="join-button" target="_blank">JOIN OUR TEAM</a>
+    </div>
+
+    <script>
+        const prompts = {
+            normal: {
+                1: "Hello WhatsApp Support, my number NUMBER_HERE was mistakenly banned. Kindly review and restore my access. Thank you.",
+                2: "Dear WhatsApp team, my account NUMBER_HERE got banned accidentally. Please help me recover it.",
+                3: "Hi, I believe my number NUMBER_HERE was wrongly banned. Requesting a quick reactivation.",
+                4: "I am facing an issue as my number NUMBER_HERE is banned. Kindly verify and unban it.",
+                5: "To WhatsApp Support: Please check number NUMBER_HERE, it appears to be banned without reason.",
+                6: "My number NUMBER_HERE got banned but I have not violated any terms. Please reinstate access."
+            },
+            permanent: {
+                1: "Dear WhatsApp Support, I humbly request a second chance for my number NUMBER_HERE. I understand the policies and promise to follow all rules henceforth.",
+                2: "My number NUMBER_HERE is permanently banned. I deeply regret any violation. Kindly give me one more opportunity.",
+                3: "This is a request to reconsider the permanent ban on my number NUMBER_HERE. I assure compliance in the future.",
+                4: "Please unban my number NUMBER_HERE. I take full responsibility and seek one final chance to use WhatsApp responsibly.",
+                5: "I acknowledged mistakes on number NUMBER_HERE. Requesting a final opportunity and committing to policy adherence.",
+                6: `Dear WhatsApp Support,\n\nMy number has been permanently banned, and I strongly believe this may be a mistake or an automated action. I respectfully request a detailed review of my account and activity.\n\nI always strive to follow WhatsApp's Terms of Service and community guidelines. If any issues were caused unintentionally, I assure you it was not with malicious intent, and I am ready to correct any mistakes.\n\nPlease consider reinstating my number. I truly rely on WhatsApp for personal and professional communication. Your assistance would mean a lot.\n\nPhone Number: NUMBER_HERE\n\nThank you for your time and understanding.\n\nBest regards.`
+            }
+        };
+
+        function sendUnbanRequest() {
+            const number = document.getElementById('number').value.trim();
+            const promptId = document.getElementById('prompt').value;
+            const banType = document.getElementById('banType').value;
+
+            if (!number.startsWith('+') || number.length < 7) {
+                alert('Please enter a valid number like +923xx.');
+                return;
+            }
+
+            const message = encodeURIComponent(prompts[banType][promptId].replaceAll('NUMBER_HERE', number));
+            const subject = encodeURIComponent('Unban Request');
+            const mailto = `mailto:support@support.whatsapp.com?subject=${subject}&body=${message}`;
+
+            window.location.href = mailto;
+        }
+    </script>
+</body>
+</html>
