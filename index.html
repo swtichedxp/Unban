@@ -74,6 +74,44 @@
             font-size: 0.9em;
         }
 
+        .contact-buttons-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 20px;
+            width: 100%;
+            max-width: 300px;
+        }
+
+        .contact-button {
+            padding: 12px;
+            font-size: 14px;
+            font-weight: bold;
+            border: none;
+            border-radius: 15px;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .contact-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+        }
+
+        .telegram-button {
+            background-color: #0088cc;
+        }
+
+        .whatsapp-button-unlock {
+            background-color: #25D366;
+        }
+
+
         h1 {
             color: var(--crimson-accent);
             font-size: 2.5em;
@@ -293,11 +331,16 @@
         <input type="password" id="unlock-input" placeholder="Enter code here">
         <button onclick="checkUnlockCode()"><i class="fas fa-unlock"></i> Unlock</button>
         <p id="unlock-status"></p>
+
+        <div class="contact-buttons-container">
+            <h3><i class="fas fa-headset"></i> Need a code? Contact the owner:</h3>
+            <a href="https://t.me/zedside" target="_blank" class="contact-button telegram-button"><i class="fab fa-telegram-plane"></i> Telegram: zedside</a>
+            <a href="https://wa.me/212684255286" target="_blank" class="contact-button whatsapp-button-unlock"><i class="fab fa-whatsapp"></i> WhatsApp: +212684255286</a>
+        </div>
     </div>
     
     <script>
         // --- CODES & MONETIZATION ---
-        // Add your unique access codes here.
         let validUnlockCodes = [
             'COSMOS-001',
             'NEBULA-777',
@@ -460,4 +503,4 @@
         displayBatteryStatus();
     </script>
 </body>
-</html>
+                    </html>
