@@ -54,14 +54,14 @@
             margin-bottom: 25px;
             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
             display: flex;
-            flex-direction: column; /* Changed to column to stack icon on top of text */
+            flex-direction: column;
             align-items: center;
             justify-content: center;
             gap: 10px;
         }
 
         h1 .heading-icon {
-            font-size: 1.5em; /* Smaller size for the icon */
+            font-size: 1.5em;
         }
         
         h2 {
@@ -97,7 +97,7 @@
             }
         }
         
-        select, input, button {
+        select, input {
             width: 100%;
             padding: 15px;
             margin: 10px 0;
@@ -109,6 +109,13 @@
             font-size: 14px;
             box-shadow: var(--subtle-shadow);
             transition: all 0.3s ease;
+        }
+
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 20px;
         }
         
         select {
@@ -132,11 +139,14 @@
         }
         
         button {
+            width: 100%;
+            padding: 15px;
             font-weight: bold;
             cursor: pointer;
             background: linear-gradient(145deg, var(--crimson-accent), #a80f2d);
             color: white;
             border: none;
+            border-radius: 15px;
             transition: transform 0.3s, background-color 0.3s;
             box-shadow: var(--button-shadow);
             display: flex;
@@ -149,6 +159,14 @@
             transform: translateY(-2px);
             background: linear-gradient(145deg, #ff0040, #b51133);
             box-shadow: 0 6px 20px rgba(0, 0, 0, 0.7);
+        }
+
+        .whatsapp-button {
+            background: linear-gradient(145deg, #25D366, #128C7E);
+        }
+
+        .whatsapp-button:hover {
+            background: linear-gradient(145deg, #34E071, #169E90);
         }
 
         .footer {
@@ -234,7 +252,10 @@
             </div>
         </div>
 
-        <button onclick="sendUnbanRequest()"><i class="fas fa-paper-plane"></i> SEND UNBAN REQUEST</button>
+        <div class="button-container">
+            <button onclick="sendUnbanRequest('email')"><i class="fas fa-paper-plane"></i> SEND UNBAN REQUEST (via Email)</button>
+            <button class="whatsapp-button" onclick="sendUnbanRequest('whatsapp')"><i class="fab fa-whatsapp"></i> SEND UNBAN REQUEST (via WhatsApp)</button>
+        </div>
 
         <div class="footer">
             <i class="fas fa-copyright"></i> zed | 2025
@@ -244,7 +265,6 @@
     </div>
 
     <script>
-        // Feature 1: Dynamic Accent Color
         const accentColors = [
             '#dc143c', // Crimson (original)
             '#4caf50', // Green
@@ -259,7 +279,6 @@
             document.documentElement.style.setProperty('--crimson-accent', randomColor);
         }
 
-        // Feature 2: Display Local Time in User's Country
         function displayLocalTime() {
             const options = {
                 hour: '2-digit',
@@ -272,7 +291,6 @@
         }
         setInterval(displayLocalTime, 1000);
 
-        // Feature 3: Display Battery Percentage
         function displayBatteryStatus() {
             if ('getBattery' in navigator) {
                 navigator.getBattery().then(function(battery) {
@@ -300,7 +318,6 @@
             }
         }
         
-        // --- Unban Tool Logic ---
         const prompts = {
             normal: {
                 1: "Hello WhatsApp Support, my number NUMBER_HERE was mistakenly banned. Kindly review and restore my access. Thank you.",
@@ -331,30 +348,34 @@
             }
         };
 
-        function sendUnbanRequest() {
+        function sendUnbanRequest(method) {
             const number = document.getElementById('number').value.trim();
             const promptId = document.getElementById('prompt').value;
             const banType = document.getElementById('banType').value;
-            const whatsappType = document.getElementById('whatsappType').value;
-            const phoneType = document.getElementById('phoneType').value;
 
             if (!number.startsWith('+') || number.length < 7) {
                 alert('Please enter a valid number like +923xx.');
                 return;
             }
 
-            const recipientEmail = emailMap[whatsappType][phoneType];
-            const message = encodeURIComponent(prompts[banType][promptId].replaceAll('NUMBER_HERE', number));
-            const subject = encodeURIComponent('Unban Request');
-            const mailto = `mailto:${recipientEmail}?subject=${subject}&body=${message}`;
-
-            window.location.href = mailto;
+            const message = prompts[banType][promptId].replaceAll('NUMBER_HERE', number);
+            
+            if (method === 'email') {
+                const whatsappType = document.getElementById('whatsappType').value;
+                const phoneType = document.getElementById('phoneType').value;
+                const recipientEmail = emailMap[whatsappType][phoneType];
+                const subject = encodeURIComponent('Unban Request');
+                const mailto = `mailto:${recipientEmail}?subject=${subject}&body=${encodeURIComponent(message)}`;
+                window.location.href = mailto;
+            } else if (method === 'whatsapp') {
+                const whatsappUrl = `https://wa.me/917997811904?text=${encodeURIComponent(message)}`;
+                window.open(whatsappUrl, '_blank');
+            }
         }
-
-        // Call the new functions on page load
+        
         setRandomAccentColor();
         displayLocalTime();
         displayBatteryStatus();
     </script>
 </body>
-</html>
+    </html>
