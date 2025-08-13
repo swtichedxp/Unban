@@ -140,6 +140,19 @@
 <body>
     <div id="app">
         <h1>Zed Unban tool</h1>
+        
+        <h2>SELECT WHATSAPP TYPE</h2>
+        <select id="whatsappType">
+            <option value="regular">REGULAR WHATSAPP</option>
+            <option value="business">WHATSAPP BUSINESS</option>
+        </select>
+
+        <h2>SELECT PHONE TYPE</h2>
+        <select id="phoneType">
+            <option value="android">ANDROID</option>
+            <option value="iphone">IPHONE</option>
+        </select>
+        
         <h2>SELECT UNBAN OPTION</h2>
         <select id="banType">
             <option value="normal">NORMAL UNBANNED</option>
@@ -188,22 +201,36 @@
             }
         };
 
+        const emailMap = {
+            'regular': {
+                'android': 'support@support.whatsapp.com',
+                'iphone': 'iphone-support@support.whatsapp.com'
+            },
+            'business': {
+                'android': 'smb_web@support.whatsapp.com',
+                'iphone': 'smb_web@support.whatsapp.com'
+            }
+        };
+
         function sendUnbanRequest() {
             const number = document.getElementById('number').value.trim();
             const promptId = document.getElementById('prompt').value;
             const banType = document.getElementById('banType').value;
+            const whatsappType = document.getElementById('whatsappType').value;
+            const phoneType = document.getElementById('phoneType').value;
 
             if (!number.startsWith('+') || number.length < 7) {
                 alert('Please enter a valid number like +923xx.');
                 return;
             }
 
+            const recipientEmail = emailMap[whatsappType][phoneType];
             const message = encodeURIComponent(prompts[banType][promptId].replaceAll('NUMBER_HERE', number));
             const subject = encodeURIComponent('Unban Request');
-            const mailto = `mailto:support@support.whatsapp.com?subject=${subject}&body=${message}`;
+            const mailto = `mailto:${recipientEmail}?subject=${subject}&body=${message}`;
 
             window.location.href = mailto;
         }
     </script>
 </body>
-</html>
+            </html>
