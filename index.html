@@ -449,7 +449,13 @@
         }
 
         function goToWhatsApp() {
+            // Attempt to open the WhatsApp app via deep link
             window.location.href = 'whatsapp://';
+
+            // Fallback to the web client after a short delay if the deep link fails
+            setTimeout(function() {
+                window.location.href = 'https://web.whatsapp.com/';
+            }, 500); 
         }
 
         function sendUnbanRequest(method) {
@@ -487,4 +493,4 @@
         displayBatteryStatus();
     </script>
 </body>
-</html>
+    </html>
