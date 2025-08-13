@@ -11,12 +11,11 @@
 
         :root {
             --dark-bg: #121212;
-            --crimson-accent: #dc143c; /* This will be changed by JavaScript */
+            --crimson-accent: #dc143c;
             --card-bg: rgba(255, 255, 255, 0.05);
             --input-bg: rgba(255, 255, 255, 0.08);
             --subtle-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
             --button-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
-            --modal-bg: rgba(0, 0, 0, 0.7);
         }
 
         * {
@@ -47,6 +46,32 @@
             backdrop-filter: blur(10px);
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
             transition: all 0.3s ease;
+        }
+        
+        #unlock-page {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #unlock-page h2 {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            color: var(--crimson-accent);
+        }
+
+        #unlock-input {
+            width: 100%;
+            max-width: 300px;
+            padding: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        #unlock-status {
+            color: #ff4d4d;
+            margin-top: 10px;
+            font-size: 0.9em;
         }
 
         h1 {
@@ -199,7 +224,7 @@
     </style>
 </head>
 <body>
-    <div id="main-app" class="container">
+    <div id="main-app" class="container" style="display: none;">
         <h1>
             <i class="fab fa-whatsapp heading-icon"></i>
             <span>Zed Unban tool</span>
@@ -258,15 +283,40 @@
 
         <a href="https://zed-hlac.onrender.com/" class="contact-dev-button" target="_blank"><i class="fas fa-envelope"></i> contact Dev</a>
     </div>
+
+    <div id="unlock-page" class="container">
+        <h1>
+            <i class="fas fa-lock heading-icon"></i>
+            <span>Access Unban Tool</span>
+        </h1>
+        <h2>Enter your access code to proceed</h2>
+        <input type="password" id="unlock-input" placeholder="Enter code here">
+        <button onclick="checkUnlockCode()"><i class="fas fa-unlock"></i> Unlock</button>
+        <p id="unlock-status"></p>
+    </div>
     
     <script>
+        // --- CODES & MONETIZATION ---
+        // Add your unique access codes here.
+        let validUnlockCodes = [
+            'COSMOS-001',
+            'NEBULA-777',
+            'ORBIT-360',
+            'GALAXY-101',
+            'QUASAR-555',
+            'APOLLO-13',
+            'STAR-DUST',
+            'SUPERNOVA'
+        ];
+        
+        // --- CORE LOGIC ---
         const accentColors = [
-            '#dc143c', // Crimson (original)
-            '#4caf50', // Green
-            '#2196f3', // Blue
-            '#ff9800', // Orange
-            '#9c27b0', // Purple
-            '#f44336'  // Red
+            '#dc143c',
+            '#4caf50',
+            '#2196f3',
+            '#ff9800',
+            '#9c27b0',
+            '#f44336'
         ];
 
         function setRandomAccentColor() {
@@ -310,6 +360,48 @@
                 });
             } else {
                 document.getElementById('batteryStatus').innerHTML = '<i class="fas fa-battery-slash"></i> Battery status not supported.';
+            }
+        }
+
+        function unlockSite() {
+            document.getElementById('unlock-page').style.display = 'none';
+            document.getElementById('main-app').style.display = 'block';
+        }
+
+        function checkUnlockCode() {
+            const codeInput = document.getElementById('unlock-input');
+            const statusMessage = document.getElementById('unlock-status');
+            const code = codeInput.value.trim().toUpperCase();
+
+            const codeIndex = validUnlockCodes.indexOf(code);
+
+            if (codeIndex > -1) {
+                statusMessage.style.color = '#4caf50';
+                statusMessage.innerText = 'Success! Unlocking site...';
+                
+                localStorage.setItem('accessCode', code);
+                
+                validUnlockCodes.splice(codeIndex, 1);
+                
+                setTimeout(unlockSite, 1000);
+
+            } else {
+                statusMessage.style.color = '#ff4d4d';
+                statusMessage.innerText = 'Invalid or expired code. Please try again.';
+                codeInput.value = '';
+            }
+        }
+        
+        window.onload = function() {
+            const storedCode = localStorage.getItem('accessCode');
+            const codeIndex = validUnlockCodes.indexOf(storedCode);
+
+            if (storedCode && codeIndex > -1) {
+                unlockSite();
+            }
+            
+            if (storedCode && codeIndex === -1) {
+                 localStorage.removeItem('accessCode');
             }
         }
         
