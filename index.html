@@ -204,29 +204,59 @@
             box-shadow: 0 6px 20px rgba(0, 0, 0, 0.7);
         }
 
-        #instructions-container {
+        /* Instructions Page Styling */
+        #instructions-page {
             display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--dark-bg);
+            z-index: 5;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            animation: fadeIn 0.3s;
         }
 
-        #instructions-container h3 {
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .instructions-content {
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px 20px;
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+        }
+
+        .instructions-content h3 {
             color: var(--crimson-accent);
-            margin-top: 0;
             font-size: 2em;
+            margin-top: 0;
         }
 
-        #instructions-container p {
+        .instructions-content p {
             font-size: 14px;
             line-height: 1.5;
             margin-bottom: 20px;
         }
 
-        #instructions-container ol {
+        .instructions-content ol {
             text-align: left;
             padding-left: 20px;
             margin-bottom: 20px;
         }
 
-        #instructions-container li {
+        .instructions-content li {
             margin-bottom: 10px;
         }
 
@@ -294,17 +324,19 @@
         <a href="https://zed-hlac.onrender.com/" class="contact-dev-button" target="_blank"><i class="fas fa-envelope"></i> contact Dev</a>
     </div>
 
-    <div id="instructions-container" class="container">
-        <h3>Message Copied!</h3>
-        <p>Your unban appeal has been copied to your clipboard. Now, please follow these steps to contact WhatsApp support:</p>
-        <ol>
-            <li>Open WhatsApp.</li>
-            <li>Go to Settings > Help > Contact Us.</li>
-            <li>Paste the message into the text field to submit your appeal.</li>
-        </ol>
-        <div class="button-container">
-            <button class="whatsapp-button" onclick="goToWhatsApp()"><i class="fab fa-whatsapp"></i> Go to WhatsApp</button>
-            <button onclick="showForm()">Back</button>
+    <div id="instructions-page">
+        <div class="instructions-content">
+            <h3>Message Copied!</h3>
+            <p>Your unban appeal has been copied to your clipboard. Now, please follow these steps to contact WhatsApp support:</p>
+            <ol>
+                <li>Open WhatsApp.</li>
+                <li>Go to Settings > Help > Contact Us.</li>
+                <li>Paste the message into the text field to submit your appeal.</li>
+            </ol>
+            <div class="button-container">
+                <button class="whatsapp-button" onclick="goToWhatsApp()"><i class="fab fa-whatsapp"></i> Go to WhatsApp</button>
+                <button onclick="showForm()">Back</button>
+            </div>
         </div>
     </div>
     
@@ -394,12 +426,12 @@
 
         function showInstructions() {
             document.getElementById('main-app').style.display = 'none';
-            document.getElementById('instructions-container').style.display = 'flex';
+            document.getElementById('instructions-page').style.display = 'flex';
         }
 
         function showForm() {
             document.getElementById('main-app').style.display = 'block';
-            document.getElementById('instructions-container').style.display = 'none';
+            document.getElementById('instructions-page').style.display = 'none';
         }
         
         function goToWhatsApp() {
