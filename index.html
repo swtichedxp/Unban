@@ -40,7 +40,7 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 20px;
             padding: 30px 20px;
-            max-width: 400px;
+            max-width: 600px;
             width: 100%;
             text-align: center;
             backdrop-filter: blur(10px);
@@ -54,9 +54,14 @@
             margin-bottom: 25px;
             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
             display: flex;
+            flex-direction: column; /* Changed to column to stack icon on top of text */
             align-items: center;
             justify-content: center;
             gap: 10px;
+        }
+
+        h1 .heading-icon {
+            font-size: 1.5em; /* Smaller size for the icon */
         }
         
         h2 {
@@ -76,6 +81,20 @@
 
         #dynamic-info p {
             margin: 5px 0;
+        }
+
+        .form-grid-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            text-align: left;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 500px) {
+            .form-grid-container {
+                grid-template-columns: 1fr;
+            }
         }
         
         select, input, button {
@@ -168,43 +187,52 @@
 </head>
 <body>
     <div id="app">
-        <h1><i class="fab fa-whatsapp"></i> Zed Unban tool</h1>
+        <h1>
+            <i class="fab fa-whatsapp heading-icon"></i>
+            <span>Zed Unban tool</span>
+        </h1>
         
         <div id="dynamic-info">
             <p id="localTime"><i class="far fa-clock"></i></p>
             <p id="batteryStatus"><i class="fas fa-battery-half"></i></p>
         </div>
-        
-        <h2>SELECT WHATSAPP TYPE</h2>
-        <select id="whatsappType">
-            <option value="regular">REGULAR WHATSAPP</option>
-            <option value="business">WHATSAPP BUSINESS</option>
-        </select>
 
-        <h2>SELECT PHONE TYPE</h2>
-        <select id="phoneType">
-            <option value="android">ANDROID</option>
-            <option value="iphone">IPHONE</option>
-        </select>
-        
-        <h2>SELECT UNBAN OPTION</h2>
-        <select id="banType">
-            <option value="normal">NORMAL UNBANNED</option>
-            <option value="permanent">PERMANENTLY UNBANNED</option>
-        </select>
+        <div class="form-grid-container">
+            <div class="form-left">
+                <h2>SELECT WHATSAPP TYPE</h2>
+                <select id="whatsappType">
+                    <option value="regular">REGULAR WHATSAPP</option>
+                    <option value="business">WHATSAPP BUSINESS</option>
+                </select>
 
-        <h2>ENTER NUMBER</h2>
-        <input type="text" id="number" placeholder="eg: +923xxxxxxxx">
+                <h2>SELECT PHONE TYPE</h2>
+                <select id="phoneType">
+                    <option value="android">ANDROID</option>
+                    <option value="iphone">IPHONE</option>
+                </select>
+                
+                <h2>SELECT UNBAN OPTION</h2>
+                <select id="banType">
+                    <option value="normal">NORMAL UNBANNED</option>
+                    <option value="permanent">PERMANENTLY UNBANNED</option>
+                </select>
+            </div>
+            
+            <div class="form-right">
+                <h2>ENTER NUMBER</h2>
+                <input type="text" id="number" placeholder="eg: +923xxxxxxxx">
 
-        <h2>SELECT PROMPT</h2>
-        <select id="prompt">
-            <option value="1">PROMPT 1: STANDARD UNBAN REQUEST</option>
-            <option value="2">PROMPT 2: MISTAKEN BAN APPEAL</option>
-            <option value="3">PROMPT 3: POLICY COMPLIANCE PROMISE</option>
-            <option value="4">PROMPT 4: ACCOUNT REVIEW REQUEST</option>
-            <option value="5">PROMPT 5: TERMS VIOLATION APPEAL</option>
-            <option value="6">PROMPT 6: FINAL CHANCE REQUEST</option>
-        </select>
+                <h2>SELECT PROMPT</h2>
+                <select id="prompt">
+                    <option value="1">PROMPT 1: STANDARD UNBAN REQUEST</option>
+                    <option value="2">PROMPT 2: MISTAKEN BAN APPEAL</option>
+                    <option value="3">PROMPT 3: POLICY COMPLIANCE PROMISE</option>
+                    <option value="4">PROMPT 4: ACCOUNT REVIEW REQUEST</option>
+                    <option value="5">PROMPT 5: TERMS VIOLATION APPEAL</option>
+                    <option value="6">PROMPT 6: FINAL CHANCE REQUEST</option>
+                </select>
+            </div>
+        </div>
 
         <button onclick="sendUnbanRequest()"><i class="fas fa-paper-plane"></i> SEND UNBAN REQUEST</button>
 
@@ -236,7 +264,6 @@
             const options = {
                 hour: '2-digit',
                 minute: '2-digit',
-                second: '2-digit',
                 hour12: false,
                 timeZoneName: 'short'
             };
@@ -330,4 +357,4 @@
         displayBatteryStatus();
     </script>
 </body>
-</html>tml
+</html>
