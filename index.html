@@ -48,6 +48,35 @@
             transition: all 0.3s ease;
         }
         
+        /* --- Notification Styles --- */
+        #success-notification {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-100px); /* Start off-screen */
+            z-index: 1000;
+            padding: 15px 30px;
+            border-radius: 15px;
+            font-weight: bold;
+            display: none;
+            color: white;
+            opacity: 0;
+            transition: transform 0.5s ease-out, opacity 0.5s ease-out;
+            
+            /* Liquid Glass with Green Gradient */
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 0 20px rgba(55, 168, 93, 0.6), inset 0 0 10px rgba(55, 168, 93, 0.4);
+        }
+
+        #success-notification.show {
+            transform: translateX(-50%) translateY(0); /* Slide into view */
+            opacity: 1;
+        }
+
+        /* --- Unlock Page Styles --- */
         #unlock-page {
             display: flex;
             flex-direction: column;
@@ -225,6 +254,12 @@
             background: linear-gradient(145deg, #ff0040, #b51133);
             box-shadow: 0 6px 20px rgba(0, 0, 0, 0.7);
         }
+        
+        .tip {
+            font-size: 0.9em;
+            color: #aaa;
+            margin-bottom: 10px;
+        }
 
         .footer {
             margin-top: 20px;
@@ -262,6 +297,10 @@
     </style>
 </head>
 <body>
+    <div id="success-notification">
+        <i class="fas fa-check-circle"></i> Unban request sent, good luck!
+    </div>
+
     <div id="main-app" class="container" style="display: none;">
         <h1>
             <i class="fab fa-whatsapp heading-icon"></i>
@@ -311,6 +350,7 @@
         </div>
 
         <div class="button-container">
+            <p class="tip">✨ For faster results, use the email address linked to your WhatsApp account!</p>
             <button onclick="sendUnbanRequest()"><i class="fas fa-paper-plane"></i> SEND UNBAN REQUEST (via Email)</button>
         </div>
 
@@ -406,6 +446,24 @@
             }
         }
 
+        function showSuccessNotification() {
+            const notification = document.getElementById('success-notification');
+            notification.style.display = 'flex';
+            
+            // Trigger the animation after a slight delay to ensure display:flex is rendered
+            setTimeout(() => {
+                notification.classList.add('show');
+            }, 10);
+            
+            // Hide the notification after 5 seconds
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => {
+                    notification.style.display = 'none';
+                }, 500); // Wait for the transition to finish before hiding
+            }, 5000);
+        }
+
         function unlockSite() {
             document.getElementById('unlock-page').style.display = 'none';
             document.getElementById('main-app').style.display = 'block';
@@ -495,6 +553,7 @@
             const subject = encodeURIComponent('Unban Request');
             const mailto = `mailto:${recipientEmail}?subject=${subject}&body=${encodeURIComponent(message)}`;
             
+            showSuccessNotification(); // Show notification before sending email
             window.location.href = mailto;
         }
         
@@ -503,4 +562,4 @@
         displayBatteryStatus();
     </script>
 </body>
-                    </html>
+            </html>
