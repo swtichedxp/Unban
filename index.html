@@ -259,6 +259,22 @@
         .instructions-content li {
             margin-bottom: 10px;
         }
+        
+        /* Media query for smaller screens on instructions page */
+        @media (max-width: 500px) {
+            .instructions-content {
+                padding: 20px 15px;
+            }
+            .instructions-content h3 {
+                font-size: 1.5em;
+            }
+            .instructions-content p {
+                font-size: 13px;
+            }
+            .instructions-content ol {
+                padding-left: 15px;
+            }
+        }
 
     </style>
 </head>
@@ -435,10 +451,12 @@
         }
         
         function goToWhatsApp() {
-            // Attempt to open the WhatsApp app via deep link
+            // Attempt to open the WhatsApp app via deep link.
+            // This works reliably on most mobile devices.
             window.location.href = 'whatsapp://';
 
-            // Fallback to the web client after a short delay if the deep link fails
+            // Fallback to the web client after a short delay (500ms).
+            // This ensures the button works on desktops or devices where deep linking is blocked.
             setTimeout(function() {
                 window.location.href = 'https://web.whatsapp.com/';
             }, 500); 
