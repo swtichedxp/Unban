@@ -68,7 +68,8 @@
         h2 {
             color: #eee;
             font-size: 1.1em;
-            margin: 20px 0 10px;
+            margin-top: 20px;
+            margin-bottom: 15px;
         }
 
         #dynamic-info {
@@ -100,7 +101,7 @@
         
         select, input {
             width: 100%;
-            padding: 15px;
+            padding: 18px;
             margin: 10px 0;
             border-radius: 15px;
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -162,14 +163,6 @@
             box-shadow: 0 6px 20px rgba(0, 0, 0, 0.7);
         }
 
-        .whatsapp-button {
-            background: linear-gradient(145deg, #25D366, #128C7E);
-        }
-
-        .whatsapp-button:hover {
-            background: linear-gradient(145deg, #34E071, #169E90);
-        }
-
         .footer {
             margin-top: 20px;
             font-size: 13px;
@@ -202,88 +195,6 @@
             transform: translateY(-2px);
             background-color: rgba(220, 20, 60, 0.2);
             box-shadow: 0 6px 20px rgba(0, 0, 0, 0.7);
-        }
-
-        /* Instructions Page Styling */
-        #instructions-page {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--dark-bg);
-            z-index: 5;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            animation: fadeIn 0.3s;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        .instructions-content {
-            background: var(--card-bg);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 30px 20px;
-            max-width: 600px;
-            width: 100%;
-            text-align: center;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 20px;
-        }
-        
-        .instructions-content h3 {
-            color: var(--crimson-accent);
-            font-size: 2em;
-            margin: 0;
-            line-height: 1.2;
-        }
-
-        .instructions-content p {
-            font-size: 1em;
-            line-height: 1.5;
-            margin: 0;
-        }
-
-        .instructions-content ol {
-            text-align: left;
-            padding-left: 20px;
-            margin: 0;
-        }
-
-        .instructions-content li {
-            margin-bottom: 10px;
-            font-size: 0.9em;
-        }
-        
-        /* Media query for smaller screens on instructions page */
-        @media (max-width: 500px) {
-            .instructions-content {
-                padding: 20px 15px;
-                gap: 15px;
-            }
-            .instructions-content h3 {
-                font-size: 1.5em;
-            }
-            .instructions-content p {
-                font-size: 0.9em;
-            }
-            .instructions-content ol {
-                padding-left: 15px;
-            }
-            .instructions-content li {
-                font-size: 0.8em;
-            }
         }
     </style>
 </head>
@@ -337,8 +248,7 @@
         </div>
 
         <div class="button-container">
-            <button onclick="sendUnbanRequest('email')"><i class="fas fa-paper-plane"></i> SEND UNBAN REQUEST (via Email)</button>
-            <button class="whatsapp-button" onclick="sendUnbanRequest('whatsapp')"><i class="fab fa-whatsapp"></i> COPY & CONTACT SUPPORT</button>
+            <button onclick="sendUnbanRequest()"><i class="fas fa-paper-plane"></i> SEND UNBAN REQUEST (via Email)</button>
         </div>
 
         <div class="footer">
@@ -347,22 +257,6 @@
         </div>
 
         <a href="https://zed-hlac.onrender.com/" class="contact-dev-button" target="_blank"><i class="fas fa-envelope"></i> contact Dev</a>
-    </div>
-
-    <div id="instructions-page">
-        <div class="instructions-content">
-            <h3>Message Copied!</h3>
-            <p>Your unban appeal has been copied to your clipboard. Now, please follow these steps to contact WhatsApp support:</p>
-            <ol>
-                <li>Open WhatsApp.</li>
-                <li>Go to Settings > Help > Contact Us.</li>
-                <li>Paste the message into the text field to submit your appeal.</li>
-            </ol>
-            <div class="button-container">
-                <button class="whatsapp-button" onclick="goToWhatsApp()"><i class="fab fa-whatsapp"></i> Go to WhatsApp</button>
-                <button onclick="showForm()">Back</button>
-            </div>
-        </div>
     </div>
     
     <script>
@@ -449,32 +343,12 @@
             }
         };
 
-        function showInstructions() {
-            document.getElementById('main-app').style.display = 'none';
-            document.getElementById('instructions-page').style.display = 'flex';
-        }
-
-        function showForm() {
-            document.getElementById('main-app').style.display = 'block';
-            document.getElementById('instructions-page').style.display = 'none';
-        }
-        
-        function goToWhatsApp() {
-            // Attempt to open the WhatsApp app via deep link.
-            // This works reliably on most mobile devices.
-            window.location.href = 'whatsapp://';
-
-            // Fallback to the web client after a short delay (500ms).
-            // This ensures the button works on desktops or devices where deep linking is blocked.
-            setTimeout(function() {
-                window.location.href = 'https://web.whatsapp.com/';
-            }, 500); 
-        }
-
-        function sendUnbanRequest(method) {
+        function sendUnbanRequest() {
             const number = document.getElementById('number').value.trim();
             const promptId = document.getElementById('prompt').value;
             const banType = document.getElementById('banType').value;
+            const whatsappType = document.getElementById('whatsappType').value;
+            const phoneType = document.getElementById('phoneType').value;
 
             if (!number.startsWith('+') || number.length < 7) {
                 alert('Please enter a valid number like +923xx.');
@@ -482,23 +356,11 @@
             }
 
             const message = prompts[banType][promptId].replaceAll('NUMBER_HERE', number);
+            const recipientEmail = emailMap[whatsappType][phoneType];
+            const subject = encodeURIComponent('Unban Request');
+            const mailto = `mailto:${recipientEmail}?subject=${subject}&body=${encodeURIComponent(message)}`;
             
-            if (method === 'email') {
-                const whatsappType = document.getElementById('whatsappType').value;
-                const phoneType = document.getElementById('phoneType').value;
-                const recipientEmail = emailMap[whatsappType][phoneType];
-                const subject = encodeURIComponent('Unban Request');
-                const mailto = `mailto:${recipientEmail}?subject=${subject}&body=${encodeURIComponent(message)}`;
-                window.location.href = mailto;
-            } else if (method === 'whatsapp') {
-                navigator.clipboard.writeText(message)
-                .then(() => {
-                    showInstructions();
-                })
-                .catch(err => {
-                    alert('Failed to copy message. Please try again or copy the text manually and send it via the official in-app Contact Us feature.');
-                });
-            }
+            window.location.href = mailto;
         }
         
         setRandomAccentColor();
