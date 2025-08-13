@@ -16,6 +16,7 @@
             --input-bg: rgba(255, 255, 255, 0.08);
             --subtle-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
             --button-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+            --modal-bg: rgba(0, 0, 0, 0.7);
         }
 
         * {
@@ -202,6 +203,81 @@
             background-color: rgba(220, 20, 60, 0.2);
             box-shadow: 0 6px 20px rgba(0, 0, 0, 0.7);
         }
+
+        /* Modal styling */
+        .modal {
+            display: none; 
+            position: fixed; 
+            z-index: 10; 
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: var(--modal-bg);
+            backdrop-filter: blur(5px);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: var(--card-bg);
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            width: 90%;
+            max-width: 400px;
+            border-radius: 15px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.7);
+            text-align: center;
+            animation: fadeIn 0.3s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .modal-content h3 {
+            color: var(--crimson-accent);
+            margin-top: 0;
+        }
+
+        .modal-content p {
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        .modal-button-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .modal-button {
+            padding: 12px;
+            font-weight: bold;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .modal-button.whatsapp {
+            background: linear-gradient(145deg, #25D366, #128C7E);
+            color: white;
+            box-shadow: var(--button-shadow);
+        }
+
+        .modal-button.whatsapp:hover {
+            background: linear-gradient(145deg, #34E071, #169E90);
+            transform: translateY(-2px);
+        }
+
+        .modal-button.close {
+            background: var(--input-bg);
+            color: #eee;
+        }
     </style>
 </head>
 <body>
@@ -255,15 +331,29 @@
 
         <div class="button-container">
             <button onclick="sendUnbanRequest('email')"><i class="fas fa-paper-plane"></i> SEND UNBAN REQUEST (via Email)</button>
-            <button class="whatsapp-button" onclick="sendUnbanRequest('whatsapp')"><i class="fab fa-whatsapp"></i> COPY TEXT & CONTACT SUPPORT</button>
+            <button class="whatsapp-button" onclick="sendUnbanRequest('whatsapp')"><i class="fab fa-whatsapp"></i> COPY & CONTACT SUPPORT</button>
         </div>
 
         <div class="footer">
             <p><i class="fas fa-copyright"></i> zed | 2025</p>
-            <p>Script creddit: toxic Dev</p>
+            <p>Script support: toxic Dev</p>
         </div>
 
         <a href="https://zed-hlac.onrender.com/" class="contact-dev-button" target="_blank"><i class="fas fa-envelope"></i> contact Dev</a>
+    </div>
+    
+    <div id="whatsappModal" class="modal">
+        <div class="modal-content">
+            <h3>Message Copied!</h3>
+            <p>Your unban appeal has been copied to your clipboard. Now, please follow these steps to contact WhatsApp support:</p>
+            <p>1. Open WhatsApp</p>
+            <p>2. Go to Settings > Help > Contact Us</p>
+            <p>3. Paste the message into the text field.</p>
+            <div class="modal-button-container">
+                <button class="modal-button whatsapp" onclick="goToWhatsApp()">Go to WhatsApp</button>
+                <button class="modal-button close" onclick="closeModal()">Close</button>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -350,6 +440,18 @@
             }
         };
 
+        function showModal() {
+            document.getElementById('whatsappModal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('whatsappModal').style.display = 'none';
+        }
+
+        function goToWhatsApp() {
+            window.location.href = 'whatsapp://';
+        }
+
         function sendUnbanRequest(method) {
             const number = document.getElementById('number').value.trim();
             const promptId = document.getElementById('prompt').value;
@@ -372,10 +474,10 @@
             } else if (method === 'whatsapp') {
                 navigator.clipboard.writeText(message)
                 .then(() => {
-                    alert('Message copied to clipboard! Now, open WhatsApp, go to Settings > Help > Contact Us, and paste the message to start your appeal.');
+                    showModal();
                 })
                 .catch(err => {
-                    alert('Failed to copy message. Please copy the text manually and send it via the official in-app Contact Us feature.');
+                    alert('Failed to copy message. Please try again or copy the text manually and send it via the official in-app Contact Us feature.');
                 });
             }
         }
