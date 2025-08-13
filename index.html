@@ -61,19 +61,29 @@
             display: none;
             color: white;
             opacity: 0;
-            transition: transform 0.5s ease-out, opacity 0.5s ease-out;
             
-            /* Liquid Glass with Green Gradient */
-            background: rgba(255, 255, 255, 0.1);
+            /* Initial state with green gradient */
+            background: linear-gradient(90deg, #37a85d, #208741);
             border: 1px solid rgba(255, 255, 255, 0.2);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
-            box-shadow: 0 0 20px rgba(55, 168, 93, 0.6), inset 0 0 10px rgba(55, 168, 93, 0.4);
+            box-shadow: none; /* Removed the glow */
+
+            transition: transform 0.5s ease-out, opacity 0.5s ease-out, background 1s ease-in-out;
         }
 
         #success-notification.show {
-            transform: translateX(-50%) translateY(0); /* Slide into view */
+            transform: translateX(-50%) translateY(0);
             opacity: 1;
+        }
+
+        #success-notification.fade-to-glass {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        #success-notification.dissolve {
+            opacity: 0;
+            transform: translateX(-50%) translateY(-100px);
         }
 
         /* --- Unlock Page Styles --- */
@@ -450,18 +460,35 @@
             const notification = document.getElementById('success-notification');
             notification.style.display = 'flex';
             
-            // Trigger the animation after a slight delay to ensure display:flex is rendered
+            // Step 1: Slide in and show with initial green gradient
             setTimeout(() => {
                 notification.classList.add('show');
             }, 10);
             
-            // Hide the notification after 5 seconds
+            // Step 2: Fade the green background to glass
+            setTimeout(() => {
+                notification.classList.add('fade-to-glass');
+            }, 2500); // Wait 2.5 seconds before starting the fade
+            
+            // Step 3: Dissolve and hide the notification
             setTimeout(() => {
                 notification.classList.remove('show');
+                notification.classList.add('dissolve');
                 setTimeout(() => {
                     notification.style.display = 'none';
-                }, 500); // Wait for the transition to finish before hiding
-            }, 5000);
+                    notification.classList.remove('fade-to-glass', 'dissolve');
+                }, 500); // Wait for the transition to finish before hiding completely
+            }, 6000); // Wait 6 seconds total before dissolving
+        }
+
+        function handleVisibilityChange() {
+            if (document.visibilityState === 'visible') {
+                const hasSentRequest = localStorage.getItem('sentRequest');
+                if (hasSentRequest) {
+                    showSuccessNotification();
+                    localStorage.removeItem('sentRequest'); // Clear the flag
+                }
+            }
         }
 
         function unlockSite() {
@@ -504,6 +531,8 @@
             if (storedCode && codeIndex === -1) {
                  localStorage.removeItem('accessCode');
             }
+            
+            document.addEventListener('visibilitychange', handleVisibilityChange);
         }
         
         const prompts = {
@@ -553,7 +582,7 @@
             const subject = encodeURIComponent('Unban Request');
             const mailto = `mailto:${recipientEmail}?subject=${subject}&body=${encodeURIComponent(message)}`;
             
-            showSuccessNotification(); // Show notification before sending email
+            localStorage.setItem('sentRequest', 'true');
             window.location.href = mailto;
         }
         
@@ -562,4 +591,4 @@
         displayBatteryStatus();
     </script>
 </body>
-            </html>
+</html>
