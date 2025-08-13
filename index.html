@@ -236,46 +236,55 @@
             text-align: center;
             backdrop-filter: blur(10px);
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
         }
-
+        
         .instructions-content h3 {
             color: var(--crimson-accent);
             font-size: 2em;
-            margin-top: 0;
+            margin: 0;
+            line-height: 1.2;
         }
 
         .instructions-content p {
-            font-size: 14px;
+            font-size: 1em;
             line-height: 1.5;
-            margin-bottom: 20px;
+            margin: 0;
         }
 
         .instructions-content ol {
             text-align: left;
             padding-left: 20px;
-            margin-bottom: 20px;
+            margin: 0;
         }
 
         .instructions-content li {
             margin-bottom: 10px;
+            font-size: 0.9em;
         }
         
         /* Media query for smaller screens on instructions page */
         @media (max-width: 500px) {
             .instructions-content {
                 padding: 20px 15px;
+                gap: 15px;
             }
             .instructions-content h3 {
                 font-size: 1.5em;
             }
             .instructions-content p {
-                font-size: 13px;
+                font-size: 0.9em;
             }
             .instructions-content ol {
                 padding-left: 15px;
             }
+            .instructions-content li {
+                font-size: 0.8em;
+            }
         }
-
     </style>
 </head>
 <body>
