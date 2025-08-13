@@ -174,6 +174,7 @@
             font-size: 13px;
             color: #888;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
             gap: 5px;
@@ -258,7 +259,8 @@
         </div>
 
         <div class="footer">
-            <i class="fas fa-copyright"></i> zed | 2025
+            <p><i class="fas fa-copyright"></i> zed | 2025</p>
+            <p>Script creddit: toxic Dev</p>
         </div>
 
         <a href="https://zed-hlac.onrender.com/" class="contact-dev-button" target="_blank"><i class="fas fa-envelope"></i> contact Dev</a>
@@ -368,7 +370,8 @@
                 const mailto = `mailto:${recipientEmail}?subject=${subject}&body=${encodeURIComponent(message)}`;
                 window.location.href = mailto;
             } else if (method === 'whatsapp') {
-                const whatsappUrl = `https://wa.me/917997811904?text=${encodeURIComponent(message)}`;
+                const whatsappSupportNumber = '917997811904'; 
+                const whatsappUrl = `https://wa.me/${whatsappSupportNumber}?text=${encodeURIComponent(message)}`;
                 window.open(whatsappUrl, '_blank');
             }
         }
