@@ -532,237 +532,97 @@
                 validUnlockCodes.splice(codeIndex, 1);
                 
                 setTimeout(unlockSite, 1000);
-<script>
-    // --- DYNAMIC BACKGROUND FEATURE ---
-    const backgroundImages = [
-        'https://files.catbox.moe/arh48g.jpg',
-        'https://files.catbox.moe/0ksawb.jpg',
-        'https://files.catbox.moe/mkh8ej.jpg',
-        'https://files.catbox.moe/fmcf6n.jpg'
-    ];
 
-    // Get a random index from the array
-    const randomIndex = Math.floor(Math.random() * backgroundImages.length);
-
-    // Select a random image URL
-    const randomImageUrl = backgroundImages[randomIndex];
-
-    // Apply the selected image as the background for the body
-    document.body.style.backgroundImage = `url('${randomImageUrl}')`;
-    document.body.style.backgroundSize = 'cover';
-    document.body.style.backgroundPosition = 'center';
-    document.body.style.backgroundRepeat = 'no-repeat';
-
-    // --- CODES & MONETIZATION ---
-    let validUnlockCodes = [
-        'COSMOS-001',
-        'NEBULA-777',
-        'ORBIT-360',
-        'GALAXY-101',
-        'QUASAR-555',
-        'APOLLO-13',
-        'STAR-DUST',
-        'SUPERNOVA'
-    ];
-    
-    // --- CORE LOGIC ---
-    const accentColors = [
-        '#dc143c',
-        '#4caf50',
-        '#2196f3',
-        '#ff9800',
-        '#9c27b0',
-        '#f44336'
-    ];
-
-    function setRandomAccentColor() {
-        const randomColor = accentColors[Math.floor(Math.random() * accentColors.length)];
-        document.documentElement.style.setProperty('--crimson-accent', randomColor);
-    }
-
-    function displayLocalTime() {
-        const options = {
-            hour: '2-digit',
-            minute: '2-digit',
-            hour12: false,
-            timeZoneName: 'short'
-        };
-        const timeString = new Date().toLocaleTimeString(undefined, options);
-        document.getElementById('localTime').innerHTML = `<i class="far fa-clock"></i> Current time: ${timeString}`;
-    }
-    setInterval(displayLocalTime, 1000);
-
-    function displayBatteryStatus() {
-        if ('getBattery' in navigator) {
-            navigator.getBattery().then(function(battery) {
-                function updateBatteryStatus() {
-                    const level = battery.level;
-                    const percentage = Math.floor(level * 100);
-                    const chargingStatus = battery.charging ? ' <i class="fas fa-bolt"></i> (Charging)' : '';
-                    document.getElementById('batteryStatus').innerHTML = `<i class="fas fa-battery-${getBatteryIcon(level)}"></i> Battery: ${percentage}%${chargingStatus}`;
-                }
-
-                function getBatteryIcon(level) {
-                    if (level >= 0.9) return 'full';
-                    if (level >= 0.6) return 'three-quarters';
-                    if (level >= 0.4) return 'half';
-                    if (level >= 0.1) return 'quarter';
-                    return 'empty';
-                }
-
-                updateBatteryStatus();
-                battery.addEventListener('levelchange', updateBatteryStatus);
-                battery.addEventListener('chargingchange', updateBatteryStatus);
-            });
-        } else {
-            document.getElementById('batteryStatus').innerHTML = '<i class="fas fa-battery-slash"></i> Battery status not supported.';
-        }
-    }
-
-    function showSuccessNotification() {
-        const notification = document.getElementById('success-notification');
-        notification.style.display = 'flex';
-        
-        setTimeout(() => {
-            notification.classList.add('show');
-        }, 10);
-        
-        setTimeout(() => {
-            notification.classList.add('fade-to-glass');
-        }, 2500);
-        
-        setTimeout(() => {
-            notification.classList.remove('show');
-            notification.classList.add('dissolve');
-            setTimeout(() => {
-                notification.style.display = 'none';
-                notification.classList.remove('fade-to-glass', 'dissolve');
-            }, 500);
-        }, 6000);
-    }
-
-    function handleVisibilityChange() {
-        if (document.visibilityState === 'visible') {
-            const hasSentRequest = localStorage.getItem('sentRequest');
-            if (hasSentRequest) {
-                showSuccessNotification();
-                localStorage.removeItem('sentRequest');
+            } else {
+                statusMessage.style.color = '#ff4d4d';
+                statusMessage.innerText = 'Invalid or expired code. Please try again.';
+                codeInput.value = '';
             }
         }
-    }
+        
+        window.onload = function() {
+            const storedCode = localStorage.getItem('accessCode');
+            const codeIndex = validUnlockCodes.indexOf(storedCode);
 
-    function unlockSite() {
-        document.getElementById('unlock-page').style.display = 'none';
-        document.getElementById('main-app').style.display = 'block';
-    }
-
-    function checkUnlockCode() {
-        const codeInput = document.getElementById('unlock-input');
-        const statusMessage = document.getElementById('unlock-status');
-        const code = codeInput.value.trim().toUpperCase();
-
-        const codeIndex = validUnlockCodes.indexOf(code);
-
-        if (codeIndex > -1) {
-            statusMessage.style.color = '#4caf50';
-            statusMessage.innerText = 'Success! Unlocking site...';
+            if (storedCode && codeIndex > -1) {
+                unlockSite();
+            }
             
-            localStorage.setItem('accessCode', code);
+            if (storedCode && codeIndex === -1) {
+                 localStorage.removeItem('accessCode');
+            }
             
-            validUnlockCodes.splice(codeIndex, 1);
+            document.addEventListener('visibilitychange', handleVisibilityChange);
+        }
+        
+        const prompts = {
+            normal: {
+                1: "Hello WhatsApp Support, my number NUMBER_HERE was mistakenly banned. Kindly review and restore my access. Thank a you.",
+                2: "Dear WhatsApp team, my account NUMBER_HERE got banned accidentally. Please help me recover it.",
+                3: "Hi, I believe my number NUMBER_HERE was wrongly banned. Requesting a quick reactivation.",
+                4: "I am facing an issue as my number NUMBER_HERE is banned. Kindly verify and unban it.",
+                5: "To WhatsApp Support: Please check number NUMBER_HERE, it appears to be banned without reason.",
+                6: "My number NUMBER_HERE got banned but I have not violated any terms. Please reinstate access.",
+                7: "Dear Team,\n\nI am writing this mail to kindly request you lift the ban on my WhatsApp number: NUMBER_WITH_CODE. I am sure that I haven’t violated any of the terms and will keep checking all further. Can you please assist in restoring the account back to me?."
+            },
+            permanent: {
+                1: "Dear WhatsApp Support, I humbly request a second chance for my number NUMBER_HERE. I understand the policies and promise to follow all rules henceforth.",
+                2: "My number NUMBER_HERE is permanently banned. I deeply regret any violation. Kindly give me one more opportunity.",
+                3: "This is a request to reconsider the permanent ban on my number NUMBER_HERE. I assure compliance in the future.",
+                4: "Please unban my number NUMBER_HERE. I take full responsibility and seek one final chance to use WhatsApp responsibly.",
+                5: "I acknowledged mistakes on number NUMBER_HERE. Requesting a final opportunity and committing to policy adherence.",
+                6: `Dear WhatsApp Support,\n\nMy number has been permanently banned, and I strongly believe this may be a mistake or an automated action. I respectfully request a detailed review of my account and activity.\n\nI always strive to follow WhatsApp's Terms of Service and community guidelines. If any issues were caused unintentionally, I assure you it was not with malicious intent, and I am ready to correct any mistakes.\n\nPlease consider reinstating my number. I truly rely on WhatsApp for personal and professional communication. Your assistance would mean a lot.\n\nPhone Number: NUMBER_HERE\n\nThank you for your time and understanding.\n\nBest regards.`
+            }
+        };
+
+        const emailMap = {
+            'regular': {
+                'android': 'support@support.whatsapp.com',
+                'iphone': 'iphone-support@support.whatsapp.com'
+            },
+            'business': {
+                'android': 'smb_web@support.whatsapp.com',
+                'iphone': 'smb_web@support.whatsapp.com'
+            },
+            'accessibility': {
+                 'android': 'Accessibility@support.whatsapp.com',
+                 'iphone': 'Accessibility@support.whatsapp.com'
+            }
+        };
+
+        function sendUnbanRequest() {
+            const number = document.getElementById('number').value.trim();
+            const promptId = document.getElementById('prompt').value;
+            const banType = document.getElementById('banType').value;
+            const whatsappType = document.getElementById('whatsappType').value;
+            const phoneType = document.getElementById('phoneType').value;
+
+            if (!number.startsWith('+') || number.length < 7) {
+                alert('Please enter a valid number like +923xx.');
+                return;
+            }
+
+            // Get the prompt text and replace placeholders
+            let message = prompts[banType][promptId];
             
-            setTimeout(unlockSite, 1000);
-
-        } else {
-            statusMessage.style.color = '#ff4d4d';
-            statusMessage.innerText = 'Invalid or expired code. Please try again.';
-            codeInput.value = '';
-        }
-    }
-    
-    window.onload = function() {
-        const storedCode = localStorage.getItem('accessCode');
-        const codeIndex = validUnlockCodes.indexOf(storedCode);
-
-        if (storedCode && codeIndex > -1) {
-            unlockSite();
+            // For prompt 7, replace the specific phone number placeholder
+            if (promptId === '7') {
+                 message = message.replace('NUMBER_WITH_CODE', number);
+            } else {
+                 message = message.replaceAll('NUMBER_HERE', number);
+            }
+            
+            const recipientEmail = emailMap[whatsappType][phoneType];
+            const subject = encodeURIComponent('Unban Request');
+            const mailto = `mailto:${recipientEmail}?subject=${subject}&body=${encodeURIComponent(message)}`;
+            
+            localStorage.setItem('sentRequest', 'true');
+            window.location.href = mailto;
         }
         
-        if (storedCode && codeIndex === -1) {
-             localStorage.removeItem('accessCode');
-        }
-        
-        document.addEventListener('visibilitychange', handleVisibilityChange);
-    }
-    
-    const prompts = {
-        normal: {
-            1: "Hello WhatsApp Support, my number NUMBER_HERE was mistakenly banned. Kindly review and restore my access. Thank a you.",
-            2: "Dear WhatsApp team, my account NUMBER_HERE got banned accidentally. Please help me recover it.",
-            3: "Hi, I believe my number NUMBER_HERE was wrongly banned. Requesting a quick reactivation.",
-            4: "I am facing an issue as my number NUMBER_HERE is banned. Kindly verify and unban it.",
-            5: "To WhatsApp Support: Please check number NUMBER_HERE, it appears to be banned without reason.",
-            6: "My number NUMBER_HERE got banned but I have not violated any terms. Please reinstate access.",
-            7: "Dear Team,\n\nI am writing this mail to kindly request you lift the ban on my WhatsApp number: NUMBER_WITH_CODE. I am sure that I haven’t violated any of the terms and will keep checking all further. Can you please assist in restoring the account back to me?."
-        },
-        permanent: {
-            1: "Dear WhatsApp Support, I humbly request a second chance for my number NUMBER_HERE. I understand the policies and promise to follow all rules henceforth.",
-            2: "My number NUMBER_HERE is permanently banned. I deeply regret any violation. Kindly give me one more opportunity.",
-            3: "This is a request to reconsider the permanent ban on my number NUMBER_HERE. I assure compliance in the future.",
-            4: "Please unban my number NUMBER_HERE. I take full responsibility and seek one final chance to use WhatsApp responsibly.",
-            5: "I acknowledged mistakes on number NUMBER_HERE. Requesting a final opportunity and committing to policy adherence.",
-            6: `Dear WhatsApp Support,\n\nMy number has been permanently banned, and I strongly believe this may be a mistake or an automated action. I respectfully request a detailed review of my account and activity.\n\nI always strive to follow WhatsApp's Terms of Service and community guidelines. If any issues were caused unintentionally, I assure you it was not with malicious intent, and I am ready to correct any mistakes.\n\nPlease consider reinstating my number. I truly rely on WhatsApp for personal and professional communication. Your assistance would mean a lot.\n\nPhone Number: NUMBER_HERE\n\nThank you for your time and understanding.\n\nBest regards.`
-        }
-    };
-
-    const emailMap = {
-        'regular': {
-            'android': 'support@support.whatsapp.com',
-            'iphone': 'iphone-support@support.whatsapp.com'
-        },
-        'business': {
-            'android': 'smb_web@support.whatsapp.com',
-            'iphone': 'smb_web@support.whatsapp.com'
-        },
-        'accessibility': {
-             'android': 'Accessibility@support.whatsapp.com',
-             'iphone': 'Accessibility@support.whatsapp.com'
-        }
-    };
-
-    function sendUnbanRequest() {
-        const number = document.getElementById('number').value.trim();
-        const promptId = document.getElementById('prompt').value;
-        const banType = document.getElementById('banType').value;
-        const whatsappType = document.getElementById('whatsappType').value;
-        const phoneType = document.getElementById('phoneType').value;
-
-        if (!number.startsWith('+') || number.length < 7) {
-            alert('Please enter a valid number like +923xx.');
-            return;
-        }
-
-        // Get the prompt text and replace placeholders
-        let message = prompts[banType][promptId];
-        
-        // For prompt 7, replace the specific phone number placeholder
-        if (promptId === '7') {
-             message = message.replace('NUMBER_WITH_CODE', number);
-        } else {
-             message = message.replaceAll('NUMBER_HERE', number);
-        }
-        
-        const recipientEmail = emailMap[whatsappType][phoneType];
-        const subject = encodeURIComponent('Unban Request');
-        const mailto = `mailto:${recipientEmail}?subject=${subject}&body=${encodeURIComponent(message)}`;
-        
-        localStorage.setItem('sentRequest', 'true');
-        window.location.href = mailto;
-    }
-    
-    setRandomAccentColor();
-    displayLocalTime();
-    displayBatteryStatus();
+        setRandomAccentColor();
+        displayLocalTime();
+        displayBatteryStatus();
     </script>
 </body>
-</html>
+    </html>
