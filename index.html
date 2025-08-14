@@ -25,14 +25,17 @@
         body {
             margin: 0;
             font-family: 'Orbitron', sans-serif;
-            background: url('https://files.catbox.moe/oi8p2u.png') no-repeat center center fixed;
-            background-size: cover;
             color: #ccc;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
             padding: 20px;
+            /* The background styles will be set dynamically by JavaScript */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            transition: background-image 0.5s ease-in-out;
         }
 
         .container {
@@ -61,29 +64,19 @@
             display: none;
             color: white;
             opacity: 0;
+            transition: transform 0.5s ease-out, opacity 0.5s ease-out;
             
-            /* Initial state with green gradient */
-            background: linear-gradient(90deg, #37a85d, #208741);
+            /* Liquid Glass with Green Gradient */
+            background: rgba(255, 255, 255, 0.1);
             border: 1px solid rgba(255, 255, 255, 0.2);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
-            box-shadow: none; /* Removed the glow */
-
-            transition: transform 0.5s ease-out, opacity 0.5s ease-out, background 1s ease-in-out;
+            box-shadow: 0 0 20px rgba(55, 168, 93, 0.6), inset 0 0 10px rgba(55, 168, 93, 0.4);
         }
 
         #success-notification.show {
-            transform: translateX(-50%) translateY(0);
+            transform: translateX(-50%) translateY(0); /* Slide into view */
             opacity: 1;
-        }
-
-        #success-notification.fade-to-glass {
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        #success-notification.dissolve {
-            opacity: 0;
-            transform: translateX(-50%) translateY(-100px);
         }
 
         /* --- Unlock Page Styles --- */
@@ -390,6 +383,26 @@
     </div>
     
     <script>
+        // --- DYNAMIC BACKGROUND FEATURE ---
+        const backgroundImages = [
+            'https://files.catbox.moe/arh48g.jpg',
+            'https://files.catbox.moe/0ksawb.jpg',
+            'https://files.catbox.moe/mkh8ej.jpg',
+            'https://files.catbox.moe/fmcf6n.jpg'
+        ];
+
+        // Get a random index from the array
+        const randomIndex = Math.floor(Math.random() * backgroundImages.length);
+
+        // Select a random image URL
+        const randomImageUrl = backgroundImages[randomIndex];
+
+        // Apply the selected image as the background for the body
+        document.body.style.backgroundImage = `url('${randomImageUrl}')`;
+        document.body.style.backgroundSize = 'cover';
+        document.body.style.backgroundPosition = 'center';
+        document.body.style.backgroundRepeat = 'no-repeat';
+
         // --- CODES & MONETIZATION ---
         let validUnlockCodes = [
             'COSMOS-001',
@@ -460,35 +473,18 @@
             const notification = document.getElementById('success-notification');
             notification.style.display = 'flex';
             
-            // Step 1: Slide in and show with initial green gradient
+            // Trigger the animation after a slight delay to ensure display:flex is rendered
             setTimeout(() => {
                 notification.classList.add('show');
             }, 10);
             
-            // Step 2: Fade the green background to glass
-            setTimeout(() => {
-                notification.classList.add('fade-to-glass');
-            }, 2500); // Wait 2.5 seconds before starting the fade
-            
-            // Step 3: Dissolve and hide the notification
+            // Hide the notification after 5 seconds
             setTimeout(() => {
                 notification.classList.remove('show');
-                notification.classList.add('dissolve');
                 setTimeout(() => {
                     notification.style.display = 'none';
-                    notification.classList.remove('fade-to-glass', 'dissolve');
-                }, 500); // Wait for the transition to finish before hiding completely
-            }, 6000); // Wait 6 seconds total before dissolving
-        }
-
-        function handleVisibilityChange() {
-            if (document.visibilityState === 'visible') {
-                const hasSentRequest = localStorage.getItem('sentRequest');
-                if (hasSentRequest) {
-                    showSuccessNotification();
-                    localStorage.removeItem('sentRequest'); // Clear the flag
-                }
-            }
+                }, 500); // Wait for the transition to finish before hiding
+            }, 5000);
         }
 
         function unlockSite() {
@@ -531,8 +527,6 @@
             if (storedCode && codeIndex === -1) {
                  localStorage.removeItem('accessCode');
             }
-            
-            document.addEventListener('visibilitychange', handleVisibilityChange);
         }
         
         const prompts = {
@@ -582,7 +576,7 @@
             const subject = encodeURIComponent('Unban Request');
             const mailto = `mailto:${recipientEmail}?subject=${subject}&body=${encodeURIComponent(message)}`;
             
-            localStorage.setItem('sentRequest', 'true');
+            showSuccessNotification(); // Show notification before sending email
             window.location.href = mailto;
         }
         
@@ -591,4 +585,4 @@
         displayBatteryStatus();
     </script>
 </body>
-</html>
+        </html>
