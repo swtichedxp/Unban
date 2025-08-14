@@ -31,7 +31,6 @@
             align-items: center;
             min-height: 100vh;
             padding: 20px;
-            /* The background styles will be set dynamically by JavaScript */
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -64,19 +63,28 @@
             display: none;
             color: white;
             opacity: 0;
-            transition: transform 0.5s ease-out, opacity 0.5s ease-out;
             
-            /* Liquid Glass with Green Gradient */
-            background: rgba(255, 255, 255, 0.1);
+            background: linear-gradient(90deg, #37a85d, #208741);
             border: 1px solid rgba(255, 255, 255, 0.2);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
-            box-shadow: 0 0 20px rgba(55, 168, 93, 0.6), inset 0 0 10px rgba(55, 168, 93, 0.4);
+            box-shadow: none;
+
+            transition: transform 0.5s ease-out, opacity 0.5s ease-out, background 1s ease-in-out;
         }
 
         #success-notification.show {
-            transform: translateX(-50%) translateY(0); /* Slide into view */
+            transform: translateX(-50%) translateY(0);
             opacity: 1;
+        }
+
+        #success-notification.fade-to-glass {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        #success-notification.dissolve {
+            opacity: 0;
+            transform: translateX(-50%) translateY(-100px);
         }
 
         /* --- Unlock Page Styles --- */
@@ -321,6 +329,7 @@
                 <select id="whatsappType">
                     <option value="regular">REGULAR WHATSAPP</option>
                     <option value="business">WHATSAPP BUSINESS</option>
+                    <option value="accessibility">WHATSAPP ACCESSIBILITY</option>
                 </select>
 
                 <h2>SELECT PHONE TYPE</h2>
@@ -348,6 +357,7 @@
                     <option value="4">PROMPT 4: ACCOUNT REVIEW REQUEST</option>
                     <option value="5">PROMPT 5: TERMS VIOLATION APPEAL</option>
                     <option value="6">PROMPT 6: FINAL CHANCE REQUEST</option>
+                    <option value="7">PROMPT 7: SIMPLIFIED APPEAL</option>
                 </select>
             </div>
         </div>
@@ -473,18 +483,32 @@
             const notification = document.getElementById('success-notification');
             notification.style.display = 'flex';
             
-            // Trigger the animation after a slight delay to ensure display:flex is rendered
             setTimeout(() => {
                 notification.classList.add('show');
             }, 10);
             
-            // Hide the notification after 5 seconds
+            setTimeout(() => {
+                notification.classList.add('fade-to-glass');
+            }, 2500);
+            
             setTimeout(() => {
                 notification.classList.remove('show');
+                notification.classList.add('dissolve');
                 setTimeout(() => {
                     notification.style.display = 'none';
-                }, 500); // Wait for the transition to finish before hiding
-            }, 5000);
+                    notification.classList.remove('fade-to-glass', 'dissolve');
+                }, 500);
+            }, 6000);
+        }
+
+        function handleVisibilityChange() {
+            if (document.visibilityState === 'visible') {
+                const hasSentRequest = localStorage.getItem('sentRequest');
+                if (hasSentRequest) {
+                    showSuccessNotification();
+                    localStorage.removeItem('sentRequest');
+                }
+            }
         }
 
         function unlockSite() {
@@ -527,6 +551,8 @@
             if (storedCode && codeIndex === -1) {
                  localStorage.removeItem('accessCode');
             }
+            
+            document.addEventListener('visibilitychange', handleVisibilityChange);
         }
         
         const prompts = {
@@ -536,7 +562,8 @@
                 3: "Hi, I believe my number NUMBER_HERE was wrongly banned. Requesting a quick reactivation.",
                 4: "I am facing an issue as my number NUMBER_HERE is banned. Kindly verify and unban it.",
                 5: "To WhatsApp Support: Please check number NUMBER_HERE, it appears to be banned without reason.",
-                6: "My number NUMBER_HERE got banned but I have not violated any terms. Please reinstate access."
+                6: "My number NUMBER_HERE got banned but I have not violated any terms. Please reinstate access.",
+                7: "Dear Team,\n\nI am writing this mail to kindly request you lift the ban on my WhatsApp number: +[Your Country Code][Your Phone Number]. I am sure that I haven’t violated any of the terms and will keep checking all further. Can you please assist in restoring the account back to me?.\n\nSincerely,\n[Your Name]"
             },
             permanent: {
                 1: "Dear WhatsApp Support, I humbly request a second chance for my number NUMBER_HERE. I understand the policies and promise to follow all rules henceforth.",
@@ -556,6 +583,10 @@
             'business': {
                 'android': 'smb_web@support.whatsapp.com',
                 'iphone': 'smb_web@support.whatsapp.com'
+            },
+            'accessibility': {
+                 'android': 'Accessibility@support.whatsapp.com',
+                 'iphone': 'Accessibility@support.whatsapp.com'
             }
         };
 
@@ -571,12 +602,22 @@
                 return;
             }
 
-            const message = prompts[banType][promptId].replaceAll('NUMBER_HERE', number);
+            // Get the prompt text and replace placeholders
+            let message = prompts[banType][promptId];
+            message = message.replaceAll('NUMBER_HERE', number);
+            
+            // For the new prompt, we'll replace the full placeholder
+            if (promptId === '7') {
+                 message = message.replace('+[]', number); // Update the number placeholder
+                 // Add logic here to get the user's name if you want to implement that later
+                 message = message.replace('[Your Name]', 'My Name'); // A simple default for now
+            }
+            
             const recipientEmail = emailMap[whatsappType][phoneType];
             const subject = encodeURIComponent('Unban Request');
             const mailto = `mailto:${recipientEmail}?subject=${subject}&body=${encodeURIComponent(message)}`;
             
-            showSuccessNotification(); // Show notification before sending email
+            localStorage.setItem('sentRequest', 'true');
             window.location.href = mailto;
         }
         
@@ -585,4 +626,4 @@
         displayBatteryStatus();
     </script>
 </body>
-        </html>
+</html>
