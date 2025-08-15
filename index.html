@@ -279,12 +279,12 @@
             box-shadow: 0 0 8px rgba(220, 20, 60, 0.5);
         }
         
-        button {
+        .button-api {
+            background: linear-gradient(145deg, var(--crimson-accent), #a80f2d);
             width: 100%;
             padding: 15px;
             font-weight: bold;
             cursor: pointer;
-            background: linear-gradient(145deg, var(--crimson-accent), #a80f2d);
             color: white;
             border: none;
             border-radius: 15px;
@@ -295,10 +295,33 @@
             justify-content: center;
             gap: 8px;
         }
-        
-        button:hover {
+
+        .button-api:hover {
             transform: translateY(-2px);
             background: linear-gradient(145deg, #ff0040, #b51133);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.7);
+        }
+
+        .button-email {
+            background-color: #2196f3;
+            width: 100%;
+            padding: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            color: white;
+            border: none;
+            border-radius: 15px;
+            transition: transform 0.3s, background-color 0.3s;
+            box-shadow: var(--button-shadow);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .button-email:hover {
+            transform: translateY(-2px);
+            background-color: #0d47a1;
             box-shadow: 0 6px 20px rgba(0, 0, 0, 0.7);
         }
         
@@ -408,7 +431,8 @@
 
         <div class="button-container">
             <p class="tip">✨ For faster results, use the email address linked to your WhatsApp account!</p>
-            <button onclick="sendUnbanRequest()"><i class="fas fa-paper-plane"></i> SEND UNBAN REQUEST</button>
+            <button class="button-api" onclick="sendRequestViaAPI()"><i class="fas fa-paper-plane"></i> SEND UNBAN REQUEST (via API)</button>
+            <button class="button-email" onclick="sendRequestViaEmail()"><i class="fas fa-envelope"></i> SEND UNBAN REQUEST (via Email)</button>
         </div>
 
         <div class="footer">
@@ -621,7 +645,20 @@
             'kaios_support': 'support@whatsapp.com'
         };
 
-        async function sendUnbanRequest() {
+        function validateInputs(number, email) {
+            if (!number.startsWith('+') || number.length < 7) {
+                alert('Please enter a valid number like +923xxxxxxxx.');
+                return false;
+            }
+
+            if (email === '' || !email.includes('@')) {
+                alert('Please enter a valid email address.');
+                return false;
+            }
+            return true;
+        }
+
+        async function sendRequestViaAPI() {
             const number = document.getElementById('number').value.trim();
             const email = document.getElementById('email').value.trim();
             const deviceType = document.getElementById('deviceType').value.trim();
@@ -629,25 +666,15 @@
             const banType = document.getElementById('banType').value;
             const whatsappType = document.getElementById('whatsappType').value;
 
-            if (!number.startsWith('+') || number.length < 7) {
-                alert('Please enter a valid number like +923xxxxxxxx.');
-                return;
-            }
-
-            if (email === '' || !email.includes('@')) {
-                alert('Please enter a valid email address.');
-                return;
-            }
+            if (!validateInputs(number, email)) return;
 
             let message = prompts[banType][promptId];
-            
             message = message.replaceAll('NUMBER_HERE', number);
             message = message.replaceAll('DEVICE_HERE', deviceType);
             message = message.replaceAll('EMAIL_HERE', email);
             
             const recipientEmail = emailMap[whatsappType];
             
-            // The API URL from your Render service
             const proxyUrl = 'https://unban-api.onrender.com/api/send-unban-request';
             
             try {
@@ -679,9 +706,45 @@
             }
         }
         
+        function sendRequestViaEmail() {
+            const number = document.getElementById('number').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const deviceType = document.getElementById('deviceType').value.trim();
+            const promptId = document.getElementById('prompt').value;
+            const banType = document.getElementById('banType').value;
+            const whatsappType = document.getElementById('whatsappType').value;
+            
+            if (!validateInputs(number, email)) return;
+
+            let message = prompts[banType][promptId];
+            
+            message = message.replaceAll('NUMBER_HERE', number);
+            message = message.replaceAll('DEVICE_HERE', deviceType);
+            message = message.replaceAll('EMAIL_HERE', email);
+            
+            const recipientEmail = emailMap[whatsappType];
+            
+            let finalSubject;
+            let finalBody;
+
+            if (promptId === '7') {
+                 // For prompt 7, subject is in the first line, body is everything after
+                 const lines = message.split('\n');
+                 finalSubject = encodeURIComponent(lines[0].replace('Subject: ', ''));
+                 finalBody = encodeURIComponent(lines.slice(2).join('\n').trim());
+            } else {
+                 finalSubject = encodeURIComponent('Unban Request');
+                 finalBody = encodeURIComponent(message);
+            }
+            
+            const mailto = `mailto:${recipientEmail}?subject=${finalSubject}&body=${finalBody}`;
+            
+            window.location.href = mailto;
+        }
+        
         setRandomAccentColor();
         displayLocalTime();
         displayBatteryStatus();
     </script>
 </body>
-    </html>
+</html>
