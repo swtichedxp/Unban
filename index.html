@@ -325,23 +325,24 @@
 
         <div class="form-grid-container">
             <div class="form-left">
-                <h2>SELECT WHATSAPP TYPE</h2>
+                <h2>SELECT SUPPORT TYPE</h2>
                 <select id="whatsappType">
                     <option value="regular">REGULAR WHATSAPP</option>
                     <option value="business">WHATSAPP BUSINESS</option>
                     <option value="accessibility">WHATSAPP ACCESSIBILITY</option>
+                    <option value="iphone_support">IPHONE SUPPORT</option>
                 </select>
 
-                <h2>SELECT PHONE TYPE</h2>
-                <select id="phoneType">
-                    <option value="android">ANDROID</option>
-                    <option value="iphone">IPHONE</option>
-                </select>
-                
                 <h2>SELECT UNBAN OPTION</h2>
                 <select id="banType">
                     <option value="normal">NORMAL UNBANNED</option>
                     <option value="permanent">PERMANENTLY UNBANNED</option>
+                </select>
+                
+                <h2>SELECT DEVICE TYPE</h2>
+                <select id="deviceType">
+                    <option value="Android">ANDROID</option>
+                    <option value="iPhone">IPHONE</option>
                 </select>
             </div>
             
@@ -557,45 +558,37 @@
         
         const prompts = {
             normal: {
-                1: "Hello WhatsApp Support, my number NUMBER_HERE was mistakenly banned. Kindly review and restore my access. Thank a you.",
-                2: "Dear WhatsApp team, my account NUMBER_HERE got banned accidentally. Please help me recover it.",
-                3: "Hi, I believe my number NUMBER_HERE was wrongly banned. Requesting a quick reactivation.",
-                4: "I am facing an issue as my number NUMBER_HERE is banned. Kindly verify and unban it.",
-                5: "To WhatsApp Support: Please check number NUMBER_HERE, it appears to be banned without reason.",
-                6: "My number NUMBER_HERE got banned but I have not violated any terms. Please reinstate access.",
-                7: "Dear Team,\n\nI am writing this mail to kindly request you lift the ban on my WhatsApp number: NUMBER_WITH_CODE. I am sure that I haven’t violated any of the terms and will keep checking all further. Can you please assist in restoring the account back to me?."
+                1: "Hello WhatsApp Support, my number NUMBER_HERE was mistakenly banned. I am using a DEVICE_HERE. Kindly review and restore my access. Thank you.",
+                2: "Dear WhatsApp team, my account NUMBER_HERE got banned accidentally. I am on a DEVICE_HERE. Please help me recover it.",
+                3: "Hi, I believe my number NUMBER_HERE was wrongly banned. My device is a DEVICE_HERE. Requesting a quick reactivation.",
+                4: "I am facing an issue as my number NUMBER_HERE is banned. I use a DEVICE_HERE. Kindly verify and unban it.",
+                5: "To WhatsApp Support: Please check number NUMBER_HERE, it appears to be banned without reason. I'm on a DEVICE_HERE.",
+                6: "My number NUMBER_HERE got banned but I have not violated any terms. I use a DEVICE_HERE. Please reinstate access.",
+                7: `Subject: URGENT: Banned Account - Immediate Review Required\n\nDear WhatsApp Support Team,\n\nI am writing to you with a matter of extreme urgency. My WhatsApp account, associated with the number NUMBER_HERE, has been banned. I use this account for critical personal and professional communication and the ban has caused significant disruption.\n\nI am confident that this is an error. My usage on my DEVICE_HERE has always been in strict compliance with your Terms of Service. I have not engaged in any prohibited activities, such as spamming, using unofficial clients, or creating fake accounts.\n\nI implore you to perform an immediate and thorough review of my account. I need my access restored as soon as possible. Please provide me with a clear reason for the ban and a path to resolution.\n\nI am awaiting your swift response and resolution.\n\nSincerely,\n`
             },
             permanent: {
-                1: "Dear WhatsApp Support, I humbly request a second chance for my number NUMBER_HERE. I understand the policies and promise to follow all rules henceforth.",
-                2: "My number NUMBER_HERE is permanently banned. I deeply regret any violation. Kindly give me one more opportunity.",
-                3: "This is a request to reconsider the permanent ban on my number NUMBER_HERE. I assure compliance in the future.",
-                4: "Please unban my number NUMBER_HERE. I take full responsibility and seek one final chance to use WhatsApp responsibly.",
-                5: "I acknowledged mistakes on number NUMBER_HERE. Requesting a final opportunity and committing to policy adherence.",
-                6: `Dear WhatsApp Support,\n\nMy number has been permanently banned, and I strongly believe this may be a mistake or an automated action. I respectfully request a detailed review of my account and activity.\n\nI always strive to follow WhatsApp's Terms of Service and community guidelines. If any issues were caused unintentionally, I assure you it was not with malicious intent, and I am ready to correct any mistakes.\n\nPlease consider reinstating my number. I truly rely on WhatsApp for personal and professional communication. Your assistance would mean a lot.\n\nPhone Number: NUMBER_HERE\n\nThank you for your time and understanding.\n\nBest regards.`
+                1: "Dear WhatsApp Support, I humbly request a second chance for my number NUMBER_HERE. I am using a DEVICE_HERE. I understand the policies and promise to follow all rules henceforth.",
+                2: "My number NUMBER_HERE is permanently banned. My device is a DEVICE_HERE. I deeply regret any violation. Kindly give me one more opportunity.",
+                3: "This is a request to reconsider the permanent ban on my number NUMBER_HERE. I use a DEVICE_HERE. I assure compliance in the future.",
+                4: "Please unban my number NUMBER_HERE. I am on a DEVICE_HERE. I take full responsibility and seek one final chance to use WhatsApp responsibly.",
+                5: "I acknowledged mistakes on number NUMBER_HERE. I use a DEVICE_HERE. Requesting a final opportunity and committing to policy adherence.",
+                6: `Dear WhatsApp Support,\n\nMy number has been permanently banned, and I strongly believe this may be a mistake or an automated action. I use a DEVICE_HERE. I respectfully request a detailed review of my account and activity.\n\nI always strive to follow WhatsApp's Terms of Service and community guidelines. If any issues were caused unintentionally, I assure you it was not with malicious intent, and I am ready to correct any mistakes.\n\nPlease consider reinstating my number. I truly rely on WhatsApp for personal and professional communication. Your assistance would mean a lot.\n\nPhone Number: NUMBER_HERE\n\nThank you for your time and understanding.\n\nBest regards.`
             }
         };
 
         const emailMap = {
-            'regular': {
-                'android': 'support@support.whatsapp.com',
-                'iphone': 'iphone-support@support.whatsapp.com'
-            },
-            'business': {
-                'android': 'smb_web@support.whatsapp.com',
-                'iphone': 'smb_web@support.whatsapp.com'
-            },
-            'accessibility': {
-                 'android': 'Accessibility@support.whatsapp.com',
-                 'iphone': 'Accessibility@support.whatsapp.com'
-            }
+            'regular': 'support@support.whatsapp.com',
+            'business': 'smb_web@support.whatsapp.com',
+            'accessibility': 'Accessibility@support.whatsapp.com',
+            'iphone_support': 'iphone-support@support.whatsapp.com'
         };
 
         function sendUnbanRequest() {
             const number = document.getElementById('number').value.trim();
+            const deviceType = document.getElementById('deviceType').value.trim();
             const promptId = document.getElementById('prompt').value;
             const banType = document.getElementById('banType').value;
             const whatsappType = document.getElementById('whatsappType').value;
-            const phoneType = document.getElementById('phoneType').value;
 
             if (!number.startsWith('+') || number.length < 7) {
                 alert('Please enter a valid number like +923xx.');
@@ -605,16 +598,25 @@
             // Get the prompt text and replace placeholders
             let message = prompts[banType][promptId];
             
-            // For prompt 7, replace the specific phone number placeholder
+            message = message.replaceAll('NUMBER_HERE', number);
+            message = message.replaceAll('DEVICE_HERE', deviceType);
+            
+            const recipientEmail = emailMap[whatsappType];
+            
+            let finalSubject;
+            let finalBody;
+
             if (promptId === '7') {
-                 message = message.replace('NUMBER_WITH_CODE', number);
+                 // For prompt 7, subject is in the first line, body is everything after
+                 const lines = message.split('\n');
+                 finalSubject = encodeURIComponent(lines[0].replace('Subject: ', ''));
+                 finalBody = encodeURIComponent(lines.slice(2).join('\n').trim());
             } else {
-                 message = message.replaceAll('NUMBER_HERE', number);
+                 finalSubject = encodeURIComponent('Unban Request');
+                 finalBody = encodeURIComponent(message);
             }
             
-            const recipientEmail = emailMap[whatsappType][phoneType];
-            const subject = encodeURIComponent('Unban Request');
-            const mailto = `mailto:${recipientEmail}?subject=${subject}&body=${encodeURIComponent(message)}`;
+            const mailto = `mailto:${recipientEmail}?subject=${finalSubject}&body=${finalBody}`;
             
             localStorage.setItem('sentRequest', 'true');
             window.location.href = mailto;
