@@ -33,7 +33,7 @@
             align-items: center;
             min-height: 100vh;
             padding: 20px;
-            background-color: var(--dark-bg); /* Fallback color */
+            background-color: var(--dark-bg);
             background-image: url('https://files.catbox.moe/b521vm.PNG');
             background-size: cover;
             background-position: center;
@@ -53,7 +53,7 @@
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
             transition: all 0.3s ease;
         }
-        
+
         /* --- Notification Styles --- */
         #success-notification {
             position: fixed;
@@ -67,13 +67,11 @@
             display: none;
             color: white;
             opacity: 0;
-            
             background: linear-gradient(90deg, #37a85d, #208741);
             border: 1px solid rgba(255, 255, 255, 0.2);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             box-shadow: none;
-
             transition: transform 0.5s ease-out, opacity 0.5s ease-out, background 1s ease-in-out;
         }
 
@@ -90,7 +88,7 @@
             opacity: 0;
             transform: translateX(-50%) translateY(-100px);
         }
-        
+
         #error-notification {
             position: fixed;
             top: 20px;
@@ -103,13 +101,11 @@
             display: none;
             color: white;
             opacity: 0;
-            
             background: linear-gradient(90deg, #dc143c, #a80f2d);
             border: 1px solid rgba(255, 255, 255, 0.2);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             box-shadow: none;
-            
             transition: transform 0.5s ease-out, opacity 0.5s ease-out, background 1s ease-in-out;
         }
 
@@ -239,7 +235,7 @@
         h1 .heading-icon {
             font-size: 1.5em;
         }
-        
+
         h2 {
             color: var(--text-color);
             font-size: 1.1em;
@@ -273,7 +269,7 @@
                 grid-template-columns: 1fr;
             }
         }
-        
+
         select, input {
             width: 100%;
             padding: 18px;
@@ -294,7 +290,7 @@
             gap: 10px;
             margin-top: 20px;
         }
-        
+
         select {
             background-image: linear-gradient(45deg, transparent 50%, var(--crimson-accent) 50%), linear-gradient(135deg, var(--crimson-accent) 50%, transparent 50%);
             background-position: calc(100% - 20px) 50%, calc(100% - 15px) 50%;
@@ -314,7 +310,7 @@
             border-color: var(--crimson-accent);
             box-shadow: 0 0 8px rgba(220, 20, 60, 0.5);
         }
-        
+
         .main-button {
             background: linear-gradient(145deg, var(--crimson-accent), #a80f2d);
             width: 100%;
@@ -337,7 +333,7 @@
             background: linear-gradient(145deg, #ff0040, #b51133);
             box-shadow: 0 6px 20px rgba(0, 0, 0, 0.7);
         }
-        
+
         .tip {
             font-size: 0.9em;
             color: var(--secondary-text-color);
@@ -354,7 +350,7 @@
             justify-content: center;
             gap: 5px;
         }
-        
+
         .contact-dev-button {
             margin-top: 10px;
             display: inline-flex;
@@ -383,7 +379,7 @@
     <div id="success-notification">
         <i class="fas fa-check-circle"></i> Unban request submitted successfully!
     </div>
-    
+
     <div id="error-notification">
         <i class="fas fa-exclamation-triangle"></i> Failed to submit request. Please try again.
     </div>
@@ -393,7 +389,7 @@
             <i class="fab fa-whatsapp heading-icon"></i>
             <span>Zed Unban tool</span>
         </h1>
-        
+
         <div id="dynamic-info">
             <p id="localTime"><i class="far fa-clock"></i></p>
             <p id="batteryStatus"><i class="fas fa-battery-half"></i></p>
@@ -414,18 +410,18 @@
                     <option value="normal">TEMPORARY UNBAN</option>
                     <option value="permanent">PERMANENT UNBAN</option>
                 </select>
-                
+
                 <h2>SELECT DEVICE TYPE</h2>
                 <select id="deviceType">
                     <option value="Android">ANDROID</option>
                     <option value="iPhone">IPHONE</option>
                 </select>
             </div>
-            
+
             <div class="form-right">
                 <h2>ENTER NUMBER</h2>
                 <input type="text" id="number" placeholder="eg: +923xxxxxxxx">
-                
+
                 <h2>ENTER EMAIL</h2>
                 <input type="email" id="email" placeholder="e.g., yourname@example.com">
 
@@ -471,21 +467,8 @@
             <a href="https://wa.me/212684255286" target="_blank" class="contact-button whatsapp-button-unlock"><i class="fab fa-whatsapp"></i> WhatsApp: +212684255286</a>
         </div>
     </div>
-    
+
     <script>
-        // --- DYNAMIC BACKGROUND FEATURE ---
-        const backgroundImages = [
-            'https://files.catbox.moe/arh48g.jpg',
-            'https://files.catbox.moe/0ksawb.jpg',
-            'https://files.catbox.moe/mkh8ej.jpg',
-            'https://files.catbox.moe/fmcf6n.jpg'
-        ];
-
-        const randomIndex = Math.floor(Math.random() * backgroundImages.length);
-        const randomImageUrl = backgroundImages[randomIndex];
-        // The user wants a specific background, so we will not apply a random one.
-        // The background is now set directly in the CSS.
-
         // --- CODES & MONETIZATION ---
         let validUnlockCodes = [
             'COSMOS-001',
@@ -497,7 +480,7 @@
             'STAR-DUST',
             'SUPERNOVA'
         ];
-        
+
         // --- CORE LOGIC ---
         const accentColors = [
             '#dc143c',
@@ -555,15 +538,12 @@
         function showNotification(type) {
             const notification = document.getElementById(`${type}-notification`);
             notification.style.display = 'flex';
-            
             setTimeout(() => {
                 notification.classList.add('show');
             }, 10);
-            
             setTimeout(() => {
                 notification.classList.add('fade-to-glass');
             }, 2500);
-            
             setTimeout(() => {
                 notification.classList.remove('show');
                 notification.classList.add('dissolve');
@@ -599,35 +579,28 @@
             if (codeIndex > -1) {
                 statusMessage.style.color = '#4caf50';
                 statusMessage.innerText = 'Success! Unlocking site...';
-                
                 localStorage.setItem('accessCode', code);
-                
                 validUnlockCodes.splice(codeIndex, 1);
-                
                 setTimeout(unlockSite, 1000);
-
             } else {
                 statusMessage.style.color = '#ff4d4d';
                 statusMessage.innerText = 'Invalid or expired code. Please try again.';
                 codeInput.value = '';
             }
         }
-        
+
         window.onload = function() {
             const storedCode = localStorage.getItem('accessCode');
             const codeIndex = validUnlockCodes.indexOf(storedCode);
-
             if (storedCode && codeIndex > -1) {
                 unlockSite();
             }
-            
             if (storedCode && codeIndex === -1) {
                  localStorage.removeItem('accessCode');
             }
-            
             document.addEventListener('visibilitychange', handleVisibilityChange);
         }
-        
+
         const prompts = {
             normal: {
                 1: "Hello WhatsApp Support, my number NUMBER_HERE was mistakenly banned. Kindly review and restore my access. Thank you.\n\nDevice Type: DEVICE_HERE\nEmail Address: EMAIL_HERE",
@@ -667,7 +640,7 @@
             }
             return true;
         }
-        
+
         function sendRequestViaEmail() {
             const number = document.getElementById('number').value.trim();
             const email = document.getElementById('email').value.trim();
@@ -675,17 +648,17 @@
             const promptId = document.getElementById('prompt').value;
             const banType = document.getElementById('banType').value;
             const whatsappType = document.getElementById('whatsappType').value;
-            
+
             if (!validateInputs(number, email)) return;
 
             let message = prompts[banType][promptId];
-            
+
             message = message.replaceAll('NUMBER_HERE', number);
             message = message.replaceAll('DEVICE_HERE', deviceType);
             message = message.replaceAll('EMAIL_HERE', email);
-            
+
             const recipientEmail = emailMap[whatsappType];
-            
+
             let finalSubject;
             let finalBody;
 
@@ -698,12 +671,12 @@
                  finalSubject = encodeURIComponent('Unban Request');
                  finalBody = encodeURIComponent(message);
             }
-            
+
             const mailto = `mailto:${recipientEmail}?subject=${finalSubject}&body=${finalBody}`;
-            
+
             window.location.href = mailto;
         }
-        
+
         setRandomAccentColor();
         displayLocalTime();
         displayBatteryStatus();
