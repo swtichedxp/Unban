@@ -427,11 +427,9 @@
 
                 <h2>SELECT PROMPT</h2>
                 <select id="prompt">
-                    <option value="1">PROMPT 1: STANDARD UNBAN REQUEST</option>
-                    <option value="2">PROMPT 2: MISTAKEN BAN APPEAL</option>
-                    <option value="3">PROMPT 3: POLICY COMPLIANCE PROMISE</option>
+                    <option value="1">PROMPT 1: COMPROMISED ACCOUNT APPEAL</option>
                     <option value="4">PROMPT 4: ACCOUNT REVIEW REQUEST</option>
-                    <option value="5">PROMPT 5: TERMS VIOLATION APPEAL</option>
+                    <option value="5">PROMPT 5: IMAGE EXPLOIT APPEAL</option>
                     <option value="6">PROMPT 6: FINAL CHANCE REQUEST</option>
                     <option value="7">PROMPT 7: SIMPLIFIED APPEAL</option>
                 </select>
@@ -603,13 +601,11 @@
 
         const prompts = {
             normal: {
-                1: "Hello WhatsApp Support, my number NUMBER_HERE was mistakenly banned. Kindly review and restore my access. Thank you.\n\nDevice Type: DEVICE_HERE\nEmail Address: EMAIL_HERE",
-                2: "Dear WhatsApp team, my account NUMBER_HERE got banned accidentally. Please help me recover it.\n\nDevice Type: DEVICE_HERE\nEmail Address: EMAIL_HERE",
-                3: "Hi, I believe my number NUMBER_HERE was wrongly banned. Requesting a quick reactivation.\n\nDevice Type: DEVICE_HERE\nEmail Address: EMAIL_HERE",
-                4: "I am facing an issue as my number NUMBER_HERE is banned. Kindly verify and unban it.\n\nDevice Type: DEVICE_HERE\nEmail Address: EMAIL_HERE",
-                5: "To WhatsApp Support: Please check number NUMBER_HERE, it appears to be banned without reason.\n\nDevice Type: DEVICE_HERE\nEmail Address: EMAIL_HERE",
+                1: "Subject: Urgent Appeal for Banned WhatsApp Account - Compromised Account\n\nDear WhatsApp Support Team,\n\nI hope this message finds you well. I am writing to urgently appeal for the unbanning of my WhatsApp number, as it appears to have been compromised.\n\nI recently discovered that my WhatsApp account has been banned, and I am unable to access or use the application. This ban has come as a complete surprise to me, as I have always used WhatsApp responsibly and have not engaged in any activities that violate the platform's terms of service or community guidelines.\n\nI suspect that my account may have been hacked or used without my knowledge, leading to the ban. I take the security of my account very seriously and have taken all necessary precautions to protect it. However, it seems that unauthorized activity has occurred, resulting in the ban.\n\nWhatsApp plays a crucial role in my personal and professional life, allowing me to stay connected with loved ones, colleagues, and clients. Its ban has caused significant distress and inconvenience, hindering my ability to communicate effectively.\n\nI kindly request your immediate attention and assistance in investigating this matter further. I am more than willing to provide any additional information or evidence that may help resolve this issue. I understand the importance of maintaining a safe and secure platform for all users, and I am committed to cooperating fully to rectify this situation.\n\nPlease consider lifting the ban on my WhatsApp number as soon as possible, allowing me to regain access to my account and resume normal usage. I assure you that I will take all necessary steps to prevent any future unauthorized access and will adhere to WhatsApp's policies and guidelines.\n\nI appreciate your understanding and prompt action in resolving this matter. WhatsApp has been an integral part of my daily life, and I sincerely hope to regain access to my account soon.\n\nThank you for your attention and support.\n\nMy number: NUMBER_HERE\n\nDevice Type: DEVICE_HERE\nEmail Address: EMAIL_HERE",
+                4: "Subject: Appeal to Unban My WhatsApp Account\n\nDear WhatsApp Support Team,\n\nI recently found out that my WhatsApp account has been banned. I think it might be because I sent many messages. I understand this may have triggered WhatsApp’s spam filters.\n\nI’m sorry for any trouble caused. My actions were not meant to break WhatsApp’s rules. I’ll be more careful with my messaging in the future. Please review my account and consider unbanning it.\n\nThank you for your understanding.\nBest regards,\n[Your Phone Number]\n\nDevice Type: DEVICE_HERE\nEmail Address: EMAIL_HERE",
+                5: "Subject: Banned Account - Image Exploit\n\nHi WhatsApp,\n\nMy phone number NUMBER_HERE has been banned. I believe this was due to an image exploit loophole that I was unaware of. My intention was not to violate your app's policies.\n\nPlease help me recover my account and unblock it as soon as possible, as I rely on it for important communication. I am committed to using WhatsApp responsibly and will never knowingly violate your terms or policies again. \n\nI ask that you please understand my situation and unban my number.\n\nThank you for your support.\n\nDevice Type: DEVICE_HERE\nEmail Address: EMAIL_HERE",
                 6: "My number NUMBER_HERE got banned but I have not violated any terms. Please reinstate access.\n\nDevice Type: DEVICE_HERE\nEmail Address: EMAIL_HERE",
-                7: `Subject: URGENT: Banned Account - Immediate Review Required\n\nDear WhatsApp Support Team,\n\nI am writing to you with a matter of extreme urgency. My WhatsApp account, associated with the number NUMBER_HERE, has been banned. I use this account for critical personal and professional communication and the ban has caused significant disruption.\n\nI am confident that this is an error. My usage has always been in strict compliance with your Terms of Service. I have not engaged in any prohibited activities, such as spamming, using unofficial clients, or creating fake accounts.\n\nI implore you to perform an immediate and thorough review of my account. I need my access restored as soon as possible. Please provide me with a clear reason for the ban and a path to resolution.\n\nI am awaiting your swift response and resolution.\n\nSincerely,\n\nDevice Type: DEVICE_HERE\nEmail Address: EMAIL_HERE`
+                7: "Subject: URGENT: Banned Account - Immediate Review Required\n\nDear WhatsApp Support Team,\n\nI am writing to you with a matter of extreme urgency. My WhatsApp account, associated with the number NUMBER_HERE, has been banned. I use this account for critical personal and professional communication and the ban has caused significant disruption.\n\nI am confident that this is an error. My usage has always been in strict compliance with your Terms of Service. I have not engaged in any prohibited activities, such as spamming, using unofficial clients, or creating fake accounts.\n\nI implore you to perform an immediate and thorough review of my account. I need my access restored as soon as possible. Please provide me with a clear reason for the ban and a path to resolution.\n\nI am awaiting your swift response and resolution.\n\nSincerely,\n\nDevice Type: DEVICE_HERE\nEmail Address: EMAIL_HERE"
             },
             permanent: {
                 1: "Dear WhatsApp Support, I humbly request a second chance for my number NUMBER_HERE. I understand the policies and promise to follow all rules henceforth.\n\nDevice Type: DEVICE_HERE\nEmail Address: EMAIL_HERE",
@@ -617,7 +613,7 @@
                 3: "This is a request to reconsider the permanent ban on my number NUMBER_HERE. I assure compliance in the future.\n\nDevice Type: DEVICE_HERE\nEmail Address: EMAIL_HERE",
                 4: "Please unban my number NUMBER_HERE. I take full responsibility and seek one final chance to use WhatsApp responsibly.\n\nDevice Type: DEVICE_HERE\nEmail Address: EMAIL_HERE",
                 5: "I acknowledged mistakes on number NUMBER_HERE. Requesting a final opportunity and committing to policy adherence.\n\nDevice Type: DEVICE_HERE\nEmail Address: EMAIL_HERE",
-                6: `Dear WhatsApp Support,\n\nMy number has been permanently banned, and I strongly believe this may be a mistake or an automated action. I respectfully request a detailed review of my account and activity.\n\nI always strive to follow WhatsApp's Terms of Service and community guidelines. If any issues were caused unintentionally, I assure you it was not with malicious intent, and I am ready to correct any mistakes.\n\nPlease consider reinstating my number. I truly rely on WhatsApp for personal and professional communication. Your assistance would mean a lot.\n\nPhone Number: NUMBER_HERE\n\nThank you for your time and understanding.\n\nBest regards.\n\nDevice Type: DEVICE_HERE\nEmail Address: EMAIL_HERE`
+                6: "Dear WhatsApp Support,\n\nMy number has been permanently banned, and I strongly believe this may be a mistake or an automated action. I respectfully request a detailed review of my account and activity.\n\nI always strive to follow WhatsApp's Terms of Service and community guidelines. If any issues were caused unintentionally, I assure you it was not with malicious intent, and I am ready to correct any mistakes.\n\nPlease consider reinstating my number. I truly rely on WhatsApp for personal and professional communication. Your assistance would mean a lot.\n\nPhone Number: NUMBER_HERE\n\nThank you for your time and understanding.\n\nBest regards.\n\nDevice Type: DEVICE_HERE\nEmail Address: EMAIL_HERE"
             }
         };
 
@@ -662,8 +658,8 @@
             let finalSubject;
             let finalBody;
 
-            if (promptId === '7') {
-                 // For prompt 7, subject is in the first line, body is everything after
+            // This block handles prompts with a subject line at the start of the string
+            if (promptId === '7' || promptId === '1' || promptId === '4' || promptId === '5') {
                  const lines = message.split('\n');
                  finalSubject = encodeURIComponent(lines[0].replace('Subject: ', ''));
                  finalBody = encodeURIComponent(lines.slice(2).join('\n').trim());
