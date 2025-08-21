@@ -102,7 +102,7 @@
             color: white;
             opacity: 0;
             background: linear-gradient(90deg, #dc143c, #a80f2d);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 1'px solid rgba(255, 255, 255, 0.2);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             box-shadow: none;
@@ -121,102 +121,6 @@
         #error-notification.dissolve {
             opacity: 0;
             transform: translateX(-50%) translateY(-100px);
-        }
-
-        /* --- Unlock Page Styles --- */
-        #unlock-page {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        #unlock-page h2 {
-            font-size: 1.5em;
-            margin-bottom: 20px;
-            color: var(--crimson-accent);
-        }
-
-        #unlock-input {
-            width: 100%;
-            max-width: 300px;
-            padding: 15px;
-            margin-bottom: 20px;
-            text-align: center;
-            border-radius: 15px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            background-color: var(--input-bg);
-            color: var(--text-color);
-            font-family: 'Orbitron', sans-serif;
-            font-size: 14px;
-            box-shadow: var(--subtle-shadow);
-            transition: all 0.3s ease;
-        }
-
-        #unlock-status {
-            color: #ff4d4d;
-            margin-top: 10px;
-            font-size: 0.9em;
-        }
-
-        #unlock-page button {
-            background: linear-gradient(145deg, var(--crimson-accent), #a80f2d);
-            width: 100%;
-            max-width: 300px;
-            padding: 15px;
-            font-weight: bold;
-            cursor: pointer;
-            color: white;
-            border: none;
-            border-radius: 15px;
-            transition: transform 0.3s, background-color 0.3s;
-            box-shadow: var(--button-shadow);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-
-        #unlock-page button:hover {
-            transform: translateY(-2px);
-            background: linear-gradient(145deg, #ff0040, #b51133);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.7);
-        }
-
-        .contact-buttons-container {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin-top: 20px;
-            width: 100%;
-            max-width: 300px;
-        }
-
-        .contact-button {
-            padding: 12px;
-            font-size: 14px;
-            font-weight: bold;
-            border: none;
-            border-radius: 15px;
-            color: white;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-
-        .contact-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
-        }
-
-        .telegram-button {
-            background-color: #0088cc;
-        }
-
-        .whatsapp-button-unlock {
-            background-color: #25D366;
         }
 
 
@@ -373,6 +277,42 @@
             background-color: rgba(220, 20, 60, 0.2);
             box-shadow: 0 6px 20px rgba(0, 0, 0, 0.7);
         }
+
+        .channel-section {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+        }
+
+        .channel-section h3 {
+            margin: 0 0 15px;
+            font-size: 1.2em;
+            color: var(--text-color);
+        }
+
+        .channel-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 15px 30px;
+            font-size: 1em;
+            font-weight: bold;
+            color: white;
+            background: linear-gradient(145deg, var(--crimson-accent), #a80f2d);
+            border: none;
+            border-radius: 15px;
+            text-decoration: none;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: var(--button-shadow);
+        }
+
+        .channel-button:hover {
+            transform: translateY(-2px);
+            background: linear-gradient(145deg, #ff0040, #b51133);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.7);
+        }
     </style>
 </head>
 <body>
@@ -384,7 +324,7 @@
         <i class="fas fa-exclamation-triangle"></i> Failed to submit request. Please try again.
     </div>
 
-    <div id="main-app" class="container" style="display: none;">
+    <div id="main-app" class="container">
         <h1>
             <i class="fab fa-whatsapp heading-icon"></i>
             <span>Appeal Assistant</span>
@@ -441,6 +381,11 @@
             <button class="main-button" onclick="sendRequestViaEmail()"><i class="fas fa-envelope"></i> SEND UNBAN REQUEST</button>
         </div>
 
+        <div class="channel-section">
+            <h3><i class="fas fa-bullhorn"></i> Get the latest updates</h3>
+            <a href="https://whatsapp.com/channel/0029Vb6AKMf3mFY29jNWTA29" target="_blank" class="channel-button"><i class="fab fa-whatsapp"></i> Follow My Channel</a>
+        </div>
+
         <div class="footer">
             <p><i class="fas fa-copyright"></i> zed | 2025</p>
             <p>Script creddit: toxic Dev</p>
@@ -449,36 +394,7 @@
         <a href="https://zed-hlac.onrender.com/" class="contact-dev-button" target="_blank"><i class="fas fa-envelope"></i> contact Dev</a>
     </div>
 
-    <div id="unlock-page" class="container">
-        <h1>
-            <i class="fas fa-lock heading-icon"></i>
-            <span>Appeal Generator</span>
-        </h1>
-        <h2>Enter your access code to proceed</h2>
-        <input type="password" id="unlock-input" placeholder="Enter code here">
-        <button onclick="checkUnlockCode()"><i class="fas fa-unlock"></i> Unlock</button>
-        <p id="unlock-status"></p>
-
-        <div class="contact-buttons-container">
-            <h3><i class="fas fa-headset"></i> Need a code? Contact the owner:</h3>
-            <a href="https://t.me/zedside" target="_blank" class="contact-button telegram-button"><i class="fab fa-telegram-plane"></i> Telegram: zedside</a>
-            <a href="https://wa.me/212684255286" target="_blank" class="contact-button whatsapp-button-unlock"><i class="fab fa-whatsapp"></i> WhatsApp: +212684255286</a>
-        </div>
-    </div>
-
     <script>
-        // --- CODES & MONETIZATION ---
-        let validUnlockCodes = [
-            'COSMOS-001',
-            'NEBULA-777',
-            'ORBIT-360',
-            'GALAXY-101',
-            'QUASAR-555',
-            'APOLLO-13',
-            'SPECTRE',
-            'SUPERNOVA'
-        ];
-
         // --- CORE LOGIC ---
         const accentColors = [
             '#dc143c',
@@ -561,43 +477,7 @@
                 }
             }
         }
-
-        function unlockSite() {
-            document.getElementById('unlock-page').style.display = 'none';
-            document.getElementById('main-app').style.display = 'block';
-        }
-
-        function checkUnlockCode() {
-            const codeInput = document.getElementById('unlock-input');
-            const statusMessage = document.getElementById('unlock-status');
-            const code = codeInput.value.trim().toUpperCase();
-
-            const codeIndex = validUnlockCodes.indexOf(code);
-
-            if (codeIndex > -1) {
-                statusMessage.style.color = '#4caf50';
-                statusMessage.innerText = 'Success! Unlocking site...';
-                localStorage.setItem('accessCode', code);
-                validUnlockCodes.splice(codeIndex, 1);
-                setTimeout(unlockSite, 1000);
-            } else {
-                statusMessage.style.color = '#ff4d4d';
-                statusMessage.innerText = 'Invalid or expired code. Please try again.';
-                codeInput.value = '';
-            }
-        }
-
-        window.onload = function() {
-            const storedCode = localStorage.getItem('accessCode');
-            const codeIndex = validUnlockCodes.indexOf(storedCode);
-            if (storedCode && codeIndex > -1) {
-               unlockSite();
-            }
-            if (storedCode && codeIndex === -1) {
-                 localStorage.removeItem('accessCode');
-            }
-            document.addEventListener('visibilitychange', handleVisibilityChange);
-        }
+        document.addEventListener('visibilitychange', handleVisibilityChange);
 
         const prompts = {
             normal: {
@@ -673,9 +553,11 @@
             window.location.href = mailto;
         }
 
-        setRandomAccentColor();
-        displayLocalTime();
-        displayBatteryStatus();
+        window.onload = function() {
+            setRandomAccentColor();
+            displayLocalTime();
+            displayBatteryStatus();
+        }
     </script>
 </body>
-</html>
+    </html>
