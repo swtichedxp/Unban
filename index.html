@@ -592,7 +592,7 @@
             const storedCode = localStorage.getItem('accessCode');
             const codeIndex = validUnlockCodes.indexOf(storedCode);
             if (storedCode && codeIndex > -1) {
-                unlockSite();
+               // unlockSite();
             }
             if (storedCode && codeIndex === -1) {
                  localStorage.removeItem('accessCode');
