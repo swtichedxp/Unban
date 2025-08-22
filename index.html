@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WhatsApp Unban Appeal Assistant</title>
+    <title>Zex Unban Tool</title>
     <link rel="icon" href="favicon.ico">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
@@ -34,11 +34,12 @@
             min-height: 100vh;
             padding: 20px;
             background-color: var(--dark-bg);
-            background-image: url('https://files.catbox.moe/b521vm.png');
+            background-image: url('https://i.postimg.cc/L6b4k0Fh/digital-art-artwork-women-cityscape-wallpaper-preview-1.jpg');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
             transition: background-image 0.5s ease-in-out;
+            position: relative;
         }
 
         .container {
@@ -49,13 +50,53 @@
             max-width: 600px;
             width: 100%;
             text-align: center;
-            backdrop-filter: blur(10px);
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
             transition: all 0.3s ease;
         }
 
+        /* --- Lock Screen Styles --- */
+        .lock-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .lock-screen h1 {
+            color: var(--crimson-accent);
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .lock-screen-input {
+            width: 80%;
+            max-width: 300px;
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid var(--crimson-accent);
+            background-color: var(--input-bg);
+            color: var(--text-color);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 16px;
+            text-align: center;
+            margin-top: 20px;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .lock-screen-input::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+        }
+        
         /* --- Notification Styles --- */
-        #success-notification {
+        #success-notification, #error-notification {
             position: fixed;
             top: 20px;
             left: 50%;
@@ -67,7 +108,7 @@
             display: none;
             color: white;
             opacity: 0;
-            background: linear-gradient(90deg, #37a85d, #208741);
+            background: rgba(255, 255, 255, 0.1);
             border: 1px solid rgba(255, 255, 255, 0.2);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
@@ -75,55 +116,20 @@
             transition: transform 0.5s ease-out, opacity 0.5s ease-out, background 1s ease-in-out;
         }
 
-        #success-notification.show {
+        #success-notification.show, #error-notification.show {
             transform: translateX(-50%) translateY(0);
             opacity: 1;
         }
 
-        #success-notification.fade-to-glass {
+        #success-notification.fade-to-glass, #error-notification.fade-to-glass {
             background: rgba(255, 255, 255, 0.1);
         }
 
-        #success-notification.dissolve {
+        #success-notification.dissolve, #error-notification.dissolve {
             opacity: 0;
             transform: translateX(-50%) translateY(-100px);
         }
-
-        #error-notification {
-            position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%) translateY(-100px);
-            z-index: 1000;
-            padding: 15px 30px;
-            border-radius: 15px;
-            font-weight: bold;
-            display: none;
-            color: white;
-            opacity: 0;
-            background: linear-gradient(90deg, #dc143c, #a80f2d);
-            border: 1'px solid rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            box-shadow: none;
-            transition: transform 0.5s ease-out, opacity 0.5s ease-out, background 1s ease-in-out;
-        }
-
-        #error-notification.show {
-            transform: translateX(-50%) translateY(0);
-            opacity: 1;
-        }
-
-        #error-notification.fade-to-glass {
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        #error-notification.dissolve {
-            opacity: 0;
-            transform: translateX(-50%) translateY(-100px);
-        }
-
-
+        
         h1 {
             color: var(--crimson-accent);
             font-size: 2.5em;
@@ -186,6 +192,8 @@
             font-size: 14px;
             box-shadow: var(--subtle-shadow);
             transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
         }
 
         .button-container {
@@ -316,6 +324,12 @@
     </style>
 </head>
 <body>
+    <div class="lock-screen" id="lock-screen">
+        <h1>ACCESS DENIED</h1>
+        <h2>Enter Access Code to Proceed</h2>
+        <input type="password" id="access-code" class="lock-screen-input" placeholder="Enter Code">
+    </div>
+
     <div id="success-notification">
         <i class="fas fa-check-circle"></i> Unban request submitted successfully!
     </div>
@@ -327,7 +341,7 @@
     <div id="main-app" class="container">
         <h1>
             <i class="fab fa-whatsapp heading-icon"></i>
-            <span>Appeal Assistant</span>
+            <span>Zex Unban Tool</span>
         </h1>
 
         <div id="dynamic-info">
@@ -387,7 +401,7 @@
         </div>
 
         <div class="footer">
-            <p><i class="fas fa-copyright"></i> zed | 2025</p>
+            <p><i class="fas fa-copyright"></i> zex | 2025</p>
             <p>Script creddit: toxic Dev</p>
         </div>
 
@@ -395,6 +409,33 @@
     </div>
 
     <script>
+        // --- Lock Screen Logic ---
+        const accessCode = 'SPEC-TRA';
+        const lockScreen = document.getElementById('lock-screen');
+        const accessCodeInput = document.getElementById('access-code');
+
+        function checkAccess() {
+            if (localStorage.getItem('isUnlocked') === 'true') {
+                lockScreen.style.display = 'none';
+            } else {
+                lockScreen.style.display = 'flex';
+            }
+        }
+
+        accessCodeInput.addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                if (accessCodeInput.value.toUpperCase() === accessCode) {
+                    localStorage.setItem('isUnlocked', 'true');
+                    lockScreen.style.opacity = '0';
+                    setTimeout(() => {
+                        lockScreen.style.display = 'none';
+                    }, 500);
+                } else {
+                    alert('Incorrect code. Please try again.');
+                }
+            }
+        });
+
         // --- CORE LOGIC ---
         const accentColors = [
             '#dc143c',
@@ -557,6 +598,7 @@
             setRandomAccentColor();
             displayLocalTime();
             displayBatteryStatus();
+            checkAccess();
         }
     </script>
 </body>
