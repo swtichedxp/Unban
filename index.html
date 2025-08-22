@@ -11,11 +11,11 @@
 
         :root {
             --dark-bg: #181818;
-            --crimson-accent: #e53935;
             --card-bg: rgba(255, 255, 255, 0.05);
             --input-bg: rgba(255, 255, 255, 0.08);
             --text-color: #dddddd;
             --secondary-text-color: #aaaaaa;
+            --accent-color: #e53935;
         }
 
         * {
@@ -89,7 +89,7 @@
         }
 
         .lock-screen h1 {
-            color: var(--crimson-accent);
+            color: var(--accent-color);
             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
             margin: 0;
         }
@@ -131,7 +131,7 @@
             color: white;
             border: none;
             border-radius: 15px;
-            background: linear-gradient(145deg, var(--crimson-accent), #a80f2d);
+            background: linear-gradient(145deg, var(--accent-color), #a80f2d);
             transition: transform 0.3s, background-color 0.3s, box-shadow 0.3s;
             box-shadow: 0 4px 15px rgba(229, 57, 53, 0.4);
         }
@@ -150,7 +150,7 @@
         }
 
         .lock-screen .contact-dev-button:hover {
-            color: var(--crimson-accent);
+            color: var(--accent-color);
         }
 
         .correct-message, .incorrect-message {
@@ -213,7 +213,7 @@
         }
         
         h1 {
-            color: var(--crimson-accent);
+            color: var(--accent-color);
             font-size: 2.5em;
             margin-bottom: 25px;
             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
@@ -292,7 +292,7 @@
         }
 
         select {
-            background-image: linear-gradient(45deg, transparent 50%, var(--crimson-accent) 50%), linear-gradient(135deg, var(--crimson-accent) 50%, transparent 50%);
+            background-image: linear-gradient(45deg, transparent 50%, var(--accent-color) 50%), linear-gradient(135deg, var(--accent-color) 50%, transparent 50%);
             background-position: calc(100% - 20px) 50%, calc(100% - 15px) 50%;
             background-size: 5px 5px, 5px 5px;
             background-repeat: no-repeat;
@@ -306,7 +306,7 @@
         }
 
         .main-button {
-            background: linear-gradient(145deg, var(--crimson-accent), #a80f2d);
+            background: linear-gradient(145deg, var(--accent-color), #a80f2d);
             width: 100%;
             padding: 15px;
             font-weight: bold;
@@ -353,8 +353,8 @@
             gap: 8px;
             padding: 12px 20px;
             font-size: 14px;
-            border: 1px solid var(--crimson-accent);
-            color: var(--crimson-accent);
+            border: 1px solid var(--accent-color);
+            color: var(--accent-color);
             background-color: transparent;
             border-radius: 15px;
             text-decoration: none;
@@ -390,7 +390,7 @@
             font-size: 1em;
             font-weight: bold;
             color: white;
-            background: linear-gradient(145deg, var(--crimson-accent), #a80f2d);
+            background: linear-gradient(145deg, var(--accent-color), #a80f2d);
             border: none;
             border-radius: 15px;
             text-decoration: none;
@@ -423,7 +423,7 @@
 
         @keyframes pulse-glow {
             0% { text-shadow: 0 0 5px rgba(229, 57, 53, 0.5); }
-            50% { text-shadow: 0 0 15px var(--crimson-accent), 0 0 20px rgba(229, 57, 53, 0.8); }
+            50% { text-shadow: 0 0 15px var(--accent-color), 0 0 20px rgba(229, 57, 53, 0.8); }
             100% { text-shadow: 0 0 5px rgba(229, 57, 53, 0.5); }
         }
     </style>
@@ -568,6 +568,29 @@
         });
 
         // --- CORE LOGIC ---
+        const backgroundGradients = [
+            'linear-gradient(135deg, #FF6B6B, #556270)', // Sunset to Dark Grey
+            'linear-gradient(135deg, #1A2980, #26D0CE)', // Blue to Cyan
+            'linear-gradient(135deg, #0f0c29, #302b63, #24243e)', // Dark Night
+            'linear-gradient(135deg, #B993D6, #8CA6DB)', // Purple to Blue
+            'linear-gradient(135deg, #355C7D, #6794B0, #8CA6DB)', // Tri-color blue
+            'linear-gradient(135deg, #00C9FF, #92FE9D)', // Sky to Green
+            'linear-gradient(135deg, #B52F94, #A33F53)', // Pink to Red
+        ];
+
+        function setRandomGradient() {
+            const randomGradient = backgroundGradients[Math.floor(Math.random() * backgroundGradients.length)];
+            const body = document.querySelector('body');
+            const lockScreenContent = document.querySelector('.lock-screen-content');
+            
+            // Set the gradient on the body to be used as a base
+            body.style.setProperty('background-image', 'none');
+            body.style.setProperty('background', randomGradient);
+            
+            // The lock screen content gets its own gradient for consistency
+            lockScreenContent.style.setProperty('background', randomGradient);
+        }
+        
         const accentColors = [
             '#dc143c',
             '#4caf50',
@@ -579,7 +602,7 @@
 
         function setRandomAccentColor() {
             const randomColor = accentColors[Math.floor(Math.random() * accentColors.length)];
-            document.documentElement.style.setProperty('--crimson-accent', randomColor);
+            document.documentElement.style.setProperty('--accent-color', randomColor);
         }
 
         function displayLocalTime() {
@@ -726,6 +749,7 @@
         }
 
         window.onload = function() {
+            setRandomGradient();
             setRandomAccentColor();
             displayLocalTime();
             displayBatteryStatus();
@@ -733,4 +757,4 @@
         }
     </script>
 </body>
-    </html>
+</html>
