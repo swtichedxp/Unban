@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zex Unban Tool</title>
+    <title>Zed Unban Vault</title>
     <link rel="icon" href="favicon.ico">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
@@ -34,7 +34,7 @@
             min-height: 100vh;
             padding: 20px;
             background-color: var(--dark-bg);
-            background-image: url('https://i.postimg.cc/L6b4k0Fh/digital-art-artwork-women-cityscape-wallpaper-preview-1.jpg');
+            background-image: url('https://files.catbox.moe/fnfh6a.jpeg');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -52,6 +52,8 @@
             text-align: center;
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
             transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
         }
 
         /* --- Lock Screen Styles --- */
@@ -128,17 +130,28 @@
         .unlock-button:hover {
             transform: translateY(-2px);
             background: linear-gradient(145deg, #ff0040, #b51133);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.7);
+        }
+
+        .lock-screen .contact-dev-button {
+            margin-top: 15px;
+            text-decoration: none;
+            color: var(--secondary-text-color);
+            transition: color 0.3s ease;
+        }
+
+        .lock-screen .contact-dev-button:hover {
+            color: var(--crimson-accent);
         }
 
         .correct-message, .incorrect-message {
             margin-top: 15px;
             padding: 10px;
-            border-radius: 8px;
             font-size: 0.9em;
             font-weight: bold;
             text-align: center;
             opacity: 0;
-            transform: translateY(10px);
+            transform: translateY(-5px);
             transition: opacity 0.5s ease-out, transform 0.5s ease-out;
         }
 
@@ -148,13 +161,11 @@
         }
 
         .correct-message {
-            background-color: #4caf50;
-            color: #fff;
+            color: #4caf50;
         }
 
         .incorrect-message {
-            background-color: #f44336;
-            color: #fff;
+            color: #f44336;
         }
         
         /* --- Notification Styles --- */
@@ -383,6 +394,40 @@
             background: linear-gradient(145deg, #ff0040, #b51133);
             box-shadow: 0 6px 20px rgba(0, 0, 0, 0.7);
         }
+
+        /* --- Floating Button --- */
+        .floating-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 998;
+            padding: 15px 25px;
+            background: linear-gradient(145deg, var(--crimson-accent), #a80f2d);
+            color: white;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: bold;
+            border: none;
+            border-radius: 50px;
+            text-decoration: none;
+            box-shadow: var(--button-shadow);
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            animation: pulse 2s infinite;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .floating-button:hover {
+            transform: scale(1.05);
+            animation: none;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.7);
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
+        }
     </style>
 </head>
 <body>
@@ -394,6 +439,7 @@
             <button class="unlock-button" onclick="checkCode()">UNLOCK</button>
             <p id="correct-message" class="correct-message"><i class="fas fa-check-circle"></i> Code Accepted!</p>
             <p id="incorrect-message" class="incorrect-message"><i class="fas fa-times-circle"></i> Incorrect Code. Try Again.</p>
+            <a href="https://t.me/zex_dev" target="_blank" class="contact-dev-button">Contact Dev for Code</a>
         </div>
     </div>
 
@@ -408,7 +454,7 @@
     <div id="main-app" class="container">
         <h1>
             <i class="fab fa-whatsapp heading-icon"></i>
-            <span>Zex Unban Tool</span>
+            <span>Zed Unban Vault</span>
         </h1>
 
         <div id="dynamic-info">
@@ -474,6 +520,10 @@
 
         <a href="https://zed-hlac.onrender.com/" class="contact-dev-button" target="_blank"><i class="fas fa-envelope"></i> contact Dev</a>
     </div>
+
+    <a href="https://whatsapp.com/channel/0029Vb6AKMf3mFY29jNWTA29" target="_blank" class="floating-button">
+        <i class="fab fa-whatsapp"></i> Follow My Channel
+    </a>
 
     <script>
         // --- Lock Screen Logic ---
@@ -685,4 +735,4 @@
         }
     </script>
 </body>
-    </html>
+</html>
