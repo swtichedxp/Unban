@@ -15,7 +15,8 @@
             --input-bg: rgba(255, 255, 255, 0.08);
             --text-color: #dddddd;
             --secondary-text-color: #aaaaaa;
-            --accent-color: #e53935;
+            --button-gradient: linear-gradient(145deg, #a406e9, #f72c68);
+            --text-gradient: linear-gradient(135deg, #8A2BE2, #FF1493);
         }
 
         * {
@@ -32,12 +33,20 @@
             min-height: 100vh;
             padding: 20px;
             background-color: var(--dark-bg);
-            background-image: url('https://files.catbox.moe/fnfh6a.jpeg');
+            background-image: url('https://files.catbox.moe/tq2261.jpg');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
             transition: background-image 0.5s ease-in-out;
             position: relative;
+        }
+        
+        .gradient-text {
+            background: var(--text-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
         }
 
         .container {
@@ -85,11 +94,15 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 15px; /* Added spacing to lock screen content */
+            gap: 15px;
         }
 
         .lock-screen h1 {
-            color: var(--accent-color);
+            background: var(--text-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
             margin: 0;
         }
@@ -131,15 +144,16 @@
             color: white;
             border: none;
             border-radius: 15px;
-            background: linear-gradient(145deg, var(--accent-color), #a80f2d);
+            background: var(--button-gradient);
             transition: transform 0.3s, background-color 0.3s, box-shadow 0.3s;
-            box-shadow: 0 4px 15px rgba(229, 57, 53, 0.4);
+            box-shadow: 0 4px 15px rgba(0, 255, 255, 0.4);
         }
 
         .unlock-button:hover {
             transform: translateY(-2px);
-            background: linear-gradient(145deg, #ff0040, #b51133);
-            box-shadow: 0 6px 20px rgba(229, 57, 53, 0.6);
+            background: var(--button-gradient);
+            filter: brightness(1.2);
+            box-shadow: 0 6px 20px rgba(0, 255, 255, 0.6);
         }
 
         .lock-screen .contact-dev-button {
@@ -148,13 +162,14 @@
             transition: color 0.3s ease;
             font-size: 0.9em;
         }
-
+        
+        /* Updated to use the new color scheme */
         .lock-screen .contact-dev-button:hover {
-            color: var(--accent-color);
+            color: #00ffff;
         }
 
         .correct-message, .incorrect-message {
-            margin: 0; /* Reduced margin */
+            margin: 0;
             padding: 0;
             font-size: 0.9em;
             font-weight: bold;
@@ -213,7 +228,7 @@
         }
         
         h1 {
-            color: var(--accent-color);
+            color: var(--text-color);
             font-size: 2.5em;
             margin-bottom: 25px;
             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
@@ -233,6 +248,14 @@
             font-size: 1.1em;
             margin-top: 20px;
             margin-bottom: 15px;
+        }
+        
+        h2.gradient-text {
+            background: var(--text-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
         }
 
         #dynamic-info {
@@ -292,7 +315,7 @@
         }
 
         select {
-            background-image: linear-gradient(45deg, transparent 50%, var(--accent-color) 50%), linear-gradient(135deg, var(--accent-color) 50%, transparent 50%);
+            background-image: linear-gradient(45deg, transparent 50%, var(--text-color) 50%), linear-gradient(135deg, var(--text-color) 50%, transparent 50%);
             background-position: calc(100% - 20px) 50%, calc(100% - 15px) 50%;
             background-size: 5px 5px, 5px 5px;
             background-repeat: no-repeat;
@@ -306,7 +329,7 @@
         }
 
         .main-button {
-            background: linear-gradient(145deg, var(--accent-color), #a80f2d);
+            background: var(--button-gradient);
             width: 100%;
             padding: 15px;
             font-weight: bold;
@@ -324,10 +347,11 @@
 
         .main-button:hover {
             transform: translateY(-2px);
-            background: linear-gradient(145deg, #ff0040, #b51133);
+            background: var(--button-gradient);
+            filter: brightness(1.2);
             box-shadow: 0 6px 20px rgba(229, 57, 53, 0.6);
         }
-
+        
         .tip {
             font-size: 0.9em;
             color: var(--secondary-text-color);
@@ -353,8 +377,8 @@
             gap: 8px;
             padding: 12px 20px;
             font-size: 14px;
-            border: 1px solid var(--accent-color);
-            color: var(--accent-color);
+            border: 1px solid var(--text-color);
+            color: var(--text-color);
             background-color: transparent;
             border-radius: 15px;
             text-decoration: none;
@@ -364,6 +388,7 @@
 
         .contact-dev-button:hover {
             transform: translateY(-2px);
+            color: var(--text-color);
             background-color: rgba(220, 20, 60, 0.2);
             box-shadow: 0 6px 20px rgba(0, 0, 0, 0.7);
         }
@@ -390,7 +415,7 @@
             font-size: 1em;
             font-weight: bold;
             color: white;
-            background: linear-gradient(145deg, var(--accent-color), #a80f2d);
+            background: var(--button-gradient);
             border: none;
             border-radius: 15px;
             text-decoration: none;
@@ -400,7 +425,8 @@
 
         .channel-button:hover {
             transform: translateY(-2px);
-            background: linear-gradient(145deg, #ff0040, #b51133);
+            background: var(--button-gradient);
+            filter: brightness(1.2);
             box-shadow: 0 6px 20px rgba(229, 57, 53, 0.6);
         }
 
@@ -431,8 +457,8 @@
 <body>
     <div class="lock-screen" id="lock-screen">
         <div class="lock-screen-content">
-            <h1>ACCESS DENIED</h1>
-            <h2>Enter Access Code to Proceed</h2>
+            <h1 class="gradient-text">ACCESS DENIED</h1>
+            <h2 class="gradient-text">Enter Access Code to Proceed</h2>
             <input type="password" id="access-code" class="lock-screen-input" placeholder="Enter Code">
             <button class="unlock-button" onclick="checkCode()">UNLOCK</button>
             <p id="correct-message" class="correct-message"><i class="fas fa-check-circle"></i> Code Accepted!</p>
@@ -450,7 +476,7 @@
     </div>
 
     <div id="main-app" class="container">
-        <h1>
+        <h1 class="gradient-text">
             <i class="fab fa-whatsapp heading-icon"></i>
             <span>Zed Unban Vault</span>
         </h1>
@@ -462,7 +488,7 @@
 
         <div class="form-grid-container">
             <div class="form-left">
-                <h2>SELECT SUPPORT TYPE</h2>
+                <h2 class="gradient-text">SELECT SUPPORT TYPE</h2>
                 <select id="whatsappType">
                     <option value="regular">REGULAR WHATSAPP</option>
                     <option value="accessibility">WHATSAPP ACCESSIBILITY</option>
@@ -470,13 +496,13 @@
                     <option value="kaios_support">KAIOS SUPPORT</option>
                 </select>
 
-                <h2>SELECT UNBAN OPTION</h2>
+                <h2 class="gradient-text">SELECT UNBAN OPTION</h2>
                 <select id="banType">
                     <option value="normal">TEMPORARY UNBAN</option>
                     <option value="permanent">PERMANENT UNBAN</option>
                 </select>
 
-                <h2>SELECT DEVICE TYPE</h2>
+                <h2 class="gradient-text">SELECT DEVICE TYPE</h2>
                 <select id="deviceType">
                     <option value="Android">ANDROID</option>
                     <option value="iPhone">IPHONE</option>
@@ -484,13 +510,13 @@
             </div>
 
             <div class="form-right">
-                <h2>ENTER NUMBER</h2>
+                <h2 class="gradient-text">ENTER NUMBER</h2>
                 <input type="text" id="number" placeholder="eg: +923xxxxxxxx">
 
-                <h2>ENTER EMAIL</h2>
+                <h2 class="gradient-text">ENTER EMAIL</h2>
                 <input type="email" id="email" placeholder="e.g., yourname@example.com">
 
-                <h2>SELECT APPEAL PROMPT</h2>
+                <h2 class="gradient-text">SELECT APPEAL PROMPT</h2>
                 <select id="prompt">
                     <option value="1">PROMPT 1: COMPROMISED ACCOUNT APPEAL</option>
                     <option value="4">PROMPT 4: ACCOUNT REVIEW REQUEST</option>
@@ -507,7 +533,7 @@
         </div>
 
         <div class="channel-section">
-            <h3><i class="fas fa-bullhorn"></i> Get the latest updates</h3>
+            <h3 class="gradient-text"><i class="fas fa-bullhorn"></i> Get the latest updates</h3>
             <a href="https://whatsapp.com/channel/0029Vb6AKMf3mFY29jNWTA29" target="_blank" class="channel-button"><i class="fab fa-whatsapp"></i> Follow My Channel</a>
         </div>
 
@@ -532,7 +558,6 @@
         const incorrectMessage = document.getElementById('incorrect-message');
 
         function checkCode() {
-            // First, hide both messages to reset
             correctMessage.classList.remove('show');
             incorrectMessage.classList.remove('show');
 
@@ -544,12 +569,12 @@
                     setTimeout(() => {
                         lockScreen.style.display = 'none';
                     }, 500);
-                }, 1000); // Wait 1 second before fading out
+                }, 1000);
             } else {
                 incorrectMessage.classList.add('show');
                 setTimeout(() => {
                     incorrectMessage.classList.remove('show');
-                }, 3000); // Hide after 3 seconds
+                }, 3000);
             }
         }
 
@@ -568,41 +593,34 @@
         });
 
         // --- CORE LOGIC ---
-        const backgroundGradients = [
-            'linear-gradient(135deg, #FF6B6B, #556270)', // Sunset to Dark Grey
-            'linear-gradient(135deg, #1A2980, #26D0CE)', // Blue to Cyan
-            'linear-gradient(135deg, #0f0c29, #302b63, #24243e)', // Dark Night
-            'linear-gradient(135deg, #B993D6, #8CA6DB)', // Purple to Blue
-            'linear-gradient(135deg, #355C7D, #6794B0, #8CA6DB)', // Tri-color blue
+        const textGradients = [
+            'linear-gradient(135deg, #8A2BE2, #FF1493)', // Purple to Pink
+            'linear-gradient(135deg, #00ffff, #8A2BE2)', // Cyan to Purple
+            'linear-gradient(135deg, #FF6B6B, #556270)', // Sunset to Grey
+            'linear-gradient(135deg, #FDBB2D, #22C1C3)', // Orange to Blue
             'linear-gradient(135deg, #00C9FF, #92FE9D)', // Sky to Green
-            'linear-gradient(135deg, #B52F94, #A33F53)', // Pink to Red
+            'linear-gradient(135deg, #e53935, #a80f2d)', // Red to Dark Red
+            'linear-gradient(135deg, #4CAF50, #2196F3)', // Green to Blue
+            'linear-gradient(135deg, #1A2980, #26D0CE)' // Dark Blue to Cyan
         ];
-
-        function setRandomGradient() {
-            const randomGradient = backgroundGradients[Math.floor(Math.random() * backgroundGradients.length)];
-            const body = document.querySelector('body');
-            const lockScreenContent = document.querySelector('.lock-screen-content');
-            
-            // Set the gradient on the body to be used as a base
-            body.style.setProperty('background-image', 'none');
-            body.style.setProperty('background', randomGradient);
-            
-            // The lock screen content gets its own gradient for consistency
-            lockScreenContent.style.setProperty('background', randomGradient);
-        }
         
-        const accentColors = [
-            '#dc143c',
-            '#4caf50',
-            '#2196f3',
-            '#ff9800',
-            '#9c27b0',
-            '#f44336'
+        const buttonGradients = [
+            'linear-gradient(145deg, #a406e9, #f72c68)', // Purple to Pink
+            'linear-gradient(145deg, #00ffff, #8A2BE2)', // Cyan to Purple
+            'linear-gradient(145deg, #FF6B6B, #556270)', // Sunset to Grey
+            'linear-gradient(145deg, #FDBB2D, #22C1C3)', // Orange to Blue
+            'linear-gradient(145deg, #00C9FF, #92FE9D)', // Sky to Green
+            'linear-gradient(145deg, #e53935, #a80f2d)', // Red to Dark Red
+            'linear-gradient(145deg, #4CAF50, #2196F3)', // Green to Blue
+            'linear-gradient(145deg, #1A2980, #26D0CE)' // Dark Blue to Cyan
         ];
 
-        function setRandomAccentColor() {
-            const randomColor = accentColors[Math.floor(Math.random() * accentColors.length)];
-            document.documentElement.style.setProperty('--accent-color', randomColor);
+        function setRandomGradients() {
+            const randomTextGradient = textGradients[Math.floor(Math.random() * textGradients.length)];
+            const randomButtonGradient = buttonGradients[Math.floor(Math.random() * buttonGradients.length)];
+            
+            document.documentElement.style.setProperty('--text-gradient', randomTextGradient);
+            document.documentElement.style.setProperty('--button-gradient', randomButtonGradient);
         }
 
         function displayLocalTime() {
@@ -733,7 +751,6 @@
             let finalSubject;
             let finalBody;
 
-            // This block handles prompts with a subject line at the start of the string
             if (promptId === '7' || promptId === '1' || promptId === '4' || promptId === '5' || promptId === '8') {
                  const lines = message.split('\n');
                  finalSubject = encodeURIComponent(lines[0].replace('Subject: ', ''));
@@ -749,12 +766,11 @@
         }
 
         window.onload = function() {
-            setRandomGradient();
-            setRandomAccentColor();
+            setRandomGradients();
             displayLocalTime();
             displayBatteryStatus();
             checkAccess();
         }
     </script>
 </body>
-</html>
+    </html>
