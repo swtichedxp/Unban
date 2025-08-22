@@ -56,11 +56,11 @@
 
         /* --- Lock Screen Styles --- */
         .lock-screen {
-            position: absolute;
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            height: 100%;
+            height: 100vh;
             background: rgba(0, 0, 0, 0.5);
             display: flex;
             flex-direction: column;
@@ -70,6 +70,7 @@
             transition: opacity 0.5s ease-in-out;
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
+            padding: 20px;
         }
 
         .lock-screen-content {
@@ -92,8 +93,7 @@
         }
 
         .lock-screen-input {
-            width: 80%;
-            max-width: 300px;
+            width: 100%;
             padding: 15px;
             border-radius: 10px;
             border: 1px solid var(--crimson-accent);
@@ -113,8 +113,7 @@
 
         .unlock-button {
             margin-top: 15px;
-            width: 80%;
-            max-width: 300px;
+            width: 100%;
             padding: 15px;
             font-weight: bold;
             cursor: pointer;
@@ -129,6 +128,33 @@
         .unlock-button:hover {
             transform: translateY(-2px);
             background: linear-gradient(145deg, #ff0040, #b51133);
+        }
+
+        .correct-message, .incorrect-message {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 0.9em;
+            font-weight: bold;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+        }
+
+        .correct-message.show, .incorrect-message.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .correct-message {
+            background-color: #4caf50;
+            color: #fff;
+        }
+
+        .incorrect-message {
+            background-color: #f44336;
+            color: #fff;
         }
         
         /* --- Notification Styles --- */
@@ -366,6 +392,8 @@
             <h2>Enter Access Code to Proceed</h2>
             <input type="password" id="access-code" class="lock-screen-input" placeholder="Enter Code">
             <button class="unlock-button" onclick="checkCode()">UNLOCK</button>
+            <p id="correct-message" class="correct-message"><i class="fas fa-check-circle"></i> Code Accepted!</p>
+            <p id="incorrect-message" class="incorrect-message"><i class="fas fa-times-circle"></i> Incorrect Code. Try Again.</p>
         </div>
     </div>
 
@@ -452,16 +480,28 @@
         const accessCode = 'SPEC-TRE';
         const lockScreen = document.getElementById('lock-screen');
         const accessCodeInput = document.getElementById('access-code');
+        const correctMessage = document.getElementById('correct-message');
+        const incorrectMessage = document.getElementById('incorrect-message');
 
         function checkCode() {
+            // First, hide both messages to reset
+            correctMessage.classList.remove('show');
+            incorrectMessage.classList.remove('show');
+
             if (accessCodeInput.value.toUpperCase() === accessCode) {
+                correctMessage.classList.add('show');
                 localStorage.setItem('isUnlocked', 'true');
-                lockScreen.style.opacity = '0';
                 setTimeout(() => {
-                    lockScreen.style.display = 'none';
-                }, 500);
+                    lockScreen.style.opacity = '0';
+                    setTimeout(() => {
+                        lockScreen.style.display = 'none';
+                    }, 500);
+                }, 1000); // Wait 1 second before fading out
             } else {
-                alert('Incorrect code. Please try again.');
+                incorrectMessage.classList.add('show');
+                setTimeout(() => {
+                    incorrectMessage.classList.remove('show');
+                }, 3000); // Hide after 3 seconds
             }
         }
 
@@ -645,4 +685,4 @@
         }
     </script>
 </body>
-</html>
+    </html>
