@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Zed Unban Vault</title>
     <link rel="icon" href="favicon.ico">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzfeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap');
 
@@ -17,6 +17,8 @@
             --secondary-text-color: #aaaaaa;
             --button-gradient: linear-gradient(145deg, #a406e9, #f72c68);
             --text-gradient: linear-gradient(135deg, #8A2BE2, #FF1493);
+            --button-shadow: 0 4px 15px rgba(164, 6, 233, 0.4);
+            --button-shadow-hover: 0 6px 20px rgba(164, 6, 233, 0.6);
         }
 
         * {
@@ -33,14 +35,14 @@
             min-height: 100vh;
             padding: 20px;
             background-color: var(--dark-bg);
-            background-image: url('https://files.catbox.moe/tq2261.jpg');
+            background-image: url('https://files.catbox.moe/np5gt3.jpeg');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
             transition: background-image 0.5s ease-in-out;
             position: relative;
         }
-        
+
         .gradient-text {
             background: var(--text-gradient);
             -webkit-background-clip: text;
@@ -146,14 +148,14 @@
             border-radius: 15px;
             background: var(--button-gradient);
             transition: transform 0.3s, background-color 0.3s, box-shadow 0.3s;
-            box-shadow: 0 4px 15px rgba(0, 255, 255, 0.4);
+            box-shadow: var(--button-shadow);
         }
 
         .unlock-button:hover {
             transform: translateY(-2px);
             background: var(--button-gradient);
             filter: brightness(1.2);
-            box-shadow: 0 6px 20px rgba(0, 255, 255, 0.6);
+            box-shadow: var(--button-shadow-hover);
         }
 
         .lock-screen .contact-dev-button {
@@ -162,8 +164,7 @@
             transition: color 0.3s ease;
             font-size: 0.9em;
         }
-        
-        /* Updated to use the new color scheme */
+
         .lock-screen .contact-dev-button:hover {
             color: #00ffff;
         }
@@ -191,7 +192,7 @@
         .incorrect-message {
             color: #f44336;
         }
-        
+
         /* --- Notification Styles --- */
         #success-notification, #error-notification {
             position: fixed;
@@ -226,7 +227,7 @@
             opacity: 0;
             transform: translateX(-50%) translateY(-100px);
         }
-        
+
         h1 {
             color: var(--text-color);
             font-size: 2.5em;
@@ -249,7 +250,7 @@
             margin-top: 20px;
             margin-bottom: 15px;
         }
-        
+
         h2.gradient-text {
             background: var(--text-gradient);
             -webkit-background-clip: text;
@@ -328,7 +329,8 @@
             color: rgba(255, 255, 255, 0.4);
         }
 
-        .main-button {
+        .main-button,
+        .channel-button {
             background: var(--button-gradient);
             width: 100%;
             padding: 15px;
@@ -338,20 +340,21 @@
             border: none;
             border-radius: 15px;
             transition: transform 0.3s, background-color 0.3s, box-shadow 0.3s;
-            box-shadow: 0 4px 15px rgba(229, 57, 53, 0.4);
+            box-shadow: var(--button-shadow);
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
         }
 
-        .main-button:hover {
+        .main-button:hover,
+        .channel-button:hover {
             transform: translateY(-2px);
             background: var(--button-gradient);
             filter: brightness(1.2);
-            box-shadow: 0 6px 20px rgba(229, 57, 53, 0.6);
+            box-shadow: var(--button-shadow-hover);
         }
-        
+
         .tip {
             font-size: 0.9em;
             color: var(--secondary-text-color);
@@ -404,30 +407,6 @@
             margin: 0 0 15px;
             font-size: 1.2em;
             color: var(--text-color);
-        }
-
-        .channel-button {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            padding: 15px 30px;
-            font-size: 1em;
-            font-weight: bold;
-            color: white;
-            background: var(--button-gradient);
-            border: none;
-            border-radius: 15px;
-            text-decoration: none;
-            transition: transform 0.3s, box-shadow 0.3s;
-            box-shadow: 0 4px 15px rgba(229, 57, 53, 0.4);
-        }
-
-        .channel-button:hover {
-            transform: translateY(-2px);
-            background: var(--button-gradient);
-            filter: brightness(1.2);
-            box-shadow: 0 6px 20px rgba(229, 57, 53, 0.6);
         }
 
         /* --- Floating WhatsApp Icon --- */
@@ -593,34 +572,65 @@
         });
 
         // --- CORE LOGIC ---
-        const textGradients = [
-            'linear-gradient(135deg, #8A2BE2, #FF1493)', // Purple to Pink
-            'linear-gradient(135deg, #00ffff, #8A2BE2)', // Cyan to Purple
-            'linear-gradient(135deg, #FF6B6B, #556270)', // Sunset to Grey
-            'linear-gradient(135deg, #FDBB2D, #22C1C3)', // Orange to Blue
-            'linear-gradient(135deg, #00C9FF, #92FE9D)', // Sky to Green
-            'linear-gradient(135deg, #e53935, #a80f2d)', // Red to Dark Red
-            'linear-gradient(135deg, #4CAF50, #2196F3)', // Green to Blue
-            'linear-gradient(135deg, #1A2980, #26D0CE)' // Dark Blue to Cyan
-        ];
-        
-        const buttonGradients = [
-            'linear-gradient(145deg, #a406e9, #f72c68)', // Purple to Pink
-            'linear-gradient(145deg, #00ffff, #8A2BE2)', // Cyan to Purple
-            'linear-gradient(145deg, #FF6B6B, #556270)', // Sunset to Grey
-            'linear-gradient(145deg, #FDBB2D, #22C1C3)', // Orange to Blue
-            'linear-gradient(145deg, #00C9FF, #92FE9D)', // Sky to Green
-            'linear-gradient(145deg, #e53935, #a80f2d)', // Red to Dark Red
-            'linear-gradient(145deg, #4CAF50, #2196F3)', // Green to Blue
-            'linear-gradient(145deg, #1A2980, #26D0CE)' // Dark Blue to Cyan
-        ];
-
         function setRandomGradients() {
-            const randomTextGradient = textGradients[Math.floor(Math.random() * textGradients.length)];
-            const randomButtonGradient = buttonGradients[Math.floor(Math.random() * buttonGradients.length)];
-            
-            document.documentElement.style.setProperty('--text-gradient', randomTextGradient);
-            document.documentElement.style.setProperty('--button-gradient', randomButtonGradient);
+            const baseColors = [
+                '#a406e9', // Purple
+                '#00ffff', // Cyan
+                '#FF6B6B', // Red-Coral
+                '#FDBB2D', // Gold
+                '#00C9FF', // Sky Blue
+                '#4CAF50', // Green
+                '#1A2980'  // Dark Blue
+            ];
+
+            const randomBaseColor = baseColors [Math.floor(Math.random() * baseColors.length)];
+
+            // Generate a slightly different color for the text gradient end
+            const textColorEnd = adjustBrightness(randomBaseColor, 0.8);
+            const textGradient = `linear-gradient(135deg, ${randomBaseColor}, ${textColorEnd})`;
+
+            // Generate a darker shade for the button gradient end and shadow
+            const buttonColorEnd = darkenColor(randomBaseColor, 0.1);
+            const buttonGradient = `linear-gradient(145deg, ${randomBaseColor}, ${buttonColorEnd})`;
+            const buttonShadow = `0 4px 15px ${adjustAlpha(randomBaseColor, 0.4)}`;
+            const buttonShadowHover = `0 6px 20px ${adjustAlpha(randomBaseColor, 0.6)}`;
+
+            document.documentElement.style.setProperty('--text-gradient', textGradient);
+            document.documentElement.style.setProperty('--button-gradient', buttonGradient);
+            document.documentElement.style.setProperty('--button-shadow', buttonShadow);
+            document.documentElement.style.setProperty('--button-shadow-hover', buttonShadowHover);
+        }
+
+        function adjustBrightness(hexColor, factor) {
+            let color = hexColor.replace(/^#/, '');
+            let r = parseInt(color.substring(0, 2), 16);
+            let g = parseInt(color.substring(2, 4), 16);
+            let b = parseInt(color.substring(4, 6), 16);
+
+            r = Math.round(Math.min(255, Math.max(0, r * factor))).toString(16);
+            g = Math.round(Math.min(255, Math.max(0, g * factor))).toString(16);
+            b = Math.round(Math.min(255, Math.max(0, b * factor))).toString(16);
+
+            return `#${padZero(r)}${padZero(g)}${padZero(b)}`;
+        }
+
+        function darkenColor(hexColor, factor) {
+            return adjustBrightness(hexColor, 1 - factor);
+        }
+
+        function adjustAlpha(hexColor, alpha) {
+            let color = hexColor.replace(/^#/, '');
+            let r = parseInt(color.substring(0, 2), 16);
+            let g = parseInt(color.substring(2, 4), 16);
+            let b = parseInt(color.substring(4, 6), 16);
+
+            return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+        }
+
+        function padZero(str, len = 2) {
+            len = len || 2;
+            var zeros = new Array(len).join('0');
+            return (zeros + str).slice(-len);
         }
 
         function displayLocalTime() {
