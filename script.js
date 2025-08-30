@@ -11,7 +11,6 @@ function checkCode() {
 
     if (accessCodeInput.value.toUpperCase() === accessCode) {
         correctMessage.classList.add('show');
-        // Store the unlock status in local storage so it persists across reloads
         localStorage.setItem('isUnlocked', 'true');
         setTimeout(() => {
             lockScreen.style.opacity = '0';
@@ -27,25 +26,17 @@ function checkCode() {
     }
 }
 
-function checkAccess() {
-    // Check local storage on every page load to see if the user is already unlocked
-    if (localStorage.getItem('isUnlocked') === 'true') {
-        lockScreen.style.display = 'none';
-    } else {
-        lockScreen.style.display = 'flex';
-    }
-}
-
 // --- CORE LOGIC ---
+// I've removed the 'shadow' and 'hoverShadow' properties as per your request.
 const gradients = [
-    { text: 'linear-gradient(135deg, #FF6F00, #F06292)', button: 'linear-gradient(145deg, #FF6F00, #F06292)', shadow: '0 4px 15px rgba(255, 111, 0, 0.4)', hoverShadow: '0 6px 20px rgba(255, 111, 0, 0.6)' },
-    { text: 'linear-gradient(135deg, #00ffff, #8A2BE2)', button: 'linear-gradient(145deg, #00ffff, #8A2BE2)', shadow: '0 4px 15px rgba(0, 255, 255, 0.4)', hoverShadow: '0 6px 20px rgba(0, 255, 255, 0.6)' },
-    { text: 'linear-gradient(135deg, #FF6B6B, #556270)', button: 'linear-gradient(145deg, #FF6B6B, #556270)', shadow: '0 4px 15px rgba(255, 107, 107, 0.4)', hoverShadow: '0 6px 20px rgba(255, 107, 107, 0.6)' },
-    { text: 'linear-gradient(135deg, #FDBB2D, #22C1C3)', button: 'linear-gradient(145deg, #FDBB2D, #22C1C3)', shadow: '0 4px 15px rgba(253, 187, 45, 0.4)', hoverShadow: '0 6px 20px rgba(253, 187, 45, 0.6)' },
-    { text: 'linear-gradient(135deg, #00C9FF, #92FE9D)', button: 'linear-gradient(145deg, #00C9FF, #92FE9D)', shadow: '0 4px 15px rgba(0, 201, 255, 0.4)', hoverShadow: '0 6px 20px rgba(0, 201, 255, 0.6)' },
-    { text: 'linear-gradient(135deg, #e53935, #a80f2d)', button: 'linear-gradient(145deg, #e53935, #a80f2d)', shadow: '0 4px 15px rgba(229, 57, 53, 0.4)', hoverShadow: '0 6-px 20px rgba(229, 57, 53, 0.6)' },
-    { text: 'linear-gradient(135deg, #4CAF50, #2196F3)', button: 'linear-gradient(145deg, #4CAF50, #2196F3)', shadow: '0 4px 15px rgba(76, 175, 80, 0.4)', hoverShadow: '0 6px 20px rgba(76, 175, 80, 0.6)' },
-    { text: 'linear-gradient(135deg, #1A2980, #26D0CE)', button: 'linear-gradient(145deg, #1A2980, #26D0CE)', shadow: '0 4px 15px rgba(26, 41, 128, 0.4)', hoverShadow: '0 6px 20px rgba(26, 41, 128, 0.6)' }
+    { text: 'linear-gradient(135deg, #FF6F00, #F06292)', button: 'linear-gradient(145deg, #FF6F00, #F06292)' },
+    { text: 'linear-gradient(135deg, #00ffff, #8A2BE2)', button: 'linear-gradient(145deg, #00ffff, #8A2BE2)' },
+    { text: 'linear-gradient(135deg, #FF6B6B, #556270)', button: 'linear-gradient(145deg, #FF6B6B, #556270)' },
+    { text: 'linear-gradient(135deg, #FDBB2D, #22C1C3)', button: 'linear-gradient(145deg, #FDBB2D, #22C1C3)' },
+    { text: 'linear-gradient(135deg, #00C9FF, #92FE9D)', button: 'linear-gradient(145deg, #00C9FF, #92FE9D)' },
+    { text: 'linear-gradient(135deg, #e53935, #a80f2d)', button: 'linear-gradient(145deg, #e53935, #a80f2d)' },
+    { text: 'linear-gradient(135deg, #4CAF50, #2196F3)', button: 'linear-gradient(145deg, #4CAF50, #2196F3)' },
+    { text: 'linear-gradient(135deg, #1A2980, #26D0CE)', button: 'linear-gradient(145deg, #1A2980, #26D0CE)' }
 ];
 
 const prompts = {
@@ -128,7 +119,7 @@ function sendRequestViaEmail() {
 function updatePrompts() {
     const banType = document.getElementById('banType').value;
     const promptSelect = document.getElementById('prompt');
-    promptSelect.innerHTML = ''; // Clear existing options
+    promptSelect.innerHTML = '';
 
     const currentPrompts = prompts[banType];
     const sortedKeys = Object.keys(currentPrompts).sort((a, b) => a - b);
@@ -137,51 +128,19 @@ function updatePrompts() {
         const option = document.createElement('option');
         option.value = key;
         const promptText = currentPrompts[key].match(/Subject: [^\n]+/)?.[0] || `PROMPT ${key}`;
-        option.textContent = promptText;
+        option.textContent = promptText.replace('Subject: ', ''); // Clean up the option text
         promptSelect.appendChild(option);
     });
 }
 
-// Ensure all event listeners are set up after the DOM is ready
-document.addEventListener('DOMContentLoaded', () => {
-    // Event listener for the unlock button
-    const unlockButton = document.querySelector('.unlock-button');
-    if (unlockButton) {
-        unlockButton.addEventListener('click', checkCode);
-    }
-    accessCodeInput.addEventListener('keypress', function(event) {
-        if (event.key === 'Enter') {
-            checkCode();
-        }
-    });
-
-    // Event listener for the main button
-    const mainButton = document.querySelector('.main-button');
-    if (mainButton) {
-        mainButton.addEventListener('click', sendRequestViaEmail);
-    }
-
-    // Event listeners for select boxes and file input
-    document.getElementById('banType').addEventListener('change', updatePrompts);
-    document.getElementById('file-input').addEventListener('change', handleFileSelect);
-
-    // Initial calls on page load
-    setRandomGradients();
-    displayLocalTime();
-    displayBatteryStatus();
-    checkAccess();
-    updatePrompts();
-});
-
 // Helper functions for dynamic UI
 function setRandomGradients() {
-    // Select a random gradient from the array
     const randomGradient = gradients[Math.floor(Math.random() * gradients.length)];
-    // Apply the gradient values to the CSS variables
     document.documentElement.style.setProperty('--text-gradient', randomGradient.text);
     document.documentElement.style.setProperty('--button-gradient', randomGradient.button);
-    document.documentElement.style.setProperty('--button-shadow', randomGradient.shadow);
-    document.documentElement.style.setProperty('--button-shadow-hover', randomGradient.hoverShadow);
+    // Remove the following lines to eliminate button glows
+    // document.documentElement.style.setProperty('--button-shadow', randomGradient.shadow);
+    // document.documentElement.style.setProperty('--button-shadow-hover', randomGradient.hoverShadow);
 }
 
 function displayLocalTime() {
@@ -225,7 +184,55 @@ function displayBatteryStatus() {
     }
 }
 
-// Expose checkCode and sendRequestViaEmail to the global scope for the HTML onclick attributes
+// Ensure all event listeners are set up after the DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+    // Check if the user is already unlocked from a previous session
+    if (localStorage.getItem('isUnlocked') === 'true') {
+        lockScreen.style.display = 'none';
+    } else {
+        lockScreen.style.display = 'flex';
+    }
+
+    // Event listener for the unlock button
+    const unlockButton = document.querySelector('.unlock-button');
+    if (unlockButton) {
+        unlockButton.addEventListener('click', checkCode);
+    }
+
+    // Add event listener for Enter key on the access code input
+    if (accessCodeInput) {
+        accessCodeInput.addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                checkCode();
+            }
+        });
+    }
+
+    // Event listener for the main button
+    const mainButton = document.querySelector('.main-button');
+    if (mainButton) {
+        mainButton.addEventListener('click', sendRequestViaEmail);
+    }
+
+    // Event listeners for select boxes and file input
+    const banTypeSelect = document.getElementById('banType');
+    if (banTypeSelect) {
+        banTypeSelect.addEventListener('change', updatePrompts);
+    }
+    
+    const fileInput = document.getElementById('file-input');
+    if (fileInput) {
+        fileInput.addEventListener('change', handleFileSelect);
+    }
+
+    // Initial calls on page load
+    setRandomGradients();
+    displayLocalTime();
+    displayBatteryStatus();
+    updatePrompts();
+});
+
+// Expose functions to the global scope for the HTML onclick attributes
 window.checkCode = checkCode;
 window.sendRequestViaEmail = sendRequestViaEmail;
 window.handleFileSelect = handleFileSelect;
