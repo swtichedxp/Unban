@@ -11,6 +11,7 @@ function checkCode() {
 
     if (accessCodeInput.value.toUpperCase() === accessCode) {
         correctMessage.classList.add('show');
+        // Store the unlock status in local storage so it persists across reloads
         localStorage.setItem('isUnlocked', 'true');
         setTimeout(() => {
             lockScreen.style.opacity = '0';
@@ -27,6 +28,7 @@ function checkCode() {
 }
 
 function checkAccess() {
+    // Check local storage on every page load to see if the user is already unlocked
     if (localStorage.getItem('isUnlocked') === 'true') {
         lockScreen.style.display = 'none';
     } else {
@@ -173,7 +175,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Helper functions for dynamic UI
 function setRandomGradients() {
+    // Select a random gradient from the array
     const randomGradient = gradients[Math.floor(Math.random() * gradients.length)];
+    // Apply the gradient values to the CSS variables
     document.documentElement.style.setProperty('--text-gradient', randomGradient.text);
     document.documentElement.style.setProperty('--button-gradient', randomGradient.button);
     document.documentElement.style.setProperty('--button-shadow', randomGradient.shadow);
