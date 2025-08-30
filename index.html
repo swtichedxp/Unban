@@ -9,16 +9,18 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap');
 
+        /* Andromeda-inspired Color Scheme */
         :root {
-            --dark-bg: #181818;
-            --card-bg: rgba(255, 255, 255, 0.05);
-            --input-bg: rgba(255, 255, 255, 0.08);
-            --text-color: #dddddd;
-            --secondary-text-color: #aaaaaa;
-            --button-gradient: linear-gradient(145deg, #a406e9, #f72c68);
-            --text-gradient: linear-gradient(135deg, #8A2BE2, #FF1493);
-            --button-shadow: 0 4px 15px rgba(0, 255, 255, 0.4);
-            --button-shadow-hover: 0 6px 20px rgba(0, 255, 255, 0.6);
+            --dark-bg: #121212;
+            --card-bg: #202020;
+            --input-bg: rgba(255, 255, 255, 0.05);
+            --text-color: #f0f0f0;
+            --secondary-text-color: #b0b0b0;
+            --button-gradient: linear-gradient(145deg, #FF6F00, #F06292);
+            --text-gradient: linear-gradient(135deg, #FF6F00, #F06292);
+            --button-shadow: 0 4px 15px rgba(255, 111, 0, 0.4);
+            --button-shadow-hover: 0 6px 20px rgba(255, 111, 0, 0.6);
+            --border-color: rgba(255, 255, 255, 0.1);
         }
 
         * {
@@ -49,13 +51,12 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
             color: transparent;
-            /* Neumorphism removed */
             text-shadow: none; 
         }
 
         .container {
-            background: rgba(0, 0, 0, 0.4);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
             border-radius: 20px;
             padding: 30px 20px;
             max-width: 600px;
@@ -66,8 +67,36 @@
             backdrop-filter: blur(5px);
             -webkit-backdrop-filter: blur(5px);
         }
+        
+        /* General H1 and H2 styling */
+        h1, h2 {
+            margin: 0;
+            padding: 0;
+            font-weight: 500;
+        }
 
-        /* --- Lock Screen Styles --- */
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 25px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        h1 .heading-icon {
+            font-size: 1.5em;
+        }
+
+        h2 {
+            font-size: 1.1em;
+            margin-top: 20px;
+            margin-bottom: 15px;
+        }
+
+        /* Lock Screen Styles */
         .lock-screen {
             position: fixed;
             top: 0;
@@ -88,7 +117,7 @@
 
         .lock-screen-content {
             background: var(--card-bg);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--border-color);
             border-radius: 20px;
             padding: 30px 20px;
             max-width: 400px;
@@ -110,9 +139,14 @@
             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
             margin: 0;
         }
-
+        
         .lock-screen h2 {
-            margin: 0;
+            background: var(--text-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
+            text-shadow: none;
         }
 
         .lock-screen-input {
@@ -230,37 +264,6 @@
             transform: translateX(-50%) translateY(-100px);
         }
 
-        h1 {
-            color: var(--text-color);
-            font-size: 2.5em;
-            margin-bottom: 25px;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-
-        h1 .heading-icon {
-            font-size: 1.5em;
-        }
-
-        h2 {
-            color: var(--text-color);
-            font-size: 1.1em;
-            margin-top: 20px;
-            margin-bottom: 15px;
-        }
-
-        h2.gradient-text {
-            background: var(--text-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            color: transparent;
-        }
-
         #dynamic-info {
             font-size: 0.9em;
             color: var(--secondary-text-color);
@@ -288,12 +291,12 @@
             }
         }
 
-        select, input {
+        select, input[type="text"], input[type="email"] {
             width: 100%;
             padding: 18px;
             margin: 10px 0;
             border-radius: 15px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--border-color);
             background-color: var(--input-bg);
             color: var(--text-color);
             font-family: 'Orbitron', sans-serif;
@@ -433,7 +436,7 @@
             box-shadow: var(--button-shadow-hover);
         }
 
-        /* --- Floating WhatsApp Icon --- */
+        /* Floating WhatsApp Icon */
         .floating-whatsapp-icon {
             position: fixed;
             bottom: 25px;
@@ -456,7 +459,7 @@
             100% { text-shadow: 0 0 5px rgba(229, 57, 53, 0.5); }
         }
 
-        /* --- New Image Upload Styles --- */
+        /* Image Upload Styles */
         .file-upload-box {
             display: flex;
             flex-direction: column;
@@ -495,7 +498,7 @@
             color: var(--text-color);
             text-align: center;
         }
-
+        
         /* Hide the default file input */
         #file-input {
             display: none;
@@ -651,10 +654,10 @@
         // --- CORE LOGIC ---
         const gradients = [
             {
-                text: 'linear-gradient(135deg, #8A2BE2, #FF1493)', // Purple to Pink
-                button: 'linear-gradient(145deg, #a406e9, #f72c68)',
-                shadow: '0 4px 15px rgba(164, 6, 233, 0.4)',
-                hoverShadow: '0 6px 20px rgba(164, 6, 233, 0.6)'
+                text: 'linear-gradient(135deg, #FF6F00, #F06292)', // Andromeda Orange to Pink
+                button: 'linear-gradient(145deg, #FF6F00, #F06292)',
+                shadow: '0 4px 15px rgba(255, 111, 0, 0.4)',
+                hoverShadow: '0 6px 20px rgba(255, 111, 0, 0.6)'
             },
             {
                 text: 'linear-gradient(135deg, #00ffff, #8A2BE2)', // Cyan to Purple
@@ -839,11 +842,13 @@
 
             const recipientEmail = emailMap[whatsappType];
 
-            let finalSubject = "Banned Account Appeal - Review Requested";
-            let finalBody = message;
+            let finalSubject = prompts[banType][promptId].split('\n')[0].replace('Subject: ', '');
+            if (!finalSubject) {
+                finalSubject = 'Unban Request';
+            }
 
-            // This part handles the mailto link, which can't attach files.
-            // The user will have to manually attach the file.
+            const finalBody = message;
+
             const mailto = `mailto:${recipientEmail}?subject=${encodeURIComponent(finalSubject)}&body=${encodeURIComponent(finalBody)}`;
             window.location.href = mailto;
         }
@@ -860,7 +865,8 @@
             sortedKeys.forEach(key => {
                 const option = document.createElement('option');
                 option.value = key;
-                option.textContent = currentPrompts[key].match(/PROMPT \d+: [^\n]+/)?.[0] || 'Prompt ' + key;
+                const promptText = currentPrompts[key].match(/PROMPT \d+: [^\n]+/)?.[0] || 'Prompt ' + key;
+                option.textContent = promptText;
                 promptSelect.appendChild(option);
             });
         }
@@ -877,4 +883,4 @@
         }
     </script>
 </body>
-</html>
+    </html>
