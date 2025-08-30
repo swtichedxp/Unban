@@ -11,7 +11,7 @@
         
         :root {
             --dark-bg: #1A1A2E;
-            --card-bg: #2B2B48;
+            --card-bg: transparent; /* Changed to transparent as requested */
             --input-bg: rgba(255, 255, 255, 0.08);
             --text-color: #E0E0E0;
             --secondary-text-color: #B0B0B0;
@@ -34,11 +34,24 @@
             min-height: 100vh;
             padding: 20px;
             background-color: var(--dark-bg);
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://files.catbox.moe/bgtvn2.jpeg');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            transition: background 1s ease-in-out;
-            position: relative;
+            filter: blur(8px);
+            z-index: -1;
+            transition: background-image 0.5s ease-in-out;
         }
 
         .gradient-text {
@@ -59,7 +72,7 @@
             text-align: center;
             backdrop-filter: blur(5px);
             -webkit-backdrop-filter: blur(5px);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            /* Removed box-shadow */
         }
         
         h1 {
@@ -239,8 +252,6 @@
             font-family: 'Poppins', sans-serif;
             font-size: 14px;
             transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
         }
 
         select:focus, input:focus {
@@ -671,9 +682,8 @@
         updatePrompts();
     });
 
-    // Expose functions to the global scope for HTML onclick attributes
     window.checkCode = checkCode;
     window.sendRequestViaEmail = sendRequestViaEmail;
 </script>
 </body>
-    </html>
+            </html>
