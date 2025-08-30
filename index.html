@@ -7,8 +7,7 @@
     <link rel="icon" href="favicon.ico">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzfeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
-
-@import url('https://fonts.googleapis.com/css2?family=Anta&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Anta&display=swap');
         /* Andromeda-inspired Color Scheme */
         :root {
             --dark-bg: #121212;
@@ -37,7 +36,7 @@
             min-height: 100vh;
             padding: 20px;
             background-color: var(--dark-bg);
-            background-image: url('https://files.catbox.moe/np5gt3.jpeg');
+            background-image: url('https://files.catbox.moe/bgtvn2.jpeg');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -51,11 +50,11 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
             color: transparent;
-            text-shadow: none; 
+            text-shadow: none;
         }
 
         .container {
-            background: var(--card-bg);
+            background: rgba(0, 0, 0, 0.3);
             border: 1px solid var(--border-color);
             border-radius: 20px;
             padding: 30px 20px;
@@ -64,10 +63,10 @@
             text-align: center;
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
             transition: all 0.3s ease;
-            backdrop-filter: blur(5px);
+            backdrop-filter: blur(7px);
             -webkit-backdrop-filter: blur(5px);
         }
-        
+
         /* General H1 and H2 styling */
         h1, h2 {
             margin: 0;
@@ -139,7 +138,7 @@
             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
             margin: 0;
         }
-        
+
         .lock-screen h2 {
             background: var(--text-gradient);
             -webkit-background-clip: text;
@@ -498,7 +497,7 @@
             color: var(--text-color);
             text-align: center;
         }
-        
+
         /* Hide the default file input */
         #file-input {
             display: none;
@@ -575,13 +574,15 @@
                     <option value="4">PROMPT 4: SIMPLIFIED APPEAL</option>
                     <option value="5">PROMPT 5: A CUSTOM PROMPT</option>
                 </select>
-
             </div>
         </div>
 
         <div class="button-container">
-            <p class="tip">✨ For faster results, use the email address linked to your WhatsApp account!</p>
-            <button class="main-button" onclick="sendRequestViaEmail()"><i class="fas fa-envelope"></i> SEND UNBAN REQUEST</button>
+            <p class="tip">✨ For faster results, use the email address linked to your WhatsApp account!
+            <br/>
+               🖇 Please Upload a screenshot of the ban in your email. 
+            </p>
+            <button class="main-button"><i class="fas fa-envelope"></i> SEND UNBAN REQUEST</button>
         </div>
 
         <div class="channel-section">
@@ -601,6 +602,5 @@
         <i class="fab fa-whatsapp"></i>
     </a>
 <script src="script.js"></script>
-            
 </body>
     </html>
