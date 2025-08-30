@@ -36,7 +36,7 @@
             min-height: 100vh;
             padding: 20px;
             background-color: var(--dark-bg);
-            background-image: url('https://files.catbox.moe/bgtvn2.jpeg');
+            background-image: url('https://files.catbox.moe/np5gt3.jpeg');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -54,7 +54,7 @@
         }
 
         .container {
-            background: rgba(0, 0, 0, 0.3);
+            background: var(--card-bg);
             border: 1px solid var(--border-color);
             border-radius: 20px;
             padding: 30px 20px;
@@ -63,7 +63,7 @@
             text-align: center;
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
             transition: all 0.3s ease;
-            backdrop-filter: blur(7px);
+            backdrop-filter: blur(5px);
             -webkit-backdrop-filter: blur(5px);
         }
 
@@ -578,11 +578,8 @@
         </div>
 
         <div class="button-container">
-            <p class="tip">✨ For faster results, use the email address linked to your WhatsApp account!
-            <br/>
-               🖇 Please Upload a screenshot of the ban in your email. 
-            </p>
-            <button class="main-button"><i class="fas fa-envelope"></i> SEND UNBAN REQUEST</button>
+            <p class="tip">✨ For faster results, use the email address linked to your WhatsApp account!</p>
+            <button class="main-button" onclick="sendRequestViaEmail()"><i class="fas fa-envelope"></i> SEND UNBAN REQUEST</button>
         </div>
 
         <div class="channel-section">
