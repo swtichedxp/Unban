@@ -7,19 +7,17 @@
     <link rel="icon" href="favicon.ico">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzfeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Anta&display=swap');
-        /* Andromeda-inspired Color Scheme */
+        @import url('https://fonts.googleapis.com/css2?family=Anta&family=Poppins:wght@400;600&display=swap');
+        
         :root {
-            --dark-bg: #121212;
-            --card-bg: #202020;
-            --input-bg: rgba(255, 255, 255, 0.05);
-            --text-color: #f0f0f0;
-            --secondary-text-color: #b0b0b0;
-            --button-gradient: linear-gradient(145deg, #FF6F00, #F06292);
+            --dark-bg: #1A1A2E;
+            --card-bg: #2B2B48;
+            --input-bg: rgba(255, 255, 255, 0.08);
+            --text-color: #E0E0E0;
+            --secondary-text-color: #B0B0B0;
             --text-gradient: linear-gradient(135deg, #FF6F00, #F06292);
-            --button-shadow: 0 4px 15px rgba(255, 111, 0, 0.4);
-            --button-shadow-hover: 0 6px 20px rgba(255, 111, 0, 0.6);
-            --border-color: rgba(255, 255, 255, 0.1);
+            --button-gradient: linear-gradient(145deg, #FF6F00, #F06292);
+            --border-color: rgba(255, 255, 255, 0.15);
         }
 
         * {
@@ -28,7 +26,7 @@
 
         body {
             margin: 0;
-            font-family: 'Anta', sans-serif;
+            font-family: 'Poppins', sans-serif;
             color: var(--text-color);
             display: flex;
             justify-content: center;
@@ -36,11 +34,10 @@
             min-height: 100vh;
             padding: 20px;
             background-color: var(--dark-bg);
-            background-image: url('https://files.catbox.moe/np5gt3.jpeg');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            transition: background-image 0.5s ease-in-out;
+            transition: background 1s ease-in-out;
             position: relative;
         }
 
@@ -50,7 +47,6 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
             color: transparent;
-            text-shadow: none;
         }
 
         .container {
@@ -58,26 +54,18 @@
             border: 1px solid var(--border-color);
             border-radius: 20px;
             padding: 30px 20px;
-            max-width: 600px;
+            max-width: 650px;
             width: 100%;
             text-align: center;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
-            transition: all 0.3s ease;
             backdrop-filter: blur(5px);
             -webkit-backdrop-filter: blur(5px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
         }
-
-        /* General H1 and H2 styling */
-        h1, h2 {
-            margin: 0;
-            padding: 0;
-            font-weight: 500;
-        }
-
+        
         h1 {
+            font-family: 'Anta', sans-serif;
             font-size: 2.5em;
             margin-bottom: 25px;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -85,33 +73,29 @@
             gap: 10px;
         }
 
-        h1 .heading-icon {
-            font-size: 1.5em;
-        }
-
         h2 {
             font-size: 1.1em;
             margin-top: 20px;
             margin-bottom: 15px;
+            font-weight: 600;
         }
 
-        /* Lock Screen Styles */
         .lock-screen {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100vh;
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(0, 0, 0, 0.6);
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             z-index: 999;
-            transition: opacity 0.5s ease-in-out;
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             padding: 20px;
+            transition: opacity 0.5s ease-in-out;
         }
 
         .lock-screen-content {
@@ -122,30 +106,18 @@
             max-width: 400px;
             width: 100%;
             text-align: center;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 15px;
         }
 
-        .lock-screen h1 {
+        .lock-screen h1, .lock-screen h2 {
             background: var(--text-gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            background-clip: text;
-            color: transparent;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-            margin: 0;
-        }
-
-        .lock-screen h2 {
-            background: var(--text-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            color: transparent;
-            text-shadow: none;
         }
 
         .lock-screen-input {
@@ -155,18 +127,16 @@
             border: 1px solid rgba(255, 255, 255, 0.2);
             background-color: var(--input-bg);
             color: var(--text-color);
-            font-family: 'Orbitron', sans-serif;
+            font-family: 'Poppins', sans-serif;
             font-size: 16px;
             text-align: center;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            transition: border-color 0.3s ease, background-color 0.3s ease;
         }
 
         .lock-screen-input:focus {
             outline: none;
             border-color: #ffffff;
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+            background-color: rgba(255, 255, 255, 0.15);
         }
 
         .lock-screen-input::placeholder {
@@ -182,28 +152,13 @@
             border: none;
             border-radius: 15px;
             background: var(--button-gradient);
-            transition: transform 0.3s, background-color 0.3s, box-shadow 0.3s;
-            box-shadow: var(--button-shadow);
+            transition: transform 0.3s;
         }
 
         .unlock-button:hover {
             transform: translateY(-2px);
-            background: var(--button-gradient);
-            filter: brightness(1.2);
-            box-shadow: var(--button-shadow-hover);
         }
-
-        .lock-screen .contact-dev-button {
-            text-decoration: none;
-            color: var(--secondary-text-color);
-            transition: color 0.3s ease;
-            font-size: 0.9em;
-        }
-
-        .lock-screen .contact-dev-button:hover {
-            color: #00ffff;
-        }
-
+        
         .correct-message, .incorrect-message {
             margin: 0;
             padding: 0;
@@ -221,19 +176,18 @@
         }
 
         .correct-message {
-            color: #4caf50;
+            color: #4CAF50;
         }
 
         .incorrect-message {
-            color: #f44336;
+            color: #F44336;
         }
 
-        /* --- Notification Styles --- */
         #success-notification, #error-notification {
             position: fixed;
-            top: 20px;
+            bottom: 20px;
             left: 50%;
-            transform: translateX(-50%) translateY(-100px);
+            transform: translateX(-50%) translateY(100px);
             z-index: 1000;
             padding: 15px 30px;
             border-radius: 15px;
@@ -246,7 +200,7 @@
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             box-shadow: none;
-            transition: transform 0.5s ease-out, opacity 0.5s ease-out, background 1s ease-in-out;
+            transition: transform 0.5s ease-out, opacity 0.5s ease-out;
         }
 
         #success-notification.show, #error-notification.show {
@@ -254,42 +208,26 @@
             opacity: 1;
         }
 
-        #success-notification.fade-to-glass, #error-notification.fade-to-glass {
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        #success-notification.dissolve, #error-notification.dissolve {
-            opacity: 0;
-            transform: translateX(-50%) translateY(-100px);
-        }
-
         #dynamic-info {
             font-size: 0.9em;
             color: var(--secondary-text-color);
             margin-bottom: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
         }
-
-        #dynamic-info p {
-            margin: 5px 0;
-        }
-
+        
         .form-grid-container {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
+            grid-template-columns: 1fr;
+            gap: 25px;
             text-align: left;
             margin-bottom: 20px;
         }
 
-        @media (max-width: 500px) {
+        @media (min-width: 600px) {
             .form-grid-container {
-                grid-template-columns: 1fr;
+                grid-template-columns: 1fr 1fr;
             }
         }
-
+        
         select, input[type="text"], input[type="email"] {
             width: 100%;
             padding: 18px;
@@ -298,9 +236,8 @@
             border: 1px solid var(--border-color);
             background-color: var(--input-bg);
             color: var(--text-color);
-            font-family: 'Orbitron', sans-serif;
+            font-family: 'Poppins', sans-serif;
             font-size: 14px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
             transition: all 0.3s ease;
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
@@ -309,14 +246,7 @@
         select:focus, input:focus {
             outline: none;
             border-color: #ffffff;
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
-        }
-
-        .button-container {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin-top: 20px;
+            background-color: rgba(255, 255, 255, 0.1);
         }
 
         select {
@@ -332,7 +262,7 @@
         input::placeholder {
             color: rgba(255, 255, 255, 0.4);
         }
-
+        
         .main-button {
             background: var(--button-gradient);
             width: 100%;
@@ -342,8 +272,7 @@
             color: white;
             border: none;
             border-radius: 15px;
-            transition: transform 0.3s, background-color 0.3s, box-shadow 0.3s;
-            box-shadow: var(--button-shadow);
+            transition: transform 0.3s;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -352,9 +281,6 @@
 
         .main-button:hover {
             transform: translateY(-2px);
-            background: var(--button-gradient);
-            filter: brightness(1.2);
-            box-shadow: var(--button-shadow-hover);
         }
 
         .tip {
@@ -388,16 +314,13 @@
             border-radius: 15px;
             text-decoration: none;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
         }
 
         .contact-dev-button:hover {
             transform: translateY(-2px);
-            color: var(--text-color);
-            background-color: rgba(220, 20, 60, 0.2);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.7);
+            background-color: rgba(255, 255, 255, 0.1);
         }
-
+        
         .channel-section {
             margin-top: 30px;
             padding-top: 20px;
@@ -424,83 +347,25 @@
             border: none;
             border-radius: 15px;
             text-decoration: none;
-            transition: transform 0.3s, box-shadow 0.3s;
-            box-shadow: var(--button-shadow);
+            transition: transform 0.3s;
         }
 
         .channel-button:hover {
             transform: translateY(-2px);
-            background: var(--button-gradient);
-            filter: brightness(1.2);
-            box-shadow: var(--button-shadow-hover);
         }
 
-        /* Floating WhatsApp Icon */
         .floating-whatsapp-icon {
             position: fixed;
             bottom: 25px;
             right: 25px;
             z-index: 998;
             font-size: 40px;
-            color: white;
-            transition: transform 0.3s ease, text-shadow 0.3s ease;
-            animation: pulse-glow 2s infinite;
+            color: #25D366;
+            transition: transform 0.3s ease;
         }
 
         .floating-whatsapp-icon:hover {
             transform: scale(1.1);
-            animation: none;
-        }
-
-        @keyframes pulse-glow {
-            0% { text-shadow: 0 0 5px rgba(229, 57, 53, 0.5); }
-            50% { text-shadow: 0 0 15px var(--accent-color), 0 0 20px rgba(229, 57, 53, 0.8); }
-            100% { text-shadow: 0 0 5px rgba(229, 57, 53, 0.5); }
-        }
-
-        /* Image Upload Styles */
-        .file-upload-box {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            margin: 10px 0;
-            border: 2px dashed rgba(255, 255, 255, 0.3);
-            border-radius: 15px;
-            background-color: rgba(255, 255, 255, 0.05);
-            cursor: pointer;
-            transition: background-color 0.3s ease, border-color 0.3s ease;
-        }
-
-        .file-upload-box:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-            border-color: rgba(255, 255, 255, 0.5);
-        }
-
-        .file-upload-box i {
-            font-size: 2em;
-            color: var(--secondary-text-color);
-            margin-bottom: 10px;
-        }
-
-        .file-upload-box p {
-            margin: 0;
-            font-size: 0.9em;
-            color: var(--secondary-text-color);
-        }
-
-        #file-name {
-            margin-top: 10px;
-            font-size: 0.8em;
-            font-style: italic;
-            color: var(--text-color);
-            text-align: center;
-        }
-
-        /* Hide the default file input */
-        #file-input {
-            display: none;
         }
     </style>
 </head>
@@ -510,7 +375,7 @@
             <h1 class="gradient-text">ACCESS DENIED</h1>
             <h2 class="gradient-text">Enter Access Code to Proceed</h2>
             <input type="password" id="access-code" class="lock-screen-input" placeholder="Enter Code">
-            <button class="unlock-button" onclick="checkCode()">UNLOCK</button>
+            <button class="unlock-button">UNLOCK</button>
             <p id="correct-message" class="correct-message"><i class="fas fa-check-circle"></i> Code Accepted!</p>
             <p id="incorrect-message" class="incorrect-message"><i class="fas fa-times-circle"></i> Incorrect Code. Try Again.</p>
             <a href="https://t.me/zedside" target="_blank" class="contact-dev-button">Contact Dev for Code</a>
@@ -579,7 +444,7 @@
 
         <div class="button-container">
             <p class="tip">✨ For faster results, use the email address linked to your WhatsApp account!</p>
-            <button class="main-button"><i class="fas fa-envelope"></i> SEND UNBAN REQUEST</button>
+            <button class="main-button" id="send-request-btn"><i class="fas fa-envelope"></i> SEND UNBAN REQUEST</button>
         </div>
 
         <div class="channel-section">
@@ -598,6 +463,217 @@
     <a href="https://whatsapp.com/channel/0029Vb6AKMf3mFY29jNWTA29" target="_blank" class="floating-whatsapp-icon">
         <i class="fab fa-whatsapp"></i>
     </a>
-<script src="script.js"></script>
+    
+---
+### Corrected JavaScript
+<script>
+    // --- Lock Screen Logic ---
+    const accessCode = 'SPEC-TRE';
+    const lockScreen = document.getElementById('lock-screen');
+    const accessCodeInput = document.getElementById('access-code');
+    const correctMessage = document.getElementById('correct-message');
+    const incorrectMessage = document.getElementById('incorrect-message');
+
+    function checkCode() {
+        correctMessage.classList.remove('show');
+        incorrectMessage.classList.remove('show');
+
+        if (accessCodeInput.value.toUpperCase() === accessCode) {
+            correctMessage.classList.add('show');
+            localStorage.setItem('isUnlocked', 'true');
+            setTimeout(() => {
+                lockScreen.style.opacity = '0';
+                setTimeout(() => {
+                    lockScreen.style.display = 'none';
+                }, 500);
+            }, 1000);
+        } else {
+            incorrectMessage.classList.add('show');
+            setTimeout(() => {
+                incorrectMessage.classList.remove('show');
+            }, 3000);
+        }
+    }
+
+    // --- CORE LOGIC ---
+    const gradients = [
+        { text: 'linear-gradient(135deg, #FF6F00, #F06292)', button: 'linear-gradient(145deg, #FF6F00, #F06292)' },
+        { text: 'linear-gradient(135deg, #00ffff, #8A2BE2)', button: 'linear-gradient(145deg, #00ffff, #8A2BE2)' },
+        { text: 'linear-gradient(135deg, #FF6B6B, #556270)', button: 'linear-gradient(145deg, #FF6B6B, #556270)' },
+        { text: 'linear-gradient(135deg, #FDBB2D, #22C1C3)', button: 'linear-gradient(145deg, #FDBB2D, #22C1C3)' },
+        { text: 'linear-gradient(135deg, #00C9FF, #92FE9D)', button: 'linear-gradient(145deg, #00C9FF, #92FE9D)' },
+        { text: 'linear-gradient(135deg, #e53935, #a80f2d)', button: 'linear-gradient(145deg, #e53935, #a80f2d)' },
+        { text: 'linear-gradient(135deg, #4CAF50, #2196F3)', button: 'linear-gradient(145deg, #4CAF50, #2196F3)' },
+        { text: 'linear-gradient(135deg, #1A2980, #26D0CE)', button: 'linear-gradient(145deg, #1A2980, #26D0CE)' }
+    ];
+
+    const prompts = {
+        normal: {
+            1: "Subject: Urgent Appeal for Banned WhatsApp Account - Compromised Account\n\nDear WhatsApp Support Team,\n\nI hope this message finds you well. I am writing to urgently appeal for the unbanning of my WhatsApp number, as it appears to have been compromised.\n\nI recently discovered that my WhatsApp account has been banned, and I am unable to access or use the application. This ban has come as a complete surprise to me, as I have always used WhatsApp responsibly and have not engaged in any activities that violate the platform's terms of service or community guidelines.\n\nI suspect that my account may have been hacked or used without my knowledge, leading to the ban. I take the security of my account very seriously and have taken all necessary precautions to protect it. However, it seems that unauthorized activity has occurred, resulting in the ban.\n\nWhatsApp plays a crucial role in my personal and professional life, allowing me to stay connected with loved ones, colleagues, and clients. Its ban has caused significant distress and inconvenience, hindering my ability to communicate effectively.\n\nI kindly request your immediate attention and assistance in investigating this matter further. I am more than willing to provide any additional information or evidence that may help resolve this issue. I understand the importance of maintaining a safe and secure platform for all users, and I am committed to cooperating fully to rectify this situation.\n\nPlease consider lifting the ban on my WhatsApp number as soon as possible, allowing me to regain access to my account and resume normal usage. I assure you that I will take all necessary steps to prevent any future unauthorized access and will adhere to WhatsApp's policies and guidelines.\n\nI appreciate your understanding and prompt action in resolving this matter. WhatsApp has been an integral part of my daily life, and I sincerely hope to regain access to my account soon.\n\nThank you for your attention and support.\n\nMy number: NUMBER_HERE\n\nDevice Type: DEVICE_HERE\nEmail Address: EMAIL_HERE",
+            2: "Subject: Appeal to Unban My WhatsApp Account\n\nDear WhatsApp Support Team,\n\nI recently found out that my WhatsApp account has been banned. I think it might be because I sent many messages. I understand this may have triggered WhatsApp’s spam filters.\n\nI’m sorry for any trouble caused. My actions were not meant to break WhatsApp’s rules. I’ll be more careful with my messaging in the future. Please review my account and consider unbanning it.\n\nThank you for your understanding.\nBest regards,\n[Your Phone Number]\n\nDevice Type: DEVICE_HERE\nEmail Address: EMAIL_HERE",
+            3: "My number NUMBER_HERE got banned but I have not violated any terms. Please reinstate access.\n\nDevice Type: DEVICE_HERE\nEmail Address: EMAIL_HERE",
+            4: "Subject: Urgent Review Requested for Permanently Banned Account\n\nHello WhatsApp Team,\n\nI am writing to request a review regarding my WhatsApp account that has been permanently blocked due to alleged activities violating WhatsApp’s Terms of Service. I would like to emphasize that I have never committed any violations nor infringed upon other users.\n\nI have always made every effort to comply with WhatsApp’s Terms of Service as stated on the official website. Therefore, I believe the blocking of my account is a misunderstanding.\n\nI kindly ask the WhatsApp team to review my account again and restore it as soon as possible, as I really need this account for communication.\nMy WhatsApp number: NUMBER_HERE\n\nThank you for the attention and assistance from the WhatsApp team.\n\nDevice Type: DEVICE_HERE\nEmail Address: EMAIL_HERE",
+            5: "Subject: Banned Account Appeal - Review Requested\n\nDear WhatsApp Support Team,\n\nMy account with the number NUMBER_HERE has been banned. I believe this is a mistake, as I have always used WhatsApp responsibly and in accordance with your policies. I kindly request a thorough review of my account to reinstate my access as soon as possible.\n\nThank you for your time and consideration.\n\nBest regards,\n\nDevice Type: DEVICE_HERE\nEmail Address: EMAIL_HERE"
+        },
+        permanent: {
+            1: "Dear WhatsApp Support, I humbly request a second chance for my number NUMBER_HERE. I understand the policies and promise to follow all rules henceforth.\n\nDevice Type: DEVICE_HERE\nEmail Address: EMAIL_HERE",
+            2: "My number NUMBER_HERE is permanently banned. I deeply regret any violation. Kindly give me one more opportunity.\n\nDevice Type: DEVICE_HERE\nEmail Address: EMAIL_HERE",
+            3: "This is a request to reconsider the permanent ban on my number NUMBER_HERE. I assure compliance in the future.\n\nDevice Type: DEVICE_HERE\nEmail Address: EMAIL_HERE",
+            4: "Subject: Urgent Review Requested for Permanently Banned Account\n\nHello WhatsApp Team,\n\nI am writing to request a review regarding my WhatsApp account that has been permanently blocked due to alleged activities violating WhatsApp’s Terms of Service. I would like to emphasize that I have never committed any violations nor infringed upon other users.\n\nI have always made every effort to comply with WhatsApp’s Terms of Service as stated on the official website. Therefore, I believe the blocking of my account is a misunderstanding.\n\nI kindly ask the WhatsApp team to review my account again and restore it as soon as possible, as I really need this account for communication.\nMy WhatsApp number: NUMBER_HERE\n\nThank you for the attention and assistance from the WhatsApp team.\n\nDevice Type: DEVICE_HERE\nEmail Address: EMAIL_HERE"
+        }
+    };
+
+    const emailMap = {
+        'regular': 'support@support.whatsapp.com',
+        'android_support': 'android-support@support.whatsapp.com',
+        'whatsapp_business': 'smb_support@support.whatsapp.com',
+        'accessibility': 'Accessibility@support.whatsapp.com'
+    };
+
+    function validateInputs(number, email) {
+        if (!number.startsWith('+') || number.length < 7) {
+            alert('Please enter a valid number like +923xxxxxxxx.');
+            return false;
+        }
+
+        if (email === '' || !email.includes('@')) {
+            alert('Please enter a valid email address.');
+            return false;
+        }
+        return true;
+    }
+
+    function sendRequestViaEmail() {
+        const number = document.getElementById('number').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const deviceType = document.getElementById('deviceType').value.trim();
+        const promptId = document.getElementById('prompt').value;
+        const banType = document.getElementById('banType').value;
+        const whatsappType = document.getElementById('whatsappType').value;
+
+        if (!validateInputs(number, email)) return;
+
+        let message = prompts[banType] && prompts[banType][promptId];
+
+        if (!message) {
+            alert("Could not find the selected prompt. Please try again.");
+            return;
+        }
+
+        message = message.replaceAll('NUMBER_HERE', number)
+                         .replaceAll('DEVICE_HERE', deviceType)
+                         .replaceAll('EMAIL_HERE', email);
+
+        const recipientEmail = emailMap[whatsappType];
+        const finalSubject = message.split('\n')[0].includes('Subject:') ? message.split('\n')[0].replace('Subject: ', '') : 'Unban Request';
+        const finalBody = message;
+
+        const mailto = `mailto:${recipientEmail}?subject=${encodeURIComponent(finalSubject)}&body=${encodeURIComponent(finalBody)}`;
+        window.location.href = mailto;
+    }
+
+    function updatePrompts() {
+        const banType = document.getElementById('banType').value;
+        const promptSelect = document.getElementById('prompt');
+        promptSelect.innerHTML = '';
+
+        const currentPrompts = prompts[banType];
+        const sortedKeys = Object.keys(currentPrompts).sort((a, b) => a - b);
+
+        sortedKeys.forEach(key => {
+            const option = document.createElement('option');
+            option.value = key;
+            const promptText = currentPrompts[key].match(/Subject: [^\n]+/)?.[0] || `PROMPT ${key}`;
+            option.textContent = promptText.replace('Subject: ', '');
+            promptSelect.appendChild(option);
+        });
+    }
+
+    function setRandomGradients() {
+        const randomGradient = gradients[Math.floor(Math.random() * gradients.length)];
+        document.documentElement.style.setProperty('--text-gradient', randomGradient.text);
+        document.documentElement.style.setProperty('--button-gradient', randomGradient.button);
+    }
+
+    function displayLocalTime() {
+        const options = { hour: '2-digit', minute: '2-digit', hour12: false, timeZoneName: 'short' };
+        const localTimeElement = document.getElementById('localTime');
+        if (localTimeElement) {
+            localTimeElement.innerHTML = `<i class="far fa-clock"></i> Current time: ${new Date().toLocaleTimeString(undefined, options)}`;
+        }
+    }
+    setInterval(displayLocalTime, 1000);
+
+    function displayBatteryStatus() {
+        if ('getBattery' in navigator) {
+            navigator.getBattery().then(function(battery) {
+                function updateBatteryStatus() {
+                    const level = battery.level;
+                    const percentage = Math.floor(level * 100);
+                    const chargingStatus = battery.charging ? ' <i class="fas fa-bolt"></i> (Charging)' : '';
+                    const batteryStatusElement = document.getElementById('batteryStatus');
+                    if (batteryStatusElement) {
+                        batteryStatusElement.innerHTML = `<i class="fas fa-battery-${getBatteryIcon(level)}"></i> Battery: ${percentage}%${chargingStatus}`;
+                    }
+                }
+                function getBatteryIcon(level) {
+                    if (level >= 0.9) return 'full';
+                    if (level >= 0.6) return 'three-quarters';
+                    if (level >= 0.4) return 'half';
+                    if (level >= 0.1) return 'quarter';
+                    return 'empty';
+                }
+                updateBatteryStatus();
+                battery.addEventListener('levelchange', updateBatteryStatus);
+                battery.addEventListener('chargingchange', updateBatteryStatus);
+            });
+        } else {
+            const batteryStatusElement = document.getElementById('batteryStatus');
+            if (batteryStatusElement) {
+                batteryStatusElement.innerHTML = '<i class="fas fa-battery-slash"></i> Battery status not supported.';
+            }
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        if (localStorage.getItem('isUnlocked') === 'true') {
+            lockScreen.style.display = 'none';
+        } else {
+            lockScreen.style.display = 'flex';
+        }
+
+        const unlockButton = document.querySelector('.unlock-button');
+        if (unlockButton) {
+            unlockButton.addEventListener('click', checkCode);
+        }
+
+        if (accessCodeInput) {
+            accessCodeInput.addEventListener('keypress', function(event) {
+                if (event.key === 'Enter') {
+                    checkCode();
+                }
+            });
+        }
+
+        const mainButton = document.querySelector('.main-button');
+        if (mainButton) {
+            mainButton.addEventListener('click', sendRequestViaEmail);
+        }
+
+        const banTypeSelect = document.getElementById('banType');
+        if (banTypeSelect) {
+            banTypeSelect.addEventListener('change', updatePrompts);
+        }
+
+        setRandomGradients();
+        displayLocalTime();
+        displayBatteryStatus();
+        updatePrompts();
+    });
+
+    // Expose functions to the global scope for HTML onclick attributes
+    window.checkCode = checkCode;
+    window.sendRequestViaEmail = sendRequestViaEmail;
+</script>
 </body>
     </html>
